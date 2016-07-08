@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 35a87a245c114da4ea723da97f0dd266
+timeCreated: 1467768464
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - mudPrefab: {fileID: 112060, guid: bd4166d82b9d5324ca3e3505e2f3784a, type: 2}
+  - hardDirtPrefab: {fileID: 113434, guid: 80da3a8a14338234d86545096b32eff4, type: 2}
+  - compactedDirtPrefab: {fileID: 177970, guid: 11b2c53b2816349448795024ef227eb5,
+      type: 2}
+  - compactedDirtClayPrefab: {fileID: 106358, guid: d277ab865f7ee7b4b98a8a2785bcdeec,
+      type: 2}
+  - clayPrefab: {fileID: 111572, guid: 6a1ef8d8af1b79e41a90ec14accc8d37, type: 2}
+  - hardClayPrefab: {fileID: 199596, guid: 514092091166fb14b9466e0103428bbd, type: 2}
+  - testCharacterPrefab: {fileID: 117792, guid: abafa89adb4c5e8448fb054384cdc110,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
