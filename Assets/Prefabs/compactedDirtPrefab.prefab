@@ -11,9 +11,9 @@ GameObject:
   - 33: {fileID: 3395446}
   - 65: {fileID: 6585502}
   - 23: {fileID: 2320762}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: compactedDirtPrefab
-  m_TagString: Untagged
+  m_TagString: GroundTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -23,6 +23,20 @@ public class GridManagerBehavior : MonoBehaviour
 		public int percentage;
 	}
 
+	//LAWS
+	public static int ID_X_DIGGIT = 10000;
+
+	#region Static Call
+
+	public static GridManagerBehavior instance;
+
+	public GridManagerBehavior ()
+	{
+		instance = this;
+	}
+
+	#endregion
+
 	void Start ()
 	{
 		CreateGrid ();
@@ -49,6 +63,9 @@ public class GridManagerBehavior : MonoBehaviour
 				GroundBehavior tmpTile = ((GameObject)Instantiate (tilePrefab [(int)currentTile], tmpPos, Quaternion.identity)).AddComponent<GroundBehavior> ();
 				tmpTile.groundData = groundData [(int)currentTile];
 				currentGrid.tiles [k, i] = tmpTile.GetComponent<GroundBehavior> ();
+
+				//Give ID based on position
+				tmpTile.ID = i * ID_X_DIGGIT + k;
 
 				//Set the position
 				tmpTile.tilePos.x = k;

@@ -11,9 +11,9 @@ GameObject:
   - 33: {fileID: 3384990}
   - 65: {fileID: 6507306}
   - 23: {fileID: 2396010}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: hardDirtPrefab
-  m_TagString: Untagged
+  m_TagString: GroundTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -11,9 +11,9 @@ GameObject:
   - 33: {fileID: 3398992}
   - 65: {fileID: 6527916}
   - 23: {fileID: 2301838}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: clayPrefab
-  m_TagString: Untagged
+  m_TagString: GroundTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
