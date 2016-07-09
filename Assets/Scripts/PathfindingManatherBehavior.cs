@@ -194,7 +194,6 @@ public class PathfindingManatherBehavior : MonoBehaviour
 		AStarNode currentPathNode = destinationNode;
 
 		while (currentPathNode != originNode) {
-			Debug.Log ("Parent checked!");
 			nodePath.Add (currentPathNode);
 			currentPathNode = currentPathNode.parent;
 		}
