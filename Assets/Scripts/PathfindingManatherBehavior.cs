@@ -146,14 +146,14 @@ public class PathfindingManatherBehavior : MonoBehaviour
 		}
 	}
 
-	private int mapSize { get { return GridManagerBehavior.instance.GMB.gridWidth * GridManagerBehavior.instance.GMB.gridHeight; } }
+	private static int mapSize { get { return GridManagerBehavior.instance.GMB.gridWidth * GridManagerBehavior.instance.GMB.gridHeight; } }
 
 	static GroundBehavior[] FindWithAStar (GroundBehavior origin, GroundBehavior destination)
 	{
 		//Open list are the positions to check
-		List<AStarNode> open = new List<AStarNode> ();
+		Heap<AStarNode> open = new Heap<AStarNode> (mapSize);
 		//Closed list are the positions that aren't available or that are checked already
-		List<AStarNode> closed = new List<AStarNode> ();
+		List<AStarNode> closed = new List<AStarNode> (mapSize);
 
 		//Prepare a destination node and a origin node
 		AStarNode originNode = new AStarNode (origin);
@@ -165,15 +165,8 @@ public class PathfindingManatherBehavior : MonoBehaviour
 
 		while (open.Count > 0 && !pathFound) {
 			//Get a new node
-			AStarNode currentNode = open [0];
+			AStarNode currentNode = open.RemoveFirst ();
 
-			for (int i = 1; i < open.Count; i++) {
-				if (open [i].fCost < currentNode.fCost || (open [i].fCost == currentNode.fCost && open [i].hCost < currentNode.hCost))
-					currentNode = open [i];
-			}
-
-			//Move the node to closed, as it's considered "checked"
-			open.Remove (currentNode);
 			closed.Add (currentNode);
 
 			//If destination has been reached
@@ -200,7 +193,7 @@ public class PathfindingManatherBehavior : MonoBehaviour
 
 				int newMovCost = currentNode.gCost + GetDistance (currentNode, neighborNodes [i]);
 
-				if (newMovCost < neighborNodes [i].gCost || !ListContainsGroundTile (open, neighborNodes [i])) {
+				if (newMovCost < neighborNodes [i].gCost || !open.Contains (neighborNodes [i])) {
 					//Calculate new costs
 					neighborNodes [i].gCost = newMovCost;
 					neighborNodes [i].hCost = GetDistance (neighborNodes [i], destinationNode);
@@ -208,8 +201,10 @@ public class PathfindingManatherBehavior : MonoBehaviour
 					//SetNeighbor
 					neighborNodes [i].parent = currentNode;
 
-					if (!ListContainsGroundTile (open, neighborNodes [i]))
+					if (!open.Contains (neighborNodes [i]))
 						open.Add (neighborNodes [i]);
+					else
+						open.UpdateObject (neighborNodes [i]);
 				}
 			}
 		}

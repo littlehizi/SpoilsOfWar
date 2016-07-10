@@ -110,6 +110,8 @@ public class Heap<T> where T : IHeapContent<T>
 				Swap (newObject, parentObject);
 			else
 				break;
+
+			parentIndex = (newObject.heapIndex - 1) / 2;
 		}
 	}
 
