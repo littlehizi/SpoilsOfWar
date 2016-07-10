@@ -35,6 +35,7 @@ public class GroundBehavior : MonoBehaviour
 	public bool isDug;
 	public bool isOccupied;
 
+
 	//PathFinding
 	[HideInInspector]public GroundBehavior parent;
 

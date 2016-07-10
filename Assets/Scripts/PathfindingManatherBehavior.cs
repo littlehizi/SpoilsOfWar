@@ -107,7 +107,7 @@ public class PathfindingManatherBehavior : MonoBehaviour
 
 	#region A*
 
-	private class AStarNode
+	private class AStarNode : IHeapContent<AStarNode>
 	{
 		public GroundBehavior tile;
 		public int gCost, hCost;
@@ -121,7 +121,32 @@ public class PathfindingManatherBehavior : MonoBehaviour
 			tile = newTile;
 		}
 
+		//region IHeapContent vars
+
+		private int _heapIndex;
+
+		public int heapIndex {
+			get{ return _heapIndex; }
+			set { _heapIndex = value; }
+		}
+
+		/// <summary>
+		/// Compares the current node to another, firstly based on FCOST, and then on HCOST if both FCOSt are equals.
+		/// </summary>
+		/// <returns>The to.</returns>
+		/// <param name="newNode">New node.</param>
+		public int CompareTo (AStarNode newNode)
+		{
+			int compare = fCost.CompareTo (newNode.fCost);
+
+			if (compare == 0)
+				compare = hCost.CompareTo (newNode.hCost);
+
+			return -compare;
+		}
 	}
+
+	private int mapSize { get { return GridManagerBehavior.instance.GMB.gridWidth * GridManagerBehavior.instance.GMB.gridHeight; } }
 
 	static GroundBehavior[] FindWithAStar (GroundBehavior origin, GroundBehavior destination)
 	{
