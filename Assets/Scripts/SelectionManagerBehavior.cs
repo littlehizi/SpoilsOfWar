@@ -19,7 +19,7 @@ public class SelectionManagerBehavior : MonoBehaviour, IManager
 	}
 
 	///All units stored will be stored in this list. Note that the [0] item is the currently selected unit.
-	[SerializeField] private List<ISelection> unitSelected;
+	public List<ISelection> unitSelected;
 
 
 	//START METHOD

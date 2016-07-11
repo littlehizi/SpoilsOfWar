@@ -9,10 +9,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 417968}
   - 33: {fileID: 3362712}
-  - 135: {fileID: 13503938}
   - 23: {fileID: 2331202}
-  - 114: {fileID: 11446104}
-  - 114: {fileID: 11419100}
+  - 114: {fileID: 11486874}
+  - 114: {fileID: 11492688}
   m_Layer: 0
   m_Name: characterPrefab
   m_TagString: Untagged
@@ -66,7 +65,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117792}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11419100
+--- !u!114 &11486874
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -74,12 +73,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 117792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 000e81bf3fdac884c95ab78a82920ef6, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d22bd0c8c997e4448bd8e19de4d1104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSkin: {fileID: 0}
-  unitScript: {fileID: 0}
---- !u!114 &11446104
+  unitData: {fileID: 11400000, guid: 49033d1c3a130b349899572ab9f4fe44, type: 2}
+  health: 0
+  stamina: 0
+--- !u!114 &11492688
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -87,33 +87,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 117792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef312f8b30ad6814ba2d59bfac6c4666, type: 3}
+  m_Script: {fileID: 11500000, guid: ce3dfa543f150e64487bf8db26acc6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSelected: 0
-  gridLocation: {fileID: 0}
-  tileDistance: 0
-  tileX: 0
-  tileY: 0
-  actionTimer: 0
-  counter: 0
-  destination: {fileID: 0}
-  tilePathList: []
-  isUnitMoving: 0
-  gameMaster: {fileID: 0}
-  unitState: 0
---- !u!135 &13503938
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 117792}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

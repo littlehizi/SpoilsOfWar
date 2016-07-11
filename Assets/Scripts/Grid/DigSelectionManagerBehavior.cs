@@ -25,7 +25,7 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 	{
 		//Empty the list of the last digging process
 		if (!isDigging)
-			groundTilesHolder.Clear ();
+			ResetDigPath ();
 
 		isDigging = true;
 
@@ -33,8 +33,12 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 		if (temporaryTile == null)
 			newTile = temporaryTile;
 		else {
+			//If the first pos and the 2nd are the same, just leave
+			if (temporaryTile.ID == newTile.ID)
+				return;
+			
 			//If the first position has already been given, the newTile is the 2nd, and you can collect all tiles using pathfinding
-			GroundBehavior[] tmpPath = PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, temporaryTile, newTile);
+			GroundBehavior[] tmpPath = PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, temporaryTile, newTile, false);
 
 			//Record those tiles
 			for (int i = 0; i < tmpPath.Length; i++) {
@@ -56,8 +60,24 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 	/// <param name="playerPos">Player position.</param>
 	public static GroundBehavior[] OutputTilesToDig (GroundBehavior playerPos)
 	{
+		//If the first tile is not 1-tile away from the [0]'s item of the path, check for the last item
+		if (!PathfindingManagerBehavior.GetTileNeighbor (playerPos).Contains (groundTilesHolder [0])) {
+			if (PathfindingManagerBehavior.GetTileNeighbor (playerPos).Contains (groundTilesHolder [groundTilesHolder.Count])) {
+				//If the last item is 1-tile away from the player, reverse the list
+				groundTilesHolder.Reverse ();
+			} else {
+				//If none of the tiles are connected to the player tile, return an error or now
+				Debug.LogError ("Tile too far away !");
+			}
+		}
+
 		//Stop the digging flag and return all optained tiles
 		isDigging = false;
 		return groundTilesHolder.ToArray ();
+	}
+
+	public static void ResetDigPath ()
+	{
+		groundTilesHolder.Clear ();
 	}
 }

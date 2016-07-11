@@ -22,6 +22,10 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 	//Input state var
 	InputState _currentState;
 
+	//Internal Vars
+	GroundBehavior digSelectionTmp;
+
+
 	public InputState currentState {
 		get { return _currentState; } 
 		set {
@@ -38,6 +42,8 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 			}
 
 			_currentState = value;
+
+			Debug.Log ("New Input State: " + _currentState.ToString ());
 
 			//Stuff to do when entering a state
 			switch (_currentState) {
@@ -56,6 +62,7 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 	//START METHOD
 	public void OnGameStart ()
 	{
+		digSelectionTmp = null;
 	}
 
 	void Update ()
@@ -108,12 +115,38 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 
 	#region UnitSelected State
 
+
 	void MouseUnitSelectedState ()
 	{
 		//In UnitSelected, left click will deselect all selected units
-		SMB.DeselectUnits ();
-
+		if (Input.GetMouseButtonDown (0)) {
+			SMB.DeselectUnits ();
+			//Also, empty the selection of tiles
+			DigSelectionManagerBehavior.ResetDigPath ();
+			//Go backies to IDLE mouse state
+			currentState = InputState.idle;
+		}
 		//In UnitSelected, right click will either order a unit to move, either to start digging.
+		if (Input.GetMouseButtonDown (1)) {
+			GroundBehavior tileHitRC = null;
+
+			if (RaycastOnGroundTile (out tileHitRC)) {
+				//If the tile is dug, then move. if not, then start the digging logic
+				if (tileHitRC.isDug) {
+					((UnitBehavior)SMB.unitSelected [0]).WalkToTile (tileHitRC);
+				} else {
+					//If the same tile is clicked twice, then the selecting is over. if not, the player can extend the path.
+					if (digSelectionTmp != null && tileHitRC.ID != digSelectionTmp.ID) {
+						digSelectionTmp = tileHitRC;
+
+						DigSelectionManagerBehavior.GetGroundTilesToDig (tileHitRC);
+					} else {
+					
+						digSelectionTmp = null;
+					}
+				}
+			}
+		}
 
 		//In UnitSelected, mouseRoll will either change the selected unit on a same time, either zooms out the map
 

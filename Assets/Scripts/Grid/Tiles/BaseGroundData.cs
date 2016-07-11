@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[CreateAssetMenu (menuName = "Ground Data")]
+[CreateAssetMenu (menuName = "Data/Ground Data")]
 public class BaseGroundData : ScriptableObject
 {
 	//HP REPRESENTS THE LIFE OF EACH TILE. ITS DEFAULT VALUE IS 100. WHEN IT REACHES 0, THE TILE IS DUG.

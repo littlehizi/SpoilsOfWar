@@ -8,7 +8,7 @@ public class CustomInspect_GameMasterScript : Editor
 
 	public override void OnInspectorGUI ()
 	{
-		GameMasterScript GMS = (GameMasterScript)target;
+		//GameMasterScript GMS = (GameMasterScript)target;
 		DrawDefaultInspector ();
 	}
 }

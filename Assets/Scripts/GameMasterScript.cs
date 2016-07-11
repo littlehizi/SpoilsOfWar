@@ -13,6 +13,7 @@ public class GameMasterScript : MonoBehaviour
 	public SelectionManagerBehavior SMB;
 	public PathfindingManagerBehavior PMB;
 	public DigSelectionManagerBehavior DSMB;
+	public UnitSpawnerManagerBehavior USMB;
 
 	public IManager[] managers;
 
@@ -25,6 +26,10 @@ public class GameMasterScript : MonoBehaviour
 	public int gridWidth;
 	public int gridHeight;
 	public GameObject[,] trenchGrid;
+
+	//Unit Variable
+	public float baseUnitSpeed;
+	public int staminaCostMove;
 
 	public UnitScript unitScript;
 
@@ -47,7 +52,8 @@ public class GameMasterScript : MonoBehaviour
 
 	void Start ()
 	{
-		managers = new IManager[5]{ GMB, IMB, SMB, PMB, DSMB };
+		managers = new IManager[6]{ GMB, IMB, SMB, PMB, DSMB, USMB };
+
 		//Initialize Managers
 		for (int i = 0; i < managers.Length; i++)
 			managers [i].OnGameStart ();

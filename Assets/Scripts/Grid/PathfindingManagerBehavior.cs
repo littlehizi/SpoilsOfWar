@@ -29,7 +29,7 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 	/// <param name="newType">New type.</param>
 	/// <param name="origin">Origin.</param>
 	/// <param name="destination">Destination.</param>
-	public static GroundBehavior[] FindPathToTarget (PathfindingType newType, GroundBehavior origin, GroundBehavior destination)
+	public static GroundBehavior[] FindPathToTarget (PathfindingType newType, GroundBehavior origin, GroundBehavior destination, bool hasToBeDug = true)
 	{
 		switch (newType) {
 		case PathfindingType.BFS:
@@ -49,7 +49,7 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 	/// <returns>The with BF.</returns>
 	/// <param name="origin">Origin.</param>
 	/// <param name="destination">Destination.</param>
-	static GroundBehavior[] FindWithBFS (GroundBehavior origin, GroundBehavior destination)
+	static GroundBehavior[] FindWithBFS (GroundBehavior origin, GroundBehavior destination, bool hasToBeDug = true)
 	{
 		//Open list are the positions to check
 		List<GroundBehavior> open = new List<GroundBehavior> ();
@@ -79,8 +79,10 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 				for (int i = 0; i < successors.Count; i++) {
 					if (!ListContainsGroundTile (closed, successors [i]) && !ListContainsGroundTile (open, successors [i])) {
 						//CHECK IF DUG
-						//if (!successors [i].isDug)
-						//	continue;
+						if (hasToBeDug) {
+							if (!successors [i].isDug)
+								continue;
+						}
 
 						//Make a path using the "parent" storage
 						successors [i].parent = currentTile;
@@ -154,7 +156,7 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 
 	private static int mapSize { get { return GameMasterScript.instance.gridWidth * GameMasterScript.instance.gridHeight; } }
 
-	static GroundBehavior[] FindWithAStar (GroundBehavior origin, GroundBehavior destination)
+	static GroundBehavior[] FindWithAStar (GroundBehavior origin, GroundBehavior destination, bool hasToBeDug = true)
 	{
 		//Open list are the positions to check
 		Heap<AStarNode> open = new Heap<AStarNode> (mapSize);
@@ -187,8 +189,10 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 
 			for (int i = 0; i < currentNeighbors.Count; i++) {
 				//CHECK IF DUG
-				//if (!currentNeighbors [i].isDug)
-				//	continue;
+				if (hasToBeDug) {
+					if (!currentNeighbors [i].isDug)
+						continue;
+				}
 
 				//Change the tile into a node
 				neighborNodes.Add (new AStarNode (currentNeighbors [i]));
@@ -263,7 +267,7 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 	/// </summary>
 	/// <returns>The tile neighbor.</returns>
 	/// <param name="currenTile">Curren tile.</param>
-	static List<GroundBehavior> GetTileNeighbor (GroundBehavior currenTile)
+	public static List<GroundBehavior> GetTileNeighbor (GroundBehavior currenTile)
 	{
 		//Check UP, DOWN, LEFT, RIGHT according to the IDs
 		List<GroundBehavior> output = new List<GroundBehavior> ();
