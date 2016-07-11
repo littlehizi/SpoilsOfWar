@@ -13,8 +13,14 @@ public enum PathfindingType
 }
 
 
-public class PathfindingManatherBehavior : MonoBehaviour
+
+public class PathfindingManagerBehavior : MonoBehaviour, IManager
 {
+	//START METHOD
+	public void OnGameStart ()
+	{
+	}
+
 	/// <summary>
 	/// Based on a type of pathfinding, this method will calculate using the appropriate algorithm 
 	/// and return a path as a GroundBehavior array.
@@ -146,7 +152,7 @@ public class PathfindingManatherBehavior : MonoBehaviour
 		}
 	}
 
-	private static int mapSize { get { return GridManagerBehavior.instance.GMB.gridWidth * GridManagerBehavior.instance.GMB.gridHeight; } }
+	private static int mapSize { get { return GameMasterScript.instance.gridWidth * GameMasterScript.instance.gridHeight; } }
 
 	static GroundBehavior[] FindWithAStar (GroundBehavior origin, GroundBehavior destination)
 	{
@@ -263,7 +269,7 @@ public class PathfindingManatherBehavior : MonoBehaviour
 		List<GroundBehavior> output = new List<GroundBehavior> ();
 
 
-		foreach (GroundBehavior GB in GridManagerBehavior.instance.currentGrid.tiles) {
+		foreach (GroundBehavior GB in GameMasterScript.instance.GMB.currentGrid.tiles) {
 			//UP
 			if (GB.ID == currenTile.ID + GridManagerBehavior.ID_X_DIGGIT)
 				output.Add (GB);

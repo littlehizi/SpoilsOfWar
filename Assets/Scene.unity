@@ -94,11 +94,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 412706, guid: 2f609fa8ea7a7bc44a781067f3076aa0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 7.32
       objectReference: {fileID: 0}
     - target: {fileID: 412706, guid: 2f609fa8ea7a7bc44a781067f3076aa0, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: -3.11
       objectReference: {fileID: 0}
     - target: {fileID: 412706, guid: 2f609fa8ea7a7bc44a781067f3076aa0, type: 2}
       propertyPath: m_LocalPosition.z
@@ -197,7 +197,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
---- !u!1001 &1207304957
+--- !u!1001 &1513508666
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -236,70 +236,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 11493820, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &2034027945 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 150090, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-  m_PrefabInternal: {fileID: 1207304957}
---- !u!114 &2034027946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2034027945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89a5a611b12329d449daddb7d6650bf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2034027947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2034027945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba8ced5a13fa41c438c159ceee45a823, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileLayer:
-    serializedVersion: 2
-    m_Bits: 256
---- !u!114 &2034027948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2034027945}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35a87a245c114da4ea723da97f0dd266, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trenchWidth: 0
-  mudLayer: 0
-  hardDirtLayer: 0
-  compactedDirtLayer: 0
-  compactedDirtClayLayer: 0
-  clayLayer: 0
-  hardClayLayer: 0
-  trenchHeight: 0
-  mudPrefab: {fileID: 112060, guid: bd4166d82b9d5324ca3e3505e2f3784a, type: 2}
-  hardDirtPrefab: {fileID: 113434, guid: 80da3a8a14338234d86545096b32eff4, type: 2}
-  compactedDirtPrefab: {fileID: 177970, guid: 11b2c53b2816349448795024ef227eb5, type: 2}
-  compactedDirtClayPrefab: {fileID: 106358, guid: d277ab865f7ee7b4b98a8a2785bcdeec,
-    type: 2}
-  clayPrefab: {fileID: 111572, guid: 6a1ef8d8af1b79e41a90ec14accc8d37, type: 2}
-  hardClayPrefab: {fileID: 199596, guid: 514092091166fb14b9466e0103428bbd, type: 2}
-  testCharacterPrefab: {fileID: 117792, guid: abafa89adb4c5e8448fb054384cdc110, type: 2}
-  gameMaster: {fileID: 2034027949}
---- !u!114 &2034027949 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11422320, guid: 2804bb5a99f31e942b1dbd583f44ad8a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1207304957}
-  m_Script: {fileID: 11500000, guid: 16c01bd3d30d0af4aac81d0a2268b4d2, type: 3}

@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GridManagerBehavior : MonoBehaviour
+public class GridManagerBehavior : MonoBehaviour, IManager
 {
-	//References
-	public GameMasterScript GMB;
-
 	//Storage Variables
 	public Grid currentGrid;
 
@@ -26,33 +23,23 @@ public class GridManagerBehavior : MonoBehaviour
 	//LAWS
 	public static int ID_X_DIGGIT = 10000;
 
-	#region Static Call
-
-	public static GridManagerBehavior instance;
-
-	public GridManagerBehavior ()
+	//START METHOD
+	public void OnGameStart ()
 	{
-		instance = this;
 	}
-
-	#endregion
-
-	void Start ()
-	{
-		CreateGrid ();
-	}
-
 
 	/// <summary>
 	/// Creates the grid based on the height and width.
 	/// </summary>
 	public void CreateGrid ()
 	{
-		currentGrid = new Grid (GMB.gridWidth, GMB.gridHeight);
+		GameObject tileStorage = new GameObject ("Grid");
+
+		currentGrid = new Grid (GameMasterScript.instance.gridWidth, GameMasterScript.instance.gridHeight);
 		Vector3 tmpPos = Vector3.zero;
 
-		for (int i = 0; i < GMB.gridHeight; i++) {
-			for (int k = 0; k < GMB.gridWidth; k++) {
+		for (int i = 0; i < GameMasterScript.instance.gridHeight; i++) {
+			for (int k = 0; k < GameMasterScript.instance.gridWidth; k++) {
 				tmpPos.x = k;
 				tmpPos.y = -i;
 
@@ -71,6 +58,10 @@ public class GridManagerBehavior : MonoBehaviour
 				tmpTile.tilePos.x = k;
 				tmpTile.tilePos.y = i;
 
+				//Make the hierarchy clean
+				tmpTile.transform.SetParent (tileStorage.transform);
+				tmpTile.name = currentTile.ToString () + " " + k.ToString () + "," + i.ToString ();
+
 				//Finally, initialize the ground
 				tmpTile.GetComponent<GroundBehavior> ().SetupGround ();
 			}
@@ -85,11 +76,11 @@ public class GridManagerBehavior : MonoBehaviour
 	GroundBehavior.GroundType GetNewTile (int tileHeight)
 	{
 		//IF IT IS THE FINAL ROW, USE BEDROCK NO MATTER WAT
-		if (tileHeight == GMB.gridHeight - 1)
+		if (tileHeight == GameMasterScript.instance.gridHeight - 1)
 			return GroundBehavior.GroundType.bedRock;
 
 		//First, get the tile height as a percentage
-		float heightPer = ((float)tileHeight) / ((float)GMB.gridHeight) * 100;
+		float heightPer = ((float)tileHeight) / ((float)GameMasterScript.instance.gridHeight) * 100;
 
 		//Return a type of tile according to the percentages entered in inspector
 		for (int i = 0; i < tileLayerSize.Length; i++) {

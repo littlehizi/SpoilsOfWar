@@ -26,7 +26,7 @@ public class TestPF : MonoBehaviour
 					Debug.Log ("Destination Set!");
 
 					//Get the path finding happening !
-					path = PathfindingManatherBehavior.FindPathToTarget (PathfindingType.AS, origin, destination);
+					path = PathfindingManagerBehavior.FindPathToTarget (PathfindingType.AS, origin, destination);
 
 					for (int i = 0; i < path.Length; i++) {
 						path [i].transform.GetComponent<Renderer> ().material.color += Color.cyan;

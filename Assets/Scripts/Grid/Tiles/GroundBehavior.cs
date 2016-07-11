@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// This class is responsible for storing all data related to the ground tiles.
@@ -31,9 +32,29 @@ public class GroundBehavior : MonoBehaviour
 	public Sprite sprite;
 	public int moveCost;
 
+	//Vars
+	public List<UnitBehavior> unitsOnTile;
+	Color greyedOut = new Color (0.2f, 0.2f, 0.2f);
+
 	//Flags
-	public bool isDug;
-	public bool isOccupied;
+	bool _isDug;
+
+	public bool isDug {
+		get { return _isDug; }
+		set {
+			bool prevValue = _isDug;
+
+			//Change the flag and set the tile color to darker
+			_isDug = value;
+
+			if (_isDug && !prevValue)
+				this.transform.GetComponent<Renderer> ().material.color -= greyedOut;
+			else if (!_isDug && prevValue)
+				this.transform.GetComponent<Renderer> ().material.color += greyedOut;
+		}
+	}
+
+	public bool isOccupied { get { return unitsOnTile.Count > 0; } }
 
 
 	//PathFinding
@@ -42,6 +63,10 @@ public class GroundBehavior : MonoBehaviour
 	//Extract the data from given GroundData
 	public void SetupGround ()
 	{
+		//Initialize lists
+		unitsOnTile = new List<UnitBehavior> ();
+
+		//Get stats
 		hp = groundData.hp;
 		digRes = groundData.digRes;
 		sprite = groundData.sprite;

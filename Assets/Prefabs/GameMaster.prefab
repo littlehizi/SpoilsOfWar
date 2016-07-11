@@ -9,8 +9,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 457932}
   - 114: {fileID: 11422320}
-  - 114: {fileID: 11493820}
   - 114: {fileID: 11430764}
+  - 114: {fileID: 11477180}
+  - 114: {fileID: 11445322}
+  - 114: {fileID: 11446130}
+  - 114: {fileID: 11488608}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: GMB
@@ -42,7 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c01bd3d30d0af4aac81d0a2268b4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedUnit: {fileID: 0}
+  GMB: {fileID: 11430764}
+  IMB: {fileID: 11445322}
+  SMB: {fileID: 11446130}
+  PMB: {fileID: 11477180}
+  DSMB: {fileID: 11488608}
+  pathfindingType: 0
   gridWidth: 30
   gridHeight: 50
   unitScript: {fileID: 0}
@@ -57,7 +65,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8550b95572e05947801c3832b33b016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GMB: {fileID: 11422320}
   tilePrefab:
   - {fileID: 112060, guid: bd4166d82b9d5324ca3e3505e2f3784a, type: 2}
   - {fileID: 113434, guid: 80da3a8a14338234d86545096b32eff4, type: 2}
@@ -87,34 +94,54 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9c05f30fda96ca041aba546d83d8f30b, type: 2}
   - {fileID: 11400000, guid: b9e9b62672d40fc40a8991afcc60fd27, type: 2}
   - {fileID: 11400000, guid: 1a97274037a86a74e810bd66bd305ea1, type: 2}
---- !u!114 &11493820
+--- !u!114 &11445322
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150090}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35a87a245c114da4ea723da97f0dd266, type: 3}
+  m_Script: {fileID: 11500000, guid: dea082d26e2d34a4e8738161367c396d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trenchWidth: 30
-  mudLayer: 3
-  hardDirtLayer: 10
-  compactedDirtLayer: 10
-  compactedDirtClayLayer: 7
-  clayLayer: 10
-  hardClayLayer: 10
-  trenchHeight: 0
-  mudPrefab: {fileID: 112060, guid: bd4166d82b9d5324ca3e3505e2f3784a, type: 2}
-  hardDirtPrefab: {fileID: 113434, guid: 80da3a8a14338234d86545096b32eff4, type: 2}
-  compactedDirtPrefab: {fileID: 177970, guid: 11b2c53b2816349448795024ef227eb5, type: 2}
-  compactedDirtClayPrefab: {fileID: 106358, guid: d277ab865f7ee7b4b98a8a2785bcdeec,
-    type: 2}
-  clayPrefab: {fileID: 111572, guid: 6a1ef8d8af1b79e41a90ec14accc8d37, type: 2}
-  hardClayPrefab: {fileID: 199596, guid: 514092091166fb14b9466e0103428bbd, type: 2}
-  testCharacterPrefab: {fileID: 117792, guid: abafa89adb4c5e8448fb054384cdc110, type: 2}
-  gameMaster: {fileID: 11422320}
+  SMB: {fileID: 11446130}
+  tileLayer:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!114 &11446130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82469ce85b6eb34449cf648d419b6105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11477180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a5a611b12329d449daddb7d6650bf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11488608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f38b317a95635fb46b839a9180731348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

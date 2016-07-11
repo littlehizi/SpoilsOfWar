@@ -7,7 +7,19 @@ public class GameMasterScript : MonoBehaviour
 {
 	#region Variables
 
-	public GameObject selectedUnit;
+	//REFERENCES
+	public GridManagerBehavior GMB;
+	public InputManagerBehavior IMB;
+	public SelectionManagerBehavior SMB;
+	public PathfindingManagerBehavior PMB;
+	public DigSelectionManagerBehavior DSMB;
+
+	public IManager[] managers;
+
+	public PathfindingType pathfindingType;
+
+	//public GameObject selectedUnit;
+
 
 	// Grid Variables
 	public int gridWidth;
@@ -16,7 +28,36 @@ public class GameMasterScript : MonoBehaviour
 
 	public UnitScript unitScript;
 
+	// Camera Variables
+	public static WorldCamera.BoxLimit cameraLimits = new WorldCamera.BoxLimit ();
+	public static WorldCamera.BoxLimit mouseScrollLimits = new WorldCamera.BoxLimit ();
+
 	#endregion
+
+	#region static call
+
+	public static GameMasterScript instance;
+
+	public GameMasterScript ()
+	{
+		instance = this;
+	}
+
+	#endregion
+
+	void Start ()
+	{
+		managers = new IManager[5]{ GMB, IMB, SMB, PMB, DSMB };
+		//Initialize Managers
+		for (int i = 0; i < managers.Length; i++)
+			managers [i].OnGameStart ();
+		
+		//Initialize inputs
+		IMB.currentState = InputManagerBehavior.InputState.idle;
+
+		//Start the game
+		GMB.CreateGrid ();
+	}
 
 	#region Grid tapping
 
@@ -61,14 +102,7 @@ public class GameMasterScript : MonoBehaviour
 
 	#endregion
 
-	#region Start()
-
-	void Start ()
-	{
-
-	}
-
-	#endregion
+	/*
 
 	#region Update()
 
@@ -118,5 +152,7 @@ public class GameMasterScript : MonoBehaviour
 	}
 
 	#endregion
+
+*/
 }
 
