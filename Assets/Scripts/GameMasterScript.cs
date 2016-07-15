@@ -51,7 +51,7 @@ public class GameMasterScript : MonoBehaviour
 
 	#endregion
 
-	void Start ()
+	public void Start ()
 	{
 		managers = new IManager[6]{ GMB, IMB, SMB, PMB, DSMB, USMB };
 

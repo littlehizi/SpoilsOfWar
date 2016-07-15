@@ -83,6 +83,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UnitPrefab: {fileID: 117792, guid: abafa89adb4c5e8448fb054384cdc110, type: 2}
+  unitTypes:
+  - {fileID: 11400000, guid: 6c876147680f10b409aa2c2733d51337, type: 2}
+  - {fileID: 11400000, guid: 49033d1c3a130b349899572ab9f4fe44, type: 2}
+  - {fileID: 11400000, guid: 24c5675d404b63c419ac1309ca66f041, type: 2}
 --- !u!114 &11430764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -104,7 +108,7 @@ MonoBehaviour:
   - {fileID: 111572, guid: 9faa5454b2902ff499e0b319ba1c1daf, type: 2}
   tileLayerSize:
   - name: Mud
-    percentage: 100
+    percentage: 30
   - name: Hard Dirt
     percentage: 10
   - name: Compacted Dirt

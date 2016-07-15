@@ -11,6 +11,12 @@ public class UnitSpawnerManagerBehavior : MonoBehaviour, IManager
 	{
 	}
 
+	/// <summary>
+	/// Spawns the unit based on a UnitData.UnitType and a GroundBehavior tile.
+	/// </summary>
+	/// <returns>The unit.</returns>
+	/// <param name="newType">New type.</param>
+	/// <param name="newTile">New tile.</param>
 	public static UnitBehavior SpawnUnit (UnitData.UnitType newType, GroundBehavior newTile)
 	{
 		//Prepare spawn point
