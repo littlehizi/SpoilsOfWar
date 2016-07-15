@@ -17,7 +17,7 @@ public class UnitSpawnerManagerBehavior : MonoBehaviour, IManager
 	/// <returns>The unit.</returns>
 	/// <param name="newType">New type.</param>
 	/// <param name="newTile">New tile.</param>
-	public static UnitBehavior SpawnUnit (UnitData.UnitType newType, GroundBehavior newTile)
+	public static UnitBehavior SpawnUnit (UnitData.UnitType newType, GroundBehavior newTile, PlayerData.TypeOfPlayer newAlignment)
 	{
 		//Prepare spawn point
 		Vector3 spawnPos = new Vector3 (newTile.tilePos.x, -newTile.tilePos.y, -2);
@@ -39,6 +39,8 @@ public class UnitSpawnerManagerBehavior : MonoBehaviour, IManager
 
 		//Run unit setup
 		newUnit.SetupUnit (newTile);
+
+        newUnit.alignment = newAlignment;
 
 		return newUnit;
 	}

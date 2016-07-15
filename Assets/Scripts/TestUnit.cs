@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TestUnit : MonoBehaviour
 {
+    /*
 
 	void Update ()
 	{
@@ -18,4 +19,5 @@ public class TestUnit : MonoBehaviour
 					GB.isDug = true;
 		}
 	}
+    */
 }

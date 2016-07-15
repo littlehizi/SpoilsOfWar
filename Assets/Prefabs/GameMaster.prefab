@@ -16,6 +16,7 @@ GameObject:
   - 114: {fileID: 11488608}
   - 114: {fileID: 11429442}
   - 114: {fileID: 11407368}
+  - 114: {fileID: 11473556}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: GMB
@@ -32,7 +33,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -64,6 +64,7 @@ MonoBehaviour:
   PMB: {fileID: 11477180}
   DSMB: {fileID: 11488608}
   USMB: {fileID: 11429442}
+  PLMB: {fileID: 11473556}
   pathfindingType: 2
   gridWidth: 30
   gridHeight: 50
@@ -108,7 +109,7 @@ MonoBehaviour:
   - {fileID: 111572, guid: 9faa5454b2902ff499e0b319ba1c1daf, type: 2}
   envTilePrefab:
   - {fileID: 111572, guid: ae57fad7207e85342915979fd1c7061c, type: 2}
-  - {fileID: 111572, guid: b0bb6d2bb916150479f29dc2dbae8e2b, type: 2}
+  - {fileID: 111572, guid: ae57fad7207e85342915979fd1c7061c, type: 2}
   - {fileID: 111572, guid: 493bfca15cfb38940945a7aa6c5202ab, type: 2}
   - {fileID: 111572, guid: 550b9524779e7dc4c98c2e95d7da8701, type: 2}
   tileLayerSize:
@@ -161,6 +162,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82469ce85b6eb34449cf648d419b6105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11473556
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b251a02715a864fb4b2633325d8d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11477180

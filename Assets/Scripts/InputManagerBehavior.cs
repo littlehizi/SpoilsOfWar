@@ -96,12 +96,24 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 			if (RaycastOnGroundTile (out tileHitLC)) {
 
 				if (tileHitLC.unitsOnTile.Count > 0) {
-					//Add all the units to the current selection
-					for (int i = 0; i < tileHitLC.unitsOnTile.Count; i++)
-						SMB.SelectNewUnitsOnTile (tileHitLC.unitsOnTile [i]);
+                    //Add all the units to the current selection
 
-					//Switch to UNITSELECTED input state
-					currentState = InputState.unitSelected;
+                    bool[] alignmentCheck = new bool [tileHitLC.unitsOnTile.Count];
+                    for (int i = 0; i < tileHitLC.unitsOnTile.Count; i++)
+                    {
+                        alignmentCheck[i] = SMB.SelectNewUnitsOnTile(tileHitLC.unitsOnTile[i]);
+                    }
+
+                    for (int i = 0; i < alignmentCheck.Length; i++)
+                    {
+                        if (!alignmentCheck[i])
+                        {
+                            return;
+                        }
+                    }
+                    //Switch to UNITSELECTED input state
+                    currentState = InputState.unitSelected;
+                    
 				}
 			}
 		}

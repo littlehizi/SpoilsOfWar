@@ -30,6 +30,7 @@ public class UnitBehavior : MonoBehaviour, ISelection
 	public UnitData unitData;
 	public int health;
 	public int stamina;
+    public PlayerData.TypeOfPlayer alignment;
 
 	public void SetupUnit (GroundBehavior newTile)
 	{
@@ -163,7 +164,7 @@ public class UnitBehavior : MonoBehaviour, ISelection
 
 			//If none, return without any results (and yell at the player)
 			if (!hasATileToTalkTo)
-				yield return null;
+				return false;
 
 			while (currentState == UnitState.walking)
 				yield return null;

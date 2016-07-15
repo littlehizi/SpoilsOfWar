@@ -193,7 +193,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -16.44, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -236,10 +235,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11430764, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: envTilePrefab.Array.data[1]
+    - target: {fileID: 11473556, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
+      propertyPath: humanPlayer
       value: 
-      objectReference: {fileID: 111572, guid: ae57fad7207e85342915979fd1c7061c, type: 2}
+      objectReference: {fileID: 11400000, guid: 78bd7faa5f5defa4cb71e90b5e78f48a,
+        type: 2}
+    - target: {fileID: 11473556, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
+      propertyPath: enemyPlayer
+      value: 
+      objectReference: {fileID: 11400000, guid: ed76a6d0eb4e21443855205a2a6cb0ea,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
   m_IsPrefabParent: 0

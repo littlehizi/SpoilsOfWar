@@ -32,20 +32,33 @@ public class SelectionManagerBehavior : MonoBehaviour, IManager
 	/// Selects the new units on tile and call its OnSelect method.
 	/// </summary>
 	/// <param name="newUnit">New unit.</param>
-	public void SelectNewUnitsOnTile (ISelection newUnit)
+	public bool SelectNewUnitsOnTile (ISelection newUnit)
 	{
-		unitSelected.Add (newUnit);
-		newUnit.OnSelect ();
+        if (((UnitBehavior)newUnit).alignment == PlayerData.TypeOfPlayer.human)
+        {
+            unitSelected.Add(newUnit);
+            newUnit.OnSelect();
+
+            return true;
+        }
+        return false;
 	}
 
 	/// <summary>
 	/// Selects the new units on tile and call its OnSelect method.
 	/// </summary>
 	/// <param name="newUnit">New unit.</param>
-	public void SelectNewUnitsOnTile (UnitBehavior newUnit)
+	public bool SelectNewUnitsOnTile (UnitBehavior newUnit)
 	{
-		unitSelected.Add ((ISelection)newUnit);
-		newUnit.OnSelect ();
+        if (((UnitBehavior)newUnit).alignment == PlayerData.TypeOfPlayer.human)
+        {
+            unitSelected.Add((ISelection)newUnit);
+            newUnit.OnSelect();
+
+            return true;
+        }
+
+        return false;
 	}
 
 	/// <summary>

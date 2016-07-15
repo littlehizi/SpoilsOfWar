@@ -45,6 +45,10 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 		currentGrid = new Grid (GameMasterScript.instance.gridWidth, GameMasterScript.instance.gridHeight);
 		Vector3 tmpPos = Vector3.zero;
 
+        // Player and enemy indexs
+        int humanIndex = 0;
+        int enemyIndex = 0;
+
 		for (int i = 0; i < GameMasterScript.instance.gridHeight; i++) {
 			for (int k = 0; k < GameMasterScript.instance.gridWidth; k++) {
 				tmpPos.x = k;
@@ -59,6 +63,8 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 					if (k < STATIC_WIDTH) {
 						//Player HQ
 						currentTile = playerHQ.tileData [i, k];
+
+                        
 					} else if (k >= GameMasterScript.instance.gridWidth - STATIC_WIDTH) {
 						//ENEMY HQ
 						currentTile = playerHQ.tileData [i, GameMasterScript.instance.gridWidth - k - 1];
@@ -75,8 +81,17 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 					tmpTile.groundData = groundData [(int)currentTile];
 					currentGrid.tiles [k, i] = tmpTile.GetComponent<GroundBehavior> ();
 
-					//If it's inside the building, set it as UNDUG
-					if (currentTile == GroundBehavior.EnvGroundType.buildingBG)
+                    if (currentTile == GroundBehavior.EnvGroundType.buildingBG && k < STATIC_WIDTH)
+                    {
+                        GameMasterScript.instance.PLMB.humanPlayer.spawnTiles[humanIndex++] = tmpTile;
+                    }
+                    else if (currentTile == GroundBehavior.EnvGroundType.buildingBG && k >= GameMasterScript.instance.gridWidth - STATIC_WIDTH)
+                    {
+                        GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles[enemyIndex++] = tmpTile;
+                    }
+
+                    //If it's inside the building, set it as UNDUG
+                    if (currentTile == GroundBehavior.EnvGroundType.buildingBG)
 						tmpTile.isDug = true;
 
 					tmpTile.name = currentTile.ToString () + " " + k.ToString () + "," + i.ToString ();

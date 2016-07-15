@@ -14,6 +14,7 @@ public class GameMasterScript : MonoBehaviour
 	public PathfindingManagerBehavior PMB;
 	public DigSelectionManagerBehavior DSMB;
 	public UnitSpawnerManagerBehavior USMB;
+    public PlayerManagerBehavior PLMB;
 
 	public IManager[] managers;
 
@@ -53,7 +54,7 @@ public class GameMasterScript : MonoBehaviour
 
 	public void Start ()
 	{
-		managers = new IManager[6]{ GMB, IMB, SMB, PMB, DSMB, USMB };
+		managers = new IManager[7]{ GMB, IMB, SMB, PMB, DSMB, USMB, PLMB };
 
 		//Initialize Managers
 		for (int i = 0; i < managers.Length; i++)
@@ -64,6 +65,9 @@ public class GameMasterScript : MonoBehaviour
 
 		//Start the game
 		GMB.CreateGrid ();
+
+        // Spawn all the units
+        PLMB.SpawnBaseUnit();
 	}
 
 	#region Grid tapping
