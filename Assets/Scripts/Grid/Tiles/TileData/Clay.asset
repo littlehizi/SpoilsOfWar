@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950f84134353cbd4f8cb792d0061230b, type: 3}
   m_Name: Clay
   m_EditorClassIdentifier: 
-  hp: 0
-  digRes: 0
+  hp: 100
+  digRes: 50
   sprite: {fileID: 0}
   moveCost: 0

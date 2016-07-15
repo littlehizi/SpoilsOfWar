@@ -126,6 +126,7 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 			//Go backies to IDLE mouse state
 			currentState = InputState.idle;
 		}
+
 		//In UnitSelected, right click will either order a unit to move, either to start digging.
 		if (Input.GetMouseButtonDown (1)) {
 			GroundBehavior tileHitRC = null;
@@ -136,14 +137,19 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 					((UnitBehavior)SMB.unitSelected [0]).WalkToTile (tileHitRC);
 				} else {
 					//If the same tile is clicked twice, then the selecting is over. if not, the player can extend the path.
-					if (digSelectionTmp != null && tileHitRC.ID != digSelectionTmp.ID) {
+					if (digSelectionTmp == null || tileHitRC.ID != digSelectionTmp.ID) {
+						//If it's the first time clickin on a tile or it's not a double tap, continue gathering tiles
 						digSelectionTmp = tileHitRC;
 
+						//The method will handle the storing and creating path
 						DigSelectionManagerBehavior.GetGroundTilesToDig (tileHitRC);
-					} else {
-					
+					} else if (digSelectionTmp != null && tileHitRC.ID == digSelectionTmp.ID) {
+						//If double tap, give the order to the currently character to dig (or move to closest tile and dig)
+						((UnitBehavior)SMB.unitSelected [0]).StartDiggingProcess (DigSelectionManagerBehavior.OutputTilesToDig (SMB.unitSelected [0].currentTile));
+
+						//Reset flag
 						digSelectionTmp = null;
-					}
+					} 
 				}
 			}
 		}
@@ -159,9 +165,9 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 	bool RaycastOnGroundTile (out GroundBehavior tileHit)
 	{
 		Ray clickRay = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit stuffHit;
+		RaycastHit2D stuffHit = Physics2D.Raycast (clickRay.origin, clickRay.direction, Mathf.Infinity, tileLayer);
 
-		if (Physics.Raycast (clickRay, out stuffHit, Mathf.Infinity, tileLayer)) {
+		if (stuffHit) {
 			tileHit = stuffHit.transform.GetComponent<GroundBehavior> ();
 			return true;
 		}

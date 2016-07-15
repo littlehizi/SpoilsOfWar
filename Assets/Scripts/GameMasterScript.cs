@@ -30,6 +30,7 @@ public class GameMasterScript : MonoBehaviour
 	//Unit Variable
 	public float baseUnitSpeed;
 	public int staminaCostMove;
+	public int staminaCostDig;
 
 	public UnitScript unitScript;
 

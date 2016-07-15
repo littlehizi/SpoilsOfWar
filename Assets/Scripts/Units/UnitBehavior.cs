@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UnitBehavior : MonoBehaviour, ISelection
 {
 	//References
 	UnitMovementBehavior UMB;
+	DigBehavior DB;
 
 	//Internal vars
 	GroundBehavior _currentTile;
@@ -33,6 +35,7 @@ public class UnitBehavior : MonoBehaviour, ISelection
 	{
 		//Get references
 		UMB = this.GetComponent<UnitMovementBehavior> ();
+		DB = this.GetComponent<DigBehavior> ();
 
 		//Set current tile
 		currentTile = newTile;
@@ -107,6 +110,10 @@ public class UnitBehavior : MonoBehaviour, ISelection
 
 	#region Walk
 
+	/// <summary>
+	/// This method will communicate with the walk component, as well as setting the unit's state.
+	/// </summary>
+	/// <param name="destination">Destination.</param>
 	public void WalkToTile (GroundBehavior destination)
 	{
 		currentState = UnitState.walking;
@@ -114,6 +121,9 @@ public class UnitBehavior : MonoBehaviour, ISelection
 		UMB.MoveUnitToTarget (destination);
 	}
 
+	/// <summary>
+	/// Stops the walking process.
+	/// </summary>
 	public void StopWalking ()
 	{
 		UMB.StopWalking ();
@@ -126,6 +136,37 @@ public class UnitBehavior : MonoBehaviour, ISelection
 
 	#endregion
 
+	#region Dig
+
+	public void StartDiggingProcess (GroundBehavior[] tilesToDig)
+	{
+		//Check if the first tile is in range. If not, then walk to it.
+		if (!PathfindingManagerBehavior.ListContainsGroundTile (PathfindingManagerBehavior.GetTileNeighbor (tilesToDig [0]), currentTile)) {
+			//Find the nearest available tile next to the first tile to dig
+			//////FOR NOW, JUST HAVE IT WORK, DO NOT CARE ABOUT COMPLEX PATHS
+			List<GroundBehavior> neighbors = PathfindingManagerBehavior.GetTileNeighbor (tilesToDig [0]);
+
+			for (int i = 0; i < neighbors.Count; i++) {
+				if (!neighbors [i].isDug) {
+					WalkToTile (neighbors [i]);
+					break;
+				}
+			}
+
+			//If none, return without any results (and yell at the player)
+
+
+			while (currentState == UnitState.walking)
+				;
+			
+		}
+
+		currentState = UnitState.digging;
+
+		DB.StartDigging (tilesToDig);
+	}
+
+	#endregion
 
 	public void OnDeselect ()
 	{

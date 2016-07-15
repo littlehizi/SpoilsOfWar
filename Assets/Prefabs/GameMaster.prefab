@@ -69,6 +69,7 @@ MonoBehaviour:
   gridHeight: 50
   baseUnitSpeed: 3
   staminaCostMove: 1
+  staminaCostDig: 5
   unitScript: {fileID: 0}
 --- !u!114 &11429442
 MonoBehaviour:

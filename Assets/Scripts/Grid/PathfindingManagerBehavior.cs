@@ -33,9 +33,9 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 	{
 		switch (newType) {
 		case PathfindingType.BFS:
-			return FindWithBFS (origin, destination);
+			return FindWithBFS (origin, destination, hasToBeDug);
 		case PathfindingType.AS:
-			return FindWithAStar (origin, destination);
+			return FindWithAStar (origin, destination, hasToBeDug);
 		}
 
 		return null;
@@ -49,7 +49,7 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 	/// <returns>The with BF.</returns>
 	/// <param name="origin">Origin.</param>
 	/// <param name="destination">Destination.</param>
-	static GroundBehavior[] FindWithBFS (GroundBehavior origin, GroundBehavior destination, bool hasToBeDug = true)
+	static GroundBehavior[] FindWithBFS (GroundBehavior origin, GroundBehavior destination, bool hasToBeDug)
 	{
 		//Open list are the positions to check
 		List<GroundBehavior> open = new List<GroundBehavior> ();
@@ -156,7 +156,7 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 
 	private static int mapSize { get { return GameMasterScript.instance.gridWidth * GameMasterScript.instance.gridHeight; } }
 
-	static GroundBehavior[] FindWithAStar (GroundBehavior origin, GroundBehavior destination, bool hasToBeDug = true)
+	static GroundBehavior[] FindWithAStar (GroundBehavior origin, GroundBehavior destination, bool hasToBeDug)
 	{
 		//Open list are the positions to check
 		Heap<AStarNode> open = new Heap<AStarNode> (mapSize);
@@ -187,34 +187,39 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 			List<GroundBehavior> currentNeighbors = GetTileNeighbor (currentNode.tile);
 			List<AStarNode> neighborNodes = new List<AStarNode> ();
 
+			int dugCount = 0; 
+
 			for (int i = 0; i < currentNeighbors.Count; i++) {
 				//CHECK IF DUG
 				if (hasToBeDug) {
-					if (!currentNeighbors [i].isDug)
+					if (!currentNeighbors [i].isDug) {
+						dugCount++;
 						continue;
+					}
 				}
 
 				//Change the tile into a node
 				neighborNodes.Add (new AStarNode (currentNeighbors [i]));
 
 				//If that neighbor has already been checked, don't bother
-				if (ListContainsGroundTile (closed, neighborNodes [i]))
+				if (ListContainsGroundTile (closed, neighborNodes [i - dugCount]))
 					continue;
 
-				int newMovCost = currentNode.gCost + GetDistance (currentNode, neighborNodes [i]);
 
-				if (newMovCost < neighborNodes [i].gCost || !open.Contains (neighborNodes [i])) {
+				int newMovCost = currentNode.gCost + GetDistance (currentNode, neighborNodes [i - dugCount]);
+
+				if (newMovCost < neighborNodes [i - dugCount].gCost || !open.Contains (neighborNodes [i - dugCount])) {
 					//Calculate new costs
-					neighborNodes [i].gCost = newMovCost;
-					neighborNodes [i].hCost = GetDistance (neighborNodes [i], destinationNode);
+					neighborNodes [i - dugCount].gCost = newMovCost;
+					neighborNodes [i - dugCount].hCost = GetDistance (neighborNodes [i - dugCount], destinationNode);
 
 					//SetNeighbor
-					neighborNodes [i].parent = currentNode;
+					neighborNodes [i - dugCount].parent = currentNode;
 
-					if (!open.Contains (neighborNodes [i]))
-						open.Add (neighborNodes [i]);
+					if (!open.Contains (neighborNodes [i - dugCount]))
+						open.Add (neighborNodes [i - dugCount]);
 					else
-						open.UpdateObject (neighborNodes [i]);
+						open.UpdateObject (neighborNodes [i - dugCount]);
 				}
 			}
 		}
@@ -300,7 +305,7 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 	/// <returns><c>true</c>, if contains ground tile was listed, <c>false</c> otherwise.</returns>
 	/// <param name="currentList">Current list.</param>
 	/// <param name="currentGround">Current ground.</param>
-	static bool ListContainsGroundTile (List<GroundBehavior> currentList, GroundBehavior currentGround)
+	public static bool ListContainsGroundTile (List<GroundBehavior> currentList, GroundBehavior currentGround)
 	{
 		for (int i = 0; i < currentList.Count; i++) {
 			if (currentList [i].ID == currentGround.ID)

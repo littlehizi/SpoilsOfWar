@@ -31,10 +31,11 @@ public class GroundBehavior : MonoBehaviour
 	public float digRes;
 	public Sprite sprite;
 	public int moveCost;
+	public Color colorBackup;
 
 	//Vars
 	public List<UnitBehavior> unitsOnTile;
-	Color greyedOut = new Color (0.2f, 0.2f, 0.2f);
+	Color greyedOut = new Color (0.2f, 0.2f, 0.2f, 0.0f);
 
 	//Flags
 	bool _isDug;
@@ -48,9 +49,9 @@ public class GroundBehavior : MonoBehaviour
 			_isDug = value;
 
 			if (_isDug && !prevValue)
-				this.transform.GetComponent<Renderer> ().material.color -= greyedOut;
+				this.transform.GetComponent<SpriteRenderer> ().color -= greyedOut;
 			else if (!_isDug && prevValue)
-				this.transform.GetComponent<Renderer> ().material.color += greyedOut;
+				this.transform.GetComponent<SpriteRenderer> ().color += greyedOut;
 		}
 	}
 
@@ -71,5 +72,8 @@ public class GroundBehavior : MonoBehaviour
 		digRes = groundData.digRes;
 		sprite = groundData.sprite;
 		moveCost = groundData.moveCost;
+
+		//Temporary stuff
+		colorBackup = this.GetComponent<SpriteRenderer> ().color;
 	}
 }

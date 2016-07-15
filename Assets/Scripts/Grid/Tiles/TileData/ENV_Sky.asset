@@ -8,13 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fa848c737d92b24cb4d24897b3c7b0c, type: 3}
-  m_Name: Digger
+  m_Script: {fileID: 11500000, guid: 950f84134353cbd4f8cb792d0061230b, type: 3}
+  m_Name: ENV_Sky
   m_EditorClassIdentifier: 
-  typeOfUnit: 2
-  health: 100
-  stamina: 150
-  strength: 50
-  diggingPower: 25
-  vision: 5
-  speed: 5
+  hp: 100
+  digRes: 9999
+  sprite: {fileID: 0}
+  moveCost: 0

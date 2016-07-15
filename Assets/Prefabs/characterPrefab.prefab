@@ -12,6 +12,7 @@ GameObject:
   - 23: {fileID: 2331202}
   - 114: {fileID: 11486874}
   - 114: {fileID: 11492688}
+  - 114: {fileID: 11491810}
   m_Layer: 0
   m_Name: characterPrefab
   m_TagString: Untagged
@@ -76,9 +77,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d22bd0c8c997e4448bd8e19de4d1104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitData: {fileID: 11400000, guid: 49033d1c3a130b349899572ab9f4fe44, type: 2}
+  unitData: {fileID: 0}
   health: 0
   stamina: 0
+--- !u!114 &11491810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d8ee2cf68ff47f41a2d0278a99ee636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11492688
 MonoBehaviour:
   m_ObjectHideFlags: 1
