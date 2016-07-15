@@ -8,8 +8,10 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 
 	//Prefabs
 	public GameObject[] tilePrefab;
+	public GameObject[] envTilePrefab;
 	public LayerSize[] tileLayerSize;
 	public BaseGroundData[] groundData;
+	public BaseGroundData[] envData;
 
 
 	//Class responsible for easy storage of values. To be replaced by editor scripting
@@ -22,6 +24,8 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 
 	//LAWS
 	public static int ID_X_DIGGIT = 10000;
+	public const int STATIC_HEIGHT = 4;
+	public const int STATIC_WIDTH = 4;
 
 	//START METHOD
 	public void OnGameStart ()
@@ -35,6 +39,9 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 	{
 		GameObject tileStorage = new GameObject ("Grid");
 
+		//Get the constant background (HQs and etc)
+		HQ_Player playerHQ = new HQ_Player ();
+
 		currentGrid = new Grid (GameMasterScript.instance.gridWidth, GameMasterScript.instance.gridHeight);
 		Vector3 tmpPos = Vector3.zero;
 
@@ -43,13 +50,51 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 				tmpPos.x = k;
 				tmpPos.y = -i;
 
-				//Get the type of tile
-				GroundBehavior.GroundType currentTile = GetNewTile (i);
 
-				//Create the tile, give it a ground component and its appropriate data file
-				GroundBehavior tmpTile = ((GameObject)Instantiate (tilePrefab [(int)currentTile], tmpPos, Quaternion.identity)).AddComponent<GroundBehavior> ();
-				tmpTile.groundData = groundData [(int)currentTile];
-				currentGrid.tiles [k, i] = tmpTile.GetComponent<GroundBehavior> ();
+				GroundBehavior tmpTile = null;
+
+				if (i < STATIC_HEIGHT) {
+					GroundBehavior.EnvGroundType currentTile = GroundBehavior.EnvGroundType.grass;
+
+					if (k < STATIC_WIDTH) {
+						//Player HQ
+						currentTile = playerHQ.tileData [i, k];
+					} else if (k >= GameMasterScript.instance.gridWidth - STATIC_WIDTH) {
+						//ENEMY HQ
+						currentTile = playerHQ.tileData [i, GameMasterScript.instance.gridWidth - k - 1];
+					} else {
+						//ENV
+						if (i >= 2)
+							currentTile = GroundBehavior.EnvGroundType.sky;
+						else
+							currentTile = GroundBehavior.EnvGroundType.grass;
+					}
+
+					//Get the tile
+					tmpTile = ((GameObject)Instantiate (envTilePrefab [(int)currentTile], tmpPos, Quaternion.identity)).AddComponent<GroundBehavior> ();
+					tmpTile.groundData = groundData [(int)currentTile];
+					currentGrid.tiles [k, i] = tmpTile.GetComponent<GroundBehavior> ();
+
+					//If it's inside the building, set it as UNDUG
+					if (currentTile == GroundBehavior.EnvGroundType.buildingBG)
+						tmpTile.isDug = true;
+
+					tmpTile.name = currentTile.ToString () + " " + k.ToString () + "," + i.ToString ();
+
+				} else {	
+
+					//Get the type of tile
+					GroundBehavior.GroundType currentTile = GetNewTile (i);
+
+					//Create the tile, give it a ground component and its appropriate data file
+					tmpTile = ((GameObject)Instantiate (tilePrefab [(int)currentTile], tmpPos, Quaternion.identity)).AddComponent<GroundBehavior> ();
+					tmpTile.groundData = groundData [(int)currentTile];
+					currentGrid.tiles [k, i] = tmpTile.GetComponent<GroundBehavior> ();
+
+					tmpTile.name = currentTile.ToString () + " " + k.ToString () + "," + i.ToString ();
+				}
+
+
 
 				//Give ID based on position
 				tmpTile.ID = i * ID_X_DIGGIT + k;
@@ -60,7 +105,6 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 
 				//Make the hierarchy clean
 				tmpTile.transform.SetParent (tileStorage.transform);
-				tmpTile.name = currentTile.ToString () + " " + k.ToString () + "," + i.ToString ();
 
 				//Finally, initialize the ground
 				tmpTile.GetComponent<GroundBehavior> ().SetupGround ();

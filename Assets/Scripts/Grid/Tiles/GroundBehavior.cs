@@ -20,6 +20,14 @@ public class GroundBehavior : MonoBehaviour
 		bedRock
 	}
 
+	public enum EnvGroundType
+	{
+		building,
+		buildingBG,
+		sky,
+		grass
+	}
+
 	//Main Info
 	public BaseGroundData groundData;
 	public GroundType typeOfGround;

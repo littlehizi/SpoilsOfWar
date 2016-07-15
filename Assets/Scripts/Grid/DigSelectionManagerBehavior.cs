@@ -82,7 +82,7 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 				groundTilesHolder.Reverse ();
 			} else {
 				//If none of the tiles are connected to the player tile, return an error or now
-				Debug.LogError ("Tile too far away !");
+				Debug.LogWarning ("Tile too far away !");
 			}
 		}
 

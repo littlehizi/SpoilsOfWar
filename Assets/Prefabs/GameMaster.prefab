@@ -106,6 +106,11 @@ MonoBehaviour:
   - {fileID: 111572, guid: 6a1ef8d8af1b79e41a90ec14accc8d37, type: 2}
   - {fileID: 199596, guid: 514092091166fb14b9466e0103428bbd, type: 2}
   - {fileID: 111572, guid: 9faa5454b2902ff499e0b319ba1c1daf, type: 2}
+  envTilePrefab:
+  - {fileID: 111572, guid: ae57fad7207e85342915979fd1c7061c, type: 2}
+  - {fileID: 111572, guid: b0bb6d2bb916150479f29dc2dbae8e2b, type: 2}
+  - {fileID: 111572, guid: 493bfca15cfb38940945a7aa6c5202ab, type: 2}
+  - {fileID: 111572, guid: 550b9524779e7dc4c98c2e95d7da8701, type: 2}
   tileLayerSize:
   - name: Mud
     percentage: 30
@@ -127,6 +132,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9c05f30fda96ca041aba546d83d8f30b, type: 2}
   - {fileID: 11400000, guid: b9e9b62672d40fc40a8991afcc60fd27, type: 2}
   - {fileID: 11400000, guid: 1a97274037a86a74e810bd66bd305ea1, type: 2}
+  envData:
+  - {fileID: 11400000, guid: 134dc53186c932041b36b5dfce9e4c4b, type: 2}
+  - {fileID: 11400000, guid: 506d0c6a23362bc4fb48c47c809c7ad7, type: 2}
+  - {fileID: 11400000, guid: 71147385541721f45aabcc985e3b79c0, type: 2}
+  - {fileID: 11400000, guid: ba9f5414d7d578245baaee9683a3f0e2, type: 2}
 --- !u!114 &11445322
 MonoBehaviour:
   m_ObjectHideFlags: 1
