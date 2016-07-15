@@ -59,4 +59,9 @@ public class DigBehavior : MonoBehaviour
 
 		Debug.Log ("Diggin finished !");
 	}
+
+	public void StopDigging ()
+	{
+		StopAllCoroutines ();
+	}
 }

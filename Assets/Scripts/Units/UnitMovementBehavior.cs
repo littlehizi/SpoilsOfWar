@@ -22,6 +22,11 @@ public class UnitMovementBehavior : MonoBehaviour
 		//Get the path
 		GroundBehavior[] path = PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, unitBehavior.currentTile, destination);
 
+		//If the path is unreachable, don't bother
+		if (path == null) {
+			unitBehavior.ReachedDestination ();
+			return;
+		}
 		//Start the walk coroutine
 		StartCoroutine ("WalkUntilDestination", path);
 	}

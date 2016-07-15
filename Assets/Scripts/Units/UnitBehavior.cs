@@ -140,25 +140,34 @@ public class UnitBehavior : MonoBehaviour, ISelection
 
 	public void StartDiggingProcess (GroundBehavior[] tilesToDig)
 	{
+		StartCoroutine ("DiggingProcess", tilesToDig);
+	}
+
+	IEnumerator DiggingProcess (GroundBehavior[] tilesToDig)
+	{
 		//Check if the first tile is in range. If not, then walk to it.
 		if (!PathfindingManagerBehavior.ListContainsGroundTile (PathfindingManagerBehavior.GetTileNeighbor (tilesToDig [0]), currentTile)) {
 			//Find the nearest available tile next to the first tile to dig
 			//////FOR NOW, JUST HAVE IT WORK, DO NOT CARE ABOUT COMPLEX PATHS
 			List<GroundBehavior> neighbors = PathfindingManagerBehavior.GetTileNeighbor (tilesToDig [0]);
 
+			bool hasATileToTalkTo = false;
+
 			for (int i = 0; i < neighbors.Count; i++) {
-				if (!neighbors [i].isDug) {
+				if (neighbors [i].isDug) {
 					WalkToTile (neighbors [i]);
+					hasATileToTalkTo = true;
 					break;
 				}
 			}
 
 			//If none, return without any results (and yell at the player)
-
+			if (!hasATileToTalkTo)
+				yield return null;
 
 			while (currentState == UnitState.walking)
-				;
-			
+				yield return null;
+
 		}
 
 		currentState = UnitState.digging;

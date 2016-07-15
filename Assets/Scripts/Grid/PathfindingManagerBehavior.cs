@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public enum PathfindingType
 {
@@ -172,6 +173,10 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 		bool pathFound = false;
 
 		while (open.Count > 0 && !pathFound) {
+			//Check if the path cannot be found. Return null in this case.
+			if (open.Count >= mapSize - 1 || closed.Count >= mapSize - 1)
+				return null;
+
 			//Get a new node
 			AStarNode currentNode = open.RemoveFirst ();
 
