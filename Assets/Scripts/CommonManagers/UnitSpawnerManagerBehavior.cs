@@ -40,7 +40,19 @@ public class UnitSpawnerManagerBehavior : MonoBehaviour, IManager
 		//Run unit setup
 		newUnit.SetupUnit (newTile);
 
-        newUnit.alignment = newAlignment;
+		newUnit.alignment = newAlignment;
+
+		//ADD ALIGNMENT COMPONENTS
+		switch (newAlignment) {
+		case PlayerData.TypeOfPlayer.human:
+			//Human units can see through FOV
+			newUnit.gameObject.AddComponent<VisionFOWBehavior> ();
+			break;
+		case PlayerData.TypeOfPlayer.enemy:
+			//Enemy Units got AI brain
+			newUnit.gameObject.AddComponent<AIBrainBehavior> ();
+			break;
+		}
 
 		return newUnit;
 	}

@@ -57,3 +57,6 @@ TagManager:
   - name: CharacterOverlay
     uniqueID: 1389475865
     locked: 0
+  - name: FogOfWar
+    uniqueID: 3189225465
+    locked: 0

@@ -8,8 +8,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 477028}
+  - 114: {fileID: 11441998}
   - 212: {fileID: 21274812}
   - 61: {fileID: 6171202}
+  - 114: {fileID: 11462400}
   m_Layer: 8
   m_Name: env_sky
   m_TagString: GroundTile
@@ -44,6 +46,31 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!114 &11441998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d81424c4423743343acc71f8ec08952a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeOfEntity: 1
+--- !u!114 &11462400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e25abe52ed5fa04e948c5d731c69585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileVision: 1
+  tileReference: {fileID: 0}
 --- !u!212 &21274812
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -68,7 +95,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: 400990489
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 88b60dbe2255034479250cfb26018c7d, type: 3}
   m_Color: {r: 0.35818556, g: 0.7798518, b: 0.9191176, a: 1}

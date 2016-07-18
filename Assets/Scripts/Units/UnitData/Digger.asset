@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Name: Digger
   m_EditorClassIdentifier: 
   typeOfUnit: 2
+  sprite: {fileID: 21300000, guid: b6f8fce2089793e43adcc2a9dcbbe1c5, type: 3}
+  tmpColor: {r: 0.8150578, g: 0.8455882, b: 0.2922253, a: 1}
   health: 100
   stamina: 150
   strength: 50
   diggingPower: 25
-  vision: 5
+  vision: 3
   speed: 5

@@ -32,10 +32,24 @@ public class DigBehavior : MonoBehaviour
 
 			//First,  break the tile
 			while (tilesToDig [currentIndex].hp > 0) {
+				//Check if there's any enemy unit on next tile
+				if (tilesToDig [currentIndex].unitsOnTile.Count > 0 && tilesToDig [currentIndex].unitsOnTile [0].alignment != unitBehavior.alignment) {
+					//Stop walking and engage combat
+					unitBehavior.EngageCombat (tilesToDig [currentIndex]);
+					StopDigging ();
+				}
+
 				yield return new WaitForSeconds (tilesToDig [currentIndex].digRes / unitBehavior.unitData.diggingPower);
 
 				tilesToDig [currentIndex].hp -= unitBehavior.unitData.diggingPower * 4;
 				Debug.Log ("Diggin tile... Hp left: " + tilesToDig [currentIndex].hp);
+
+			}
+
+			//If the upcoming tile has been dug, walk to it instead
+			if (tilesToDig [currentIndex].isDug) {
+				//Wait according to the speed stat. 
+				yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed / (float)unitBehavior.unitData.speed);
 			}
 
 			//Set tile as dug

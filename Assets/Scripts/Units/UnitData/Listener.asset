@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Name: Listener
   m_EditorClassIdentifier: 
   typeOfUnit: 1
+  sprite: {fileID: 21300000, guid: 8eb9feeb58bc09a4ca09d2c60e2cd822, type: 3}
+  tmpColor: {r: 0.61422414, g: 0.5187608, b: 0.6985294, a: 1}
   health: 100
   stamina: 100
   strength: 30
   diggingPower: 8
-  vision: 10
+  vision: 7
   speed: 7

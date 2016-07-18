@@ -17,16 +17,18 @@ public class UnitMovementBehavior : MonoBehaviour
 	/// <param name="destination">Destination.</param>
 	public void MoveUnitToTarget (GroundBehavior destination)
 	{
-		//Stop all walk coroutines if any
-		StopCoroutine ("WalkUntilDestination");
 		//Get the path
 		GroundBehavior[] path = PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, unitBehavior.currentTile, destination);
 
 		//If the path is unreachable, don't bother
-		if (path == null) {
+		if (path == null || path.Length == 0) {
 			unitBehavior.ReachedDestination ();
 			return;
 		}
+
+		//Stop all walk coroutines if any
+		StopCoroutine ("WalkUntilDestination");
+
 		//Start the walk coroutine
 		StartCoroutine ("WalkUntilDestination", path);
 	}
@@ -41,6 +43,13 @@ public class UnitMovementBehavior : MonoBehaviour
 			currentIndex = 1;
 
 		while (currentIndex < path.Length) {
+			//Check if there's any enemy unit on next tile
+			if (path [currentIndex].unitsOnTile.Count > 0 && path [currentIndex].unitsOnTile [0].alignment != unitBehavior.alignment) {
+				//Stop walking and engage combat
+				unitBehavior.EngageCombat (path [currentIndex]);
+				StopWalking ();
+			}
+
 			//Wait according to the speed stat. 
 			yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed / (float)unitBehavior.unitData.speed);
 

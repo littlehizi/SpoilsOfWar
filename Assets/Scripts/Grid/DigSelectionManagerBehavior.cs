@@ -33,21 +33,29 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 			temporaryTile = newTile;
 			isDigging = true;
 		} else {
+			//If the target tile is already dug, cancel and ask the player to start thinking and stop being retarded
+			if (newTile.isDug)
+				return;
+			
 			if (temporaryTile == null)
 				temporaryTile = groundTilesHolder [groundTilesHolder.Count - 1];
+
+
 
 			Debug.Log ("Got two pos, get diggin !");
 			//If the first pos and the 2nd are the same, just leave
 			if (temporaryTile.ID == newTile.ID)
 				return;
 
-			//Debug
-			temporaryTile.GetComponent<SpriteRenderer> ().color = Color.gray;
-			newTile.GetComponent<SpriteRenderer> ().color = Color.yellow;
-
-
 			//If the first position has already been given, the newTile is the 2nd, and you can collect all tiles using pathfinding
 			GroundBehavior[] tmpPath = PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, temporaryTile, newTile, false);
+
+			if (tmpPath == null) {
+				return;
+			}
+
+			//Debug
+			temporaryTile.tileSR.color = Color.gray;
 
 			//Add the starting tile
 			if (!groundTilesHolder.Contains (temporaryTile))
@@ -60,7 +68,7 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 					continue;
 				groundTilesHolder.Add (tmpPath [i]);
 
-				tmpPath [i].GetComponent<SpriteRenderer> ().color = Color.cyan;
+				tmpPath [i].tileSR.color = Color.cyan;
 			}
 
 			//Reset temporary variable for next digging
@@ -75,6 +83,10 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 	/// <param name="playerPos">Player position.</param>
 	public static GroundBehavior[] OutputTilesToDig (GroundBehavior playerPos)
 	{
+		//If the player simply double clicked on a tile, tell him off
+		if (groundTilesHolder.Count <= 1)
+			return null;
+		
 		//If the first tile is not 1-tile away from the [0]'s item of the path, check for the last item
 		if (!PathfindingManagerBehavior.ListContainsGroundTile (PathfindingManagerBehavior.GetTileNeighbor (playerPos), groundTilesHolder [0])) {
 			if (PathfindingManagerBehavior.ListContainsGroundTile (PathfindingManagerBehavior.GetTileNeighbor (playerPos), groundTilesHolder [groundTilesHolder.Count - 1])) {
@@ -87,12 +99,26 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 		}
 
 		//reset the color
-		for (int i = 0; i < groundTilesHolder.Count; i++)
-			groundTilesHolder [i].GetComponent<SpriteRenderer> ().color = groundTilesHolder [i].colorBackup;
+		ResetTileColors ();
 
 		//Stop the digging flag and return all optained tiles
 		isDigging = false;
 		return groundTilesHolder.ToArray ();
+	}
+
+	/// <summary>
+	/// Reverts the tile colors to their original ones.
+	/// </summary>
+	public static void ResetTileColors ()
+	{
+		for (int i = 0; i < groundTilesHolder.Count; i++) {
+			groundTilesHolder [i].tileSR.color = groundTilesHolder [i].colorBackup;
+			if (groundTilesHolder [i].isDug)
+				groundTilesHolder [i].ApplyDugColor ();
+		}
+
+		//reset the flag 
+		isDigging = false;
 	}
 
 	public static int GetPathLength ()
@@ -102,6 +128,9 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 
 	public static void ResetDigPath ()
 	{
+		//If there were tiles already selected, clear the colors
+		if (groundTilesHolder.Count > 0)
+			ResetTileColors ();
 		Debug.Log ("Path Reseted !");
 		groundTilesHolder.Clear ();
 	}

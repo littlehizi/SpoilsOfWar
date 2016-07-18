@@ -12,7 +12,6 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 		disabled,
 		idle,
 		unitSelected,
-		selectingDigPath
 	}
 
 	//References
@@ -37,8 +36,6 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 				break;
 			case InputState.unitSelected:
 				break;
-			case InputState.selectingDigPath:
-				break;
 			}
 
 			_currentState = value;
@@ -52,8 +49,6 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 			case InputState.idle:
 				break;
 			case InputState.unitSelected:
-				break;
-			case InputState.selectingDigPath:
 				break;
 			}
 		}
@@ -75,8 +70,6 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 		case InputState.unitSelected:
 			MouseUnitSelectedState ();
 			break;
-		case InputState.selectingDigPath:
-			break;
 		}
 	}
 
@@ -96,23 +89,23 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 			if (RaycastOnGroundTile (out tileHitLC)) {
 
 				if (tileHitLC.unitsOnTile.Count > 0) {
-                    //Add all the units to the current selection
+					//Add all the units to the current selection
 
-                    bool[] alignmentCheck = new bool [tileHitLC.unitsOnTile.Count];
-                    for (int i = 0; i < tileHitLC.unitsOnTile.Count; i++)
-                    {
-                        alignmentCheck[i] = SMB.SelectNewUnitsOnTile(tileHitLC.unitsOnTile[i]);
-                    }
+					if (tileHitLC.unitsOnTile.Count > 0) {
+						bool alignmentCheck = (tileHitLC.unitsOnTile [0].alignment == PlayerData.TypeOfPlayer.human);
 
-                    for (int i = 0; i < alignmentCheck.Length; i++)
-                    {
-                        if (!alignmentCheck[i])
-                        {
-                            return;
-                        }
-                    }
-                    //Switch to UNITSELECTED input state
-                    currentState = InputState.unitSelected;
+						//If units are cooperating with humans, select them, if not, cancel the selection
+						if (alignmentCheck) {
+							for (int i = 0; i < tileHitLC.unitsOnTile.Count; i++) {
+								if (tileHitLC.unitsOnTile [i].canBeSelected)
+									SMB.SelectNewUnitsOnTile (tileHitLC.unitsOnTile [i]);
+							}
+						} else
+							return;
+					}
+				
+					//Switch to UNITSELECTED input state
+					currentState = InputState.unitSelected;
                     
 				}
 			}
@@ -121,6 +114,8 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 		//In Idle, right click doesn't do anythingies
 
 		//In Idle, mouseScroll zooms out the map
+		if (!Mathf.Approximately (Input.GetAxis ("Mouse ScrollWheel"), 0.0f))
+			Camera.main.GetComponent<WorldCamera> ().GetDesiredZoom ();
 	}
 
 	#endregion
@@ -130,11 +125,33 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 
 	void MouseUnitSelectedState ()
 	{
+		//Check if the selection manager has no unit selected, just in case
+		if (SMB.unitSelected.Count == 0)
+			currentState = InputState.idle;
+
+
 		//In UnitSelected, left click will deselect all selected units
 		if (Input.GetMouseButtonDown (0)) {
 			SMB.DeselectUnits ();
 			//Also, empty the selection of tiles
 			DigSelectionManagerBehavior.ResetDigPath ();
+
+			//If left clicking on a tile with other friendly units, stay in this state
+			GroundBehavior tileHitLC = null;
+
+			if (RaycastOnGroundTile (out tileHitLC)) {
+				if (tileHitLC.unitsOnTile.Count > 0) {
+					bool alignmentCheck = (tileHitLC.unitsOnTile [0].alignment == PlayerData.TypeOfPlayer.human);
+
+					if (alignmentCheck) {
+						for (int i = 0; i < tileHitLC.unitsOnTile.Count; i++)
+							SMB.SelectNewUnitsOnTile (tileHitLC.unitsOnTile [i]);
+
+						return;
+					}
+				}
+			}
+
 			//Go backies to IDLE mouse state
 			currentState = InputState.idle;
 		}
@@ -153,6 +170,9 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 						//If it's the first time clickin on a tile or it's not a double tap, continue gathering tiles
 						digSelectionTmp = tileHitRC;
 
+						//Highlight the tile (TEMPORARILY)
+						tileHitRC.tileSR.color = Color.yellow;
+
 						//The method will handle the storing and creating path
 						DigSelectionManagerBehavior.GetGroundTilesToDig (tileHitRC);
 					} else if (digSelectionTmp != null && tileHitRC.ID == digSelectionTmp.ID) {
@@ -167,7 +187,13 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 		}
 
 		//In UnitSelected, mouseRoll will either change the selected unit on a same time, either zooms out the map
-
+		if (!Mathf.Approximately (Input.GetAxis ("Mouse ScrollWheel"), 0.0f)) {
+				
+			if (Input.GetAxis ("Mouse ScrollWheel") > 0.05f)
+				SMB.ChangeUnitOrder (SelectionManagerBehavior.ChangeOrder.moveDown);
+			else if (Input.GetAxis ("Mouse ScrollWheel") < -0.05f)
+				SMB.ChangeUnitOrder (SelectionManagerBehavior.ChangeOrder.moveUp);
+		}
 	}
 
 	#endregion

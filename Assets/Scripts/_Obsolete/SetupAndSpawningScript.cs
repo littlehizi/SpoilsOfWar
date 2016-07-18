@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SetupAndSpawningScript : MonoBehaviour
 {
+	/*
     // Used to adjust the width (x axis) of the grid
     public int trenchWidth;
 
@@ -100,4 +101,5 @@ public class SetupAndSpawningScript : MonoBehaviour
         //Camera.main.transform.position = new Vector3(trenchWidth / 2, trenchHeight / 2, -10);
         //Camera.main.orthographicSize = trenchHeight / 2 + 1;
     }
+	*/
 }

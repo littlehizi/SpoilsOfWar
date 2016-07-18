@@ -23,13 +23,15 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 	}
 
 	//LAWS
-	public static int ID_X_DIGGIT = 10000;
+	public const int ID_X_DIGGIT = 10000;
 	public const int STATIC_HEIGHT = 4;
 	public const int STATIC_WIDTH = 4;
 
 	//START METHOD
 	public void OnGameStart ()
 	{
+		//Generate the terrain
+		CreateGrid ();
 	}
 
 	/// <summary>
@@ -45,9 +47,9 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 		currentGrid = new Grid (GameMasterScript.instance.gridWidth, GameMasterScript.instance.gridHeight);
 		Vector3 tmpPos = Vector3.zero;
 
-        // Player and enemy indexs
-        int humanIndex = 0;
-        int enemyIndex = 0;
+		// Player and enemy indexs
+		int humanIndex = 0;
+		int enemyIndex = 0;
 
 		for (int i = 0; i < GameMasterScript.instance.gridHeight; i++) {
 			for (int k = 0; k < GameMasterScript.instance.gridWidth; k++) {
@@ -81,19 +83,12 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 					tmpTile.groundData = groundData [(int)currentTile];
 					currentGrid.tiles [k, i] = tmpTile.GetComponent<GroundBehavior> ();
 
-                    if (currentTile == GroundBehavior.EnvGroundType.buildingBG && k < STATIC_WIDTH)
-                    {
-                        GameMasterScript.instance.PLMB.humanPlayer.spawnTiles[humanIndex++] = tmpTile;
-                    }
-                    else if (currentTile == GroundBehavior.EnvGroundType.buildingBG && k >= GameMasterScript.instance.gridWidth - STATIC_WIDTH)
-                    {
-                        GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles[enemyIndex++] = tmpTile;
-                    }
-
-                    //If it's inside the building, set it as UNDUG
-                    if (currentTile == GroundBehavior.EnvGroundType.buildingBG)
-						tmpTile.isDug = true;
-
+					if (currentTile == GroundBehavior.EnvGroundType.buildingBG && k < STATIC_WIDTH) {
+						GameMasterScript.instance.PLMB.humanPlayer.spawnTiles [humanIndex++] = tmpTile;
+					} else if (currentTile == GroundBehavior.EnvGroundType.buildingBG && k >= GameMasterScript.instance.gridWidth - STATIC_WIDTH) {
+						GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [enemyIndex++] = tmpTile;
+					}
+						
 					tmpTile.name = currentTile.ToString () + " " + k.ToString () + "," + i.ToString ();
 
 				} else {	
@@ -154,5 +149,30 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 
 		//Use bedrock as a filler
 		return GroundBehavior.GroundType.bedRock;
+	}
+
+	/// <summary>
+	/// Initalizes the spawn tiles by setting them as Dug.
+	/// This method will be called by the PlayerManagerBehavior during its initalization.
+	/// </summary>
+	public void InitalizeSpawnTiles ()
+	{
+		//human
+		for (int i = 0; i < GameMasterScript.instance.PLMB.humanPlayer.spawnTiles.Length; i++)
+			GameMasterScript.instance.PLMB.humanPlayer.spawnTiles [i].isDug = true;
+
+		//enemy
+		for (int i = 0; i < GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles.Length; i++)
+			GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [i].isDug = true;
+	}
+
+	/// <summary>
+	/// Returns the storage index X and Y values from a given ID.
+	/// </summary>
+	/// <returns>The identifier to index.</returns>
+	/// <param name="newTile">New tile.</param>
+	public Vector2 TileIDToIndex (GroundBehavior newTile)
+	{
+		return new Vector2 (newTile.ID % ID_X_DIGGIT, (newTile.ID - (newTile.ID % ID_X_DIGGIT)) / ID_X_DIGGIT);
 	}
 }

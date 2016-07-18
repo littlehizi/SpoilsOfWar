@@ -2,8 +2,10 @@
 using System.Collections;
 
 // This class holds the xy coordinates and the distance from the clicked grid tile for each grid tile.
-public class TileScript : MonoBehaviour {
+public class TileScript : MonoBehaviour
+{
 
+	/*
     public GameMasterScript GameMaster;
 
     public int distance;
@@ -21,9 +23,11 @@ public class TileScript : MonoBehaviour {
         }
     }
 
-    
-    #region Text in scene editor
-    /*
+    */
+
+	#region Text in scene editor
+
+	/*
     public static class GizmosUtils
     {
         public static void DrawText(GUISkin guiSkin, string text, Vector3 position, Color? color = null, int fontSize = 0, float yOffset = 0)
@@ -65,6 +69,7 @@ public class TileScript : MonoBehaviour {
         GizmosUtils.DrawText(GUI.skin, this.name, transform.position, textColor, fontSize, yOffset);
     }
     */
-    #endregion
+
+	#endregion
     
 }

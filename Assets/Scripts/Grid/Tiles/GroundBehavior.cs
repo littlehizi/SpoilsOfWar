@@ -34,16 +34,33 @@ public class GroundBehavior : MonoBehaviour
 	public Vector2 tilePos;
 	public int ID;
 
+	//Handy stuff (FOW)
+	public Vector2 trueTilePos { get { return new Vector2 (tilePos.x, -tilePos.y); } }
+
 	//Stats
 	public int hp;
 	public float digRes;
 	public Sprite sprite;
 	public int moveCost;
+
+	//Colors
+	private SpriteRenderer _tileSR;
+
+	public SpriteRenderer tileSR {
+		get {
+			if (_tileSR == null)
+				_tileSR = this.GetComponent<SpriteRenderer> ();
+			return _tileSR;
+		}
+	}
+
 	public Color colorBackup;
+
+	Color dugColorOffset = new Color (0.2f, 0.2f, 0.2f, 0.0f);
+
 
 	//Vars
 	public List<UnitBehavior> unitsOnTile;
-	Color greyedOut = new Color (0.2f, 0.2f, 0.2f, 0.0f);
 
 	//Flags
 	bool _isDug;
@@ -57,9 +74,9 @@ public class GroundBehavior : MonoBehaviour
 			_isDug = value;
 
 			if (_isDug && !prevValue)
-				this.transform.GetComponent<SpriteRenderer> ().color -= greyedOut;
+				ApplyDugColor ();
 			else if (!_isDug && prevValue)
-				this.transform.GetComponent<SpriteRenderer> ().color += greyedOut;
+				ApplyDugColor ();
 		}
 	}
 
@@ -82,6 +99,14 @@ public class GroundBehavior : MonoBehaviour
 		moveCost = groundData.moveCost;
 
 		//Temporary stuff
-		colorBackup = this.GetComponent<SpriteRenderer> ().color;
+		colorBackup = tileSR.color = tileSR.color;
+	}
+
+	public void ApplyDugColor ()
+	{
+		if (isDug)
+			tileSR.color -= dugColorOffset;
+		else
+			tileSR.color += dugColorOffset;
 	}
 }
