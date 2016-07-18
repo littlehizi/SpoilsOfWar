@@ -1689,8 +1689,7 @@ Prefab:
       propertyPath: HUDs.Array.data[2]
       value: 
       objectReference: {fileID: 935015290}
-    m_RemovedComponents:
-    - {fileID: 11407368, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1691189222

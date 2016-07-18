@@ -126,8 +126,10 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 	void MouseUnitSelectedState ()
 	{
 		//Check if the selection manager has no unit selected, just in case
-		if (SMB.unitSelected.Count == 0)
+		if (SMB.unitSelected.Count == 0) {
 			currentState = InputState.idle;
+			return;
+		}
 
 
 		//In UnitSelected, left click will deselect all selected units
@@ -159,8 +161,7 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 		//In UnitSelected, right click will either order a unit to move, either to start digging.
 		if (Input.GetMouseButtonDown (1)) {
 			GroundBehavior tileHitRC = null;
-
-			if (RaycastOnGroundTile (out tileHitRC)) {
+			if (RaycastOnGroundTile (out tileHitRC)) {				
 				//If the tile is dug, then move. if not, then start the digging logic
 				if (tileHitRC.isDug) {
 					((UnitBehavior)SMB.unitSelected [0]).WalkToTile (tileHitRC);

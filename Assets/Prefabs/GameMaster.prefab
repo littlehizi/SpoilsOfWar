@@ -15,7 +15,6 @@ GameObject:
   - 114: {fileID: 11446130}
   - 114: {fileID: 11488608}
   - 114: {fileID: 11429442}
-  - 114: {fileID: 11407368}
   - 114: {fileID: 11473556}
   - 114: {fileID: 11468436}
   - 114: {fileID: 11453198}
@@ -249,17 +248,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &11407368
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 150090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 607c810a29114e342b3e34d2442056d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11410494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -299,6 +287,8 @@ MonoBehaviour:
   baseUnitSpeed: 3
   staminaCostMove: 1
   staminaCostDig: 5
+  staminaCostFight: 7
+  combatSpeed: 1.2
 --- !u!114 &11429442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -441,6 +431,7 @@ MonoBehaviour:
   tileMask:
     serializedVersion: 2
     m_Bits: 256
+  tmpTileScanStorage: []
 --- !u!114 &11473556
 MonoBehaviour:
   m_ObjectHideFlags: 1
