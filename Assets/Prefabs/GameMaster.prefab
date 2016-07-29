@@ -282,8 +282,8 @@ MonoBehaviour:
   UIMB: {fileID: 11438038}
   VMB: {fileID: 11410494}
   pathfindingType: 2
-  gridWidth: 30
-  gridHeight: 50
+  gridWidth: 50
+  gridHeight: 30
   baseUnitSpeed: 3
   staminaCostMove: 1
   staminaCostDig: 5

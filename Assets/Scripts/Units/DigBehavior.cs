@@ -39,7 +39,8 @@ public class DigBehavior : MonoBehaviour
 					StopDigging ();
 				}
 
-				yield return new WaitForSeconds (tilesToDig [currentIndex].digRes / unitBehavior.unitData.diggingPower);
+				yield return new WaitForSeconds (tilesToDig [currentIndex].digRes * (unitBehavior.isExhausted ? UnitBehavior.exhaustionMalus : 1) / unitBehavior.unitData.diggingPower);
+
 
 				tilesToDig [currentIndex].hp -= unitBehavior.unitData.diggingPower * 4;
 				Debug.Log ("Diggin tile... Hp left: " + tilesToDig [currentIndex].hp);
@@ -49,7 +50,7 @@ public class DigBehavior : MonoBehaviour
 			//If the upcoming tile has been dug, walk to it instead
 			if (tilesToDig [currentIndex].isDug) {
 				//Wait according to the speed stat. 
-				yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed / (float)unitBehavior.unitData.speed);
+				yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * (unitBehavior.isExhausted ? UnitBehavior.exhaustionMalus : 1) / (float)unitBehavior.unitData.speed);
 			}
 
 			//Set tile as dug

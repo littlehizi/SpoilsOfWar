@@ -18,5 +18,5 @@ MonoBehaviour:
   stamina: 150
   strength: 50
   diggingPower: 25
-  vision: 3
+  vision: 2
   speed: 5

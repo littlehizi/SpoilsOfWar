@@ -37,7 +37,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 				OnTileEnterEvent ();
 
 			//Check if was exhausted and running home
-			if (!canBeSelected && runAwayTile != null && currentTile.ID == runAwayTile.ID) {
+			if (isOnSpawnTiles ()) {
 				OnStaminaRestored ();
 			}
 		}
@@ -45,7 +45,10 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 
 	//Stats
 	public UnitData unitData;
+	public int currentResourcesHeld;
 	public bool canBeSelected;
+	public bool isExhausted;
+	public const float exhaustionMalus = 2.5f;
 
 	int _health;
 
@@ -98,6 +101,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 
 		//Selection
 		canBeSelected = true;
+		isExhausted = false;
 	}
 
 	public void OnSelect ()
@@ -311,31 +315,55 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	/// </summary>
 	public void OnExhaustionEnter ()
 	{
-		//If the unit is in combat and cannot run away, leave it.. (and cry, I guess..)
-		if (CB.isFighting && !CB.canRunAway)
-			return;
+//		//If the unit is in combat and cannot run away, leave it.. (and cry, I guess..)
+//		if (CB.isFighting && !CB.canRunAway)
+//			return;
+//
+//		//Stop most actions
+//		UMB.StopWalking ();
+//		DB.StopDigging ();
+//		if (CB.isFighting && CB.canRunAway)
+//			CB.StopCombat ();
+//
+//
+//		Debug.Log (this + " is exhausted");
+//		canBeSelected = false;
+//		stamina = 9999;
+//		//Choose a random tile of the correct alignment and walk home
+//		runAwayTile = alignment == PlayerData.TypeOfPlayer.human ? GameMasterScript.instance.PLMB.humanPlayer.spawnTiles [Random.Range (0, GameMasterScript.instance.PLMB.humanPlayer.spawnTiles.Length)] : 
+//																GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [Random.Range (0, GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles.Length)];
+//
+//		WalkToTile (runAwayTile);
 
-		//Stop most actions
-		UMB.StopWalking ();
-		DB.StopDigging ();
-		if (CB.isFighting && CB.canRunAway)
-			CB.StopCombat ();
+		//When exhausted, the unit does not go back home, the unit simply does tasks way slower.
+		isExhausted = true;
+	}
 
+	/// <summary>
+	/// Returns true if the unit is currently standing on its spawn tiles.
+	/// </summary>
+	/// <returns><c>true</c>, if on spawn tiles was ised, <c>false</c> otherwise.</returns>
+	bool isOnSpawnTiles ()
+	{
+		if (alignment == PlayerData.TypeOfPlayer.human) {
+			for (int i = 0; i < GameMasterScript.instance.PLMB.humanPlayer.spawnTiles.Length; i++) {
+				if (currentTile.ID == GameMasterScript.instance.PLMB.humanPlayer.spawnTiles [i].ID)
+					return true;
+			}
+		} else if (alignment == PlayerData.TypeOfPlayer.enemy) {
+			for (int i = 0; i < GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles.Length; i++) {
+				if (currentTile.ID == GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [i].ID)
+					return true;
+			}
+		}
 
-		Debug.Log (this + " is exhausted");
-		canBeSelected = false;
-		stamina = 9999;
-		//Choose a random tile of the correct alignment and walk home
-		runAwayTile = alignment == PlayerData.TypeOfPlayer.human ? GameMasterScript.instance.PLMB.humanPlayer.spawnTiles [Random.Range (0, GameMasterScript.instance.PLMB.humanPlayer.spawnTiles.Length)] : 
-																GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [Random.Range (0, GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles.Length)];
-
-		WalkToTile (runAwayTile);
+		return false;
 	}
 
 	public void OnStaminaRestored ()
 	{
 		stamina = unitData.stamina;
-		canBeSelected = true;
+		isExhausted = false;
 	}
 
 	public void OnDeselect ()

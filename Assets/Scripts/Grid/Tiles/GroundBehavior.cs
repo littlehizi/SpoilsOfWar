@@ -42,6 +42,7 @@ public class GroundBehavior : MonoBehaviour
 	public float digRes;
 	public Sprite sprite;
 	public int moveCost;
+	public bool isFortified;
 
 	//Colors
 	private SpriteRenderer _tileSR;
@@ -91,6 +92,7 @@ public class GroundBehavior : MonoBehaviour
 	{
 		//Initialize lists
 		unitsOnTile = new List<UnitBehavior> ();
+		isFortified = false;
 
 		//Get stats
 		hp = groundData.hp;

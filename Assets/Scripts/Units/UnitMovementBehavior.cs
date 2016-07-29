@@ -51,7 +51,7 @@ public class UnitMovementBehavior : MonoBehaviour
 			}
 
 			//Wait according to the speed stat. 
-			yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed / (float)unitBehavior.unitData.speed);
+			yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * (unitBehavior.isExhausted ? UnitBehavior.exhaustionMalus : 1) / (float)unitBehavior.unitData.speed);
 
 			//Move the unit to the next tile
 			Vector3 tmpPos = path [currentIndex].tilePos;
