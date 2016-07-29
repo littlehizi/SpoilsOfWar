@@ -8,6 +8,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	UnitMovementBehavior UMB;
 	DigBehavior DB;
 	CombatBehavior CB;
+	BombBehavior BB;
 
 	[HideInInspector]public SpriteRenderer unitSR;
 
@@ -37,7 +38,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 				OnTileEnterEvent ();
 
 			//Check if was exhausted and running home
-			if (isOnSpawnTiles ()) {
+			if (isOnSpawnTiles (alignment)) {
 				OnStaminaRestored ();
 			}
 
@@ -51,10 +52,19 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 
 	//Stats
 	public UnitData unitData;
-	public int currentResourcesHeld;
+	public int currentBombsHeld;
 	public bool canBeSelected;
 	public bool isExhausted;
 	public const float exhaustionMalus = 2.5f;
+
+	public bool isOnEnemyTrench { 
+		get { 
+			if (alignment == PlayerData.TypeOfPlayer.human)
+				return isOnSpawnTiles (PlayerData.TypeOfPlayer.enemy);
+			else
+				return isOnSpawnTiles (PlayerData.TypeOfPlayer.human);
+		} 
+	}
 
 	int _health;
 
@@ -103,6 +113,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		DB = this.GetComponent<DigBehavior> ();
 		CB = this.GetComponent<CombatBehavior> ();
 		unitSR = this.GetComponent<SpriteRenderer> ();
+		BB = this.GetComponent<BombBehavior> ();
 
 		unitSR.sprite = unitData.sprite;
 		unitSR.color = unitData.tmpColor;
@@ -347,14 +358,28 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 
 	#region bomb
 
-	public void PlantBomb ()
+	/// <summary>
+	/// Plants a bomb.
+	/// </summary>
+	public bool PlantBomb ()
 	{
-		
+		if (currentBombsHeld > 0) {
+			if (BB.BombCurrentTile ()) {
+				currentBombsHeld--;
+				Debug.Log ("a bomb has been planted");
+				return true;
+			}
+		}
+
+		return false;
 	}
 
+	/// <summary>
+	/// Detonnates a bomb.
+	/// </summary>
 	public void DetonnateBomb ()
 	{
-		
+		BB.DetonnateBomb ();
 	}
 
 	#endregion
@@ -363,14 +388,14 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	/// Returns true if the unit is currently standing on its spawn tiles.
 	/// </summary>
 	/// <returns><c>true</c>, if on spawn tiles was ised, <c>false</c> otherwise.</returns>
-	bool isOnSpawnTiles ()
+	bool isOnSpawnTiles (PlayerData.TypeOfPlayer playerType)
 	{
-		if (alignment == PlayerData.TypeOfPlayer.human) {
+		if (playerType == PlayerData.TypeOfPlayer.human) {
 			for (int i = 0; i < GameMasterScript.instance.PLMB.humanPlayer.spawnTiles.Length; i++) {
 				if (currentTile.ID == GameMasterScript.instance.PLMB.humanPlayer.spawnTiles [i].ID)
 					return true;
 			}
-		} else if (alignment == PlayerData.TypeOfPlayer.enemy) {
+		} else if (playerType == PlayerData.TypeOfPlayer.enemy) {
 			for (int i = 0; i < GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles.Length; i++) {
 				if (currentTile.ID == GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [i].ID)
 					return true;
@@ -384,7 +409,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	{
 		stamina = unitData.stamina;
 		isExhausted = false;
-
+		currentBombsHeld = unitData.amountOfBombs;
 	}
 
 	public void OnDeselect ()

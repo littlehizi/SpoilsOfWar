@@ -187,6 +187,12 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 			}
 		}
 
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			if (!((UnitBehavior)SMB.unitSelected [0]).PlantBomb ())
+				((UnitBehavior)SMB.unitSelected [0]).DetonnateBomb ();
+		}
+
+
 		//In UnitSelected, mouseRoll will either change the selected unit on a same time, either zooms out the map
 		if (!Mathf.Approximately (Input.GetAxis ("Mouse ScrollWheel"), 0.0f)) {
 				

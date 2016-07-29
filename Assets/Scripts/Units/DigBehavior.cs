@@ -53,8 +53,8 @@ public class DigBehavior : MonoBehaviour
 				yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * (unitBehavior.isExhausted ? UnitBehavior.exhaustionMalus : 1) / (float)unitBehavior.unitData.speed);
 			}
 
-			//Set tile as dug
-			tilesToDig [currentIndex].isDug = true;
+			////Set tile as dug
+			//tilesToDig [currentIndex].isDug = true;
 
 			//Move the unit to the next tile once it's broken
 			Vector3 tmpPos = tilesToDig [currentIndex].tilePos;

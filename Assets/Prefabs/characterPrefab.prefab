@@ -14,6 +14,7 @@ GameObject:
   - 114: {fileID: 11492688}
   - 114: {fileID: 11491810}
   - 114: {fileID: 11432918}
+  - 114: {fileID: 114000013155548348}
   m_Layer: 0
   m_Name: characterPrefab
   m_TagString: Untagged
@@ -45,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43308ce72e50f845965bcf4e2378db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFighting: 0
+  canRunAway: 0
 --- !u!114 &11458540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -70,8 +73,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitSR: {fileID: 0}
   unitData: {fileID: 0}
-  health: 0
-  stamina: 0
+  currentResourcesHeld: 0
+  canBeSelected: 0
+  isExhausted: 0
+  _oxygen: 0
   alignment: 0
 --- !u!114 &11491810
 MonoBehaviour:
@@ -104,17 +109,20 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 0
   m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_SelectedWireframeHidden: 1
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -136,3 +144,16 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 117792}
   m_IsPrefabParent: 1
+--- !u!114 &114000013155548348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fbeb9dccfd8ec3418b85e78c22058a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDelayBetweenBombs: 0
+  maxAmountOfBombs: 0

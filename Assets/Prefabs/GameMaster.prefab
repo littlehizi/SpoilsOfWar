@@ -292,6 +292,9 @@ MonoBehaviour:
   staminaCostDig: 5
   staminaCostFight: 7
   combatSpeed: 1.2
+  oxygenLossPerTile: 8
+  bombExplosionRadius: 2
+  damagePerBomb: 600
 --- !u!114 &11429442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -358,6 +361,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 506d0c6a23362bc4fb48c47c809c7ad7, type: 2}
   - {fileID: 11400000, guid: 71147385541721f45aabcc985e3b79c0, type: 2}
   - {fileID: 11400000, guid: ba9f5414d7d578245baaee9683a3f0e2, type: 2}
+  percentOfObstacles: 31
+  obstacleSprite: {fileID: 21300000, guid: a2dd925f8d9a6ae4fad27c5dfaa34d8e, type: 3}
 --- !u!114 &11438038
 MonoBehaviour:
   m_ObjectHideFlags: 1

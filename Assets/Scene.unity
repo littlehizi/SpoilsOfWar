@@ -1792,19 +1792,6 @@ Prefab:
       propertyPath: enemyResources
       value: 
       objectReference: {fileID: 1415054714}
-    - target: {fileID: 11422320, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: oxygenLossPerTile
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 11430764, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: percentOfObstacles
-      value: 31
-      objectReference: {fileID: 0}
-    - target: {fileID: 11430764, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: obstacleSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a2dd925f8d9a6ae4fad27c5dfaa34d8e,
-        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
   m_IsPrefabParent: 0

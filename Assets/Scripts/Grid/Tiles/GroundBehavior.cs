@@ -38,7 +38,17 @@ public class GroundBehavior : MonoBehaviour
 	public Vector2 trueTilePos { get { return new Vector2 (tilePos.x, -tilePos.y); } }
 
 	//Stats
-	public int hp;
+	private int _hp;
+
+	public int hp {
+		get{ return _hp; }
+		set {
+			_hp = value;
+			if (_hp <= 0)
+				isDug = true;
+		}
+	}
+
 	public float digRes;
 	public Sprite sprite;
 	public int moveCost;
