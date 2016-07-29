@@ -21,6 +21,7 @@ public class GameMasterScript : MonoBehaviour
 	public AudioManagerBehavior AMB;
 	public UserInterfaceManagerBehavior UIMB;
 	public VictoryManagerBehavior VMB;
+	public ResourceManagerBehavior RMB;
 
 	public IManager[] managers;
 
@@ -34,6 +35,9 @@ public class GameMasterScript : MonoBehaviour
 	public int gridHeight;
 	public GameObject[,] trenchGrid;
 
+	//Game Variables
+	public int startResources;
+
 	//Unit Variable
 	public float baseUnitSpeed;
 	public int staminaCostMove;
@@ -41,7 +45,7 @@ public class GameMasterScript : MonoBehaviour
 	public int staminaCostFight;
 	public float combatSpeed;
 
-	//public UnitScript unitScript;
+
 
 	// Camera Variables
 	public static WorldCamera.BoxLimit cameraLimits = new WorldCamera.BoxLimit ();
@@ -116,7 +120,7 @@ public class GameMasterScript : MonoBehaviour
 	{
 		//ORDER MATTERS !! DON'T TOUCH IF YOU DON'T KNOW
 		if (managers == null)
-			managers = new IManager[9]{ PLMB, GMB, FOWMB, IMB, SMB, PMB, DSMB, USMB, VMB };
+			managers = new IManager[10]{ PLMB, GMB, FOWMB, IMB, SMB, PMB, DSMB, USMB, VMB, RMB };
 
 		//Initialize Managers
 		for (int i = 0; i < managers.Length; i++)

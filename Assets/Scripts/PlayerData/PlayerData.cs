@@ -6,16 +6,19 @@ using System.Collections.Generic;
 public class PlayerData : ScriptableObject
 {
     
-    public enum TypeOfPlayer
-    {
-        human,
-        enemy
-    };
+	public enum TypeOfPlayer
+	{
+		human,
+		enemy}
 
-    TypeOfPlayer typeOfPlayer;
+	;
 
-    public List<UnitBehavior> storedUnits;
+	TypeOfPlayer typeOfPlayer;
 
-    public GroundBehavior[] spawnTiles;
+	public List<UnitBehavior> storedUnits;
+
+	public GroundBehavior[] spawnTiles;
+
+	public int resources;
 
 }

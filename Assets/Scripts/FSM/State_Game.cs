@@ -22,6 +22,10 @@ public class State_Game : BaseState
 
 		//Allow player inputs
 		GameMasterScript.instance.IMB.currentState = InputManagerBehavior.InputState.idle;
+
+		//Set both player's resources and allow them to gather resources 
+		GameMasterScript.instance.RMB.SetResources (GameMasterScript.instance.startResources);
+		GameMasterScript.instance.RMB.canGetResources = true;
 	}
 
 	public void ButtonPressed (UserInterfaceManagerBehavior.G_ButtonType newButton)

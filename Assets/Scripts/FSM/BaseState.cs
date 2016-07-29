@@ -12,7 +12,7 @@ public abstract class BaseState : MonoBehaviour
 
 	protected BaseState ()
 	{
-		Debug.Log ("current state: " + this.ToString ());
+		//Debug.Log ("current state: " + this.ToString ());
 	}
 
 	public State stateID;

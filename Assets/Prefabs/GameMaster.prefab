@@ -20,6 +20,7 @@ GameObject:
   - 114: {fileID: 11453198}
   - 114: {fileID: 11410494}
   - 114: {fileID: 11438038}
+  - 114: {fileID: 114000011685851846}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: GMB
@@ -281,9 +282,11 @@ MonoBehaviour:
   AMB: {fileID: 11453198}
   UIMB: {fileID: 11438038}
   VMB: {fileID: 11410494}
+  RMB: {fileID: 114000011685851846}
   pathfindingType: 2
   gridWidth: 50
   gridHeight: 30
+  startResources: 0
   baseUnitSpeed: 3
   staminaCostMove: 1
   staminaCostDig: 5
@@ -370,6 +373,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  playerResources: {fileID: 0}
+  enemyResources: {fileID: 0}
 --- !u!114 &11445322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -478,3 +483,18 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 150090}
   m_IsPrefabParent: 1
+--- !u!114 &114000011685851846
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 919a60e157e4397499f5e1d2ae74bbd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canGetResources: 0
+  resourceGainPerBatch: 3
+  resourceDelay: 1.2
+  resourcesCap: 250

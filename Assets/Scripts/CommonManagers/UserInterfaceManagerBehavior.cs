@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 /// <summary>
 /// UI manager behavior.
@@ -57,6 +58,15 @@ public class UserInterfaceManagerBehavior : MonoBehaviour, IManager
 	public void G_ButtonPressed (int buttonID)
 	{
 		((State_Game)GameMasterScript.currentState).ButtonPressed ((G_ButtonType)buttonID);
+	}
+
+	public Text playerResources;
+	public Text enemyResources;
+
+	public void UpdateResourcesUI ()
+	{
+		playerResources.text = GameMasterScript.instance.PLMB.humanPlayer.resources.ToString ("D4");
+		enemyResources.text = GameMasterScript.instance.PLMB.enemyPlayer.resources.ToString ("D4");
 	}
 
 	#endregion

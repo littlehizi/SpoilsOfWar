@@ -1,15 +1,51 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ResourceManagerBehavior : MonoBehaviour {
+public class ResourceManagerBehavior : MonoBehaviour, IManager
+{
+	//References
+	PlayerManagerBehavior PLMB { get { return GameMasterScript.instance.PLMB; } }
 
-	// Use this for initialization
-	void Start () {
-	
+	//Internal variables
+	public bool canGetResources;
+	public int resourceGainPerBatch;
+	public float resourceDelay;
+	public int resourcesCap;
+
+	public void OnGameStart ()
+	{
+		canGetResources = true;
+
+		StartCoroutine (UpdateResources ());
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void SetResources (int amount)
+	{
+		if (PLMB.humanPlayer.resources < resourcesCap)
+			PLMB.humanPlayer.resources += amount;
+
+		if (PLMB.enemyPlayer.resources < resourcesCap)
+			PLMB.enemyPlayer.resources += amount;
+	}
+
+	public void StopGettingResources ()
+	{
+		StopAllCoroutines ();
+	}
+
+
+	IEnumerator UpdateResources ()
+	{
+		while (canGetResources) {
+			yield return new WaitForSeconds (resourceDelay);
+
+			if (PLMB.humanPlayer.resources < resourcesCap)
+				PLMB.humanPlayer.resources += resourceGainPerBatch;
+
+			if (PLMB.enemyPlayer.resources < resourcesCap)
+				PLMB.enemyPlayer.resources += resourceGainPerBatch;
+
+			GameMasterScript.instance.UIMB.UpdateResourcesUI ();
+		}
 	}
 }
