@@ -286,7 +286,7 @@ MonoBehaviour:
   pathfindingType: 2
   gridWidth: 50
   gridHeight: 30
-  startResources: 0
+  startResources: 50
   baseUnitSpeed: 3
   staminaCostMove: 1
   staminaCostDig: 5

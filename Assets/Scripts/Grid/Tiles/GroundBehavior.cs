@@ -44,6 +44,35 @@ public class GroundBehavior : MonoBehaviour
 	public int moveCost;
 	public bool isFortified;
 
+	private bool _isAnObstacle;
+
+	public bool isAnObstacle {
+		get { return _isAnObstacle; }
+		set { 
+			_isAnObstacle = value;
+
+			//Change the sprite 
+			if (_isAnObstacle) {
+				GameObject obstacleSpriteT = new GameObject ("obstacle sprite");
+				obstacleSpriteT.transform.position = trueTilePos;
+				obstacleSpriteT.transform.parent = this.transform;
+
+				SpriteRenderer obstacleSR = obstacleSpriteT.AddComponent<SpriteRenderer> ();
+				obstacleSR.sprite = GameMasterScript.instance.GMB.obstacleSprite;
+				obstacleSR.sortingLayerID = tileSR.sortingLayerID;
+				obstacleSR.sortingOrder = tileSR.sortingOrder + 1;
+		
+				//Set digres and HP to unbreakable values 
+				digRes = 99999;
+				hp = 99999;
+			} else {
+				digRes = groundData.digRes;
+				hp = groundData.hp;
+				Destroy (this.transform.FindChild ("obstacle sprite").gameObject);
+			}
+		}
+	}
+
 	//Colors
 	private SpriteRenderer _tileSR;
 

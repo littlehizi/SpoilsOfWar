@@ -27,6 +27,11 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 	public const int STATIC_HEIGHT = 4;
 	public const int STATIC_WIDTH = 4;
 
+	//Internal Variables
+	[Range (0, 100)]
+	public int percentOfObstacles;
+	public Sprite obstacleSprite;
+
 	//START METHOD
 	public void OnGameStart ()
 	{
@@ -120,6 +125,29 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 				tmpTile.GetComponent<GroundBehavior> ().SetupGround ();
 			}
 		} 
+
+		AddObstacles ();
+	}
+
+	public void AddObstacles ()
+	{
+		//Generate obstacles based on perlin noise
+		float rdmX = Random.Range (-10000, 10000) + 0.01f;
+		float rdmY = Random.Range (-10000, 10000) + 0.01f;
+
+
+		foreach (GroundBehavior tmpTile in currentGrid.tiles) {
+			float perlinNoise = Mathf.PerlinNoise (rdmX + tmpTile.trueTilePos.x / 10, rdmY + tmpTile.trueTilePos.y / 10);
+			if (tmpTile.tilePos.y > STATIC_WIDTH + 1) {
+				if (perlinNoise == Mathf.Infinity)
+					continue;
+				
+				if (perlinNoise > 1 - ((float)percentOfObstacles) / 100.0f) {
+					//The tile is now an obstacle !
+					tmpTile.isAnObstacle = true;
+				}
+			}
+		}
 	}
 
 	/// <summary>

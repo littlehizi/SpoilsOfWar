@@ -159,6 +159,13 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 
 	static GroundBehavior[] FindWithAStar (GroundBehavior origin, GroundBehavior destination, bool hasToBeDug)
 	{
+		//Check if the origin and destination are the same tile. If so, just return the destination as a path.
+		if (origin.ID == destination.ID) {
+			GroundBehavior[] path = new GroundBehavior[1];
+			path [0] = destination;
+			return path;
+		}
+
 		//Open list are the positions to check
 		Heap<AStarNode> open = new Heap<AStarNode> (mapSize);
 		//Closed list are the positions that aren't available or that are checked already

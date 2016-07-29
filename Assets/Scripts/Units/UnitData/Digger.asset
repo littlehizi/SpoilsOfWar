@@ -17,6 +17,7 @@ MonoBehaviour:
   health: 100
   stamina: 150
   strength: 50
+  amountOfBombs: 5
   diggingPower: 25
   vision: 2
   speed: 5

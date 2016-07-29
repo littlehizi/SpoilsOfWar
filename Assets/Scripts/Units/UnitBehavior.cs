@@ -40,6 +40,12 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 			if (isOnSpawnTiles ()) {
 				OnStaminaRestored ();
 			}
+
+			//Check for oxygen change
+			if (stamina < unitData.stamina && !canPathfindAir ()) {
+				Debug.Log ("wee?");
+				oxygen -= GameMasterScript.instance.oxygenLossPerTile;
+			}
 		}
 	}
 
@@ -70,7 +76,19 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 			_stamina = value;
 			//If the unit's stamina falls below zero, the unit goes backies to the spawn
 			if (_stamina <= 0)
-				OnExhaustionEnter ();
+				isExhausted = true;
+		}
+	}
+
+	public int _oxygen;
+
+	public int oxygen {
+		get { return _oxygen; }
+		set {
+			_oxygen = value;
+			//if the unit has no more oxygen, the unit dies.
+			if (_oxygen <= 0)
+				OnDeathEnter ();
 		}
 	}
 
@@ -89,12 +107,12 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		unitSR.sprite = unitData.sprite;
 		unitSR.color = unitData.tmpColor;
 
-		//Set current tile
-		currentTile = newTile;
-
 		//Set temporary data
 		health = unitData.health;
 		stamina = unitData.stamina;
+
+		//Set current tile
+		currentTile = newTile;
 
 		//Victory
 		OnTileEnterEvent += GameMasterScript.instance.VMB.VictoryCheck;
@@ -309,35 +327,37 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 
 	#endregion
 
-	/// <summary>
-	/// When the stamina reaches Zero, the unit heads home to refill.
-	/// The unit cannot be selected until it reaches home
-	/// </summary>
-	public void OnExhaustionEnter ()
-	{
-//		//If the unit is in combat and cannot run away, leave it.. (and cry, I guess..)
-//		if (CB.isFighting && !CB.canRunAway)
-//			return;
-//
-//		//Stop most actions
-//		UMB.StopWalking ();
-//		DB.StopDigging ();
-//		if (CB.isFighting && CB.canRunAway)
-//			CB.StopCombat ();
-//
-//
-//		Debug.Log (this + " is exhausted");
-//		canBeSelected = false;
-//		stamina = 9999;
-//		//Choose a random tile of the correct alignment and walk home
-//		runAwayTile = alignment == PlayerData.TypeOfPlayer.human ? GameMasterScript.instance.PLMB.humanPlayer.spawnTiles [Random.Range (0, GameMasterScript.instance.PLMB.humanPlayer.spawnTiles.Length)] : 
-//																GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [Random.Range (0, GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles.Length)];
-//
-//		WalkToTile (runAwayTile);
+	#region oxygen
 
-		//When exhausted, the unit does not go back home, the unit simply does tasks way slower.
-		isExhausted = true;
+	bool canPathfindAir ()
+	{
+		GroundBehavior spawnTile = null;
+
+		if (alignment == PlayerData.TypeOfPlayer.human) {
+			spawnTile = GameMasterScript.instance.PLMB.humanPlayer.spawnTiles [0];
+		} else {
+			spawnTile = GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [0];
+		}
+		GroundBehavior[] path = PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, currentTile, spawnTile, true);
+
+		return path != null;
 	}
+
+	#endregion
+
+	#region bomb
+
+	public void PlantBomb ()
+	{
+		
+	}
+
+	public void DetonnateBomb ()
+	{
+		
+	}
+
+	#endregion
 
 	/// <summary>
 	/// Returns true if the unit is currently standing on its spawn tiles.
@@ -364,6 +384,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	{
 		stamina = unitData.stamina;
 		isExhausted = false;
+
 	}
 
 	public void OnDeselect ()

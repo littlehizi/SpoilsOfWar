@@ -44,6 +44,7 @@ public class GameMasterScript : MonoBehaviour
 	public int staminaCostDig;
 	public int staminaCostFight;
 	public float combatSpeed;
+	public int oxygenLossPerTile;
 
 
 

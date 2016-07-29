@@ -17,6 +17,7 @@ public class UnitData : ScriptableObject
 	public int health;
 	public int stamina;
 	public int strength;
+	public int amountOfBombs;
 	public int diggingPower;
 	public int vision;
 	public int speed;

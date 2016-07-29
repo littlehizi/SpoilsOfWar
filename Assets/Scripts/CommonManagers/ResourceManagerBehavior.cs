@@ -14,8 +14,6 @@ public class ResourceManagerBehavior : MonoBehaviour, IManager
 
 	public void OnGameStart ()
 	{
-		canGetResources = true;
-
 		StartCoroutine (UpdateResources ());
 	}
 
@@ -36,7 +34,10 @@ public class ResourceManagerBehavior : MonoBehaviour, IManager
 
 	IEnumerator UpdateResources ()
 	{
-		while (canGetResources) {
+		while (true) {
+			if (!canGetResources)
+				yield return null;
+			
 			yield return new WaitForSeconds (resourceDelay);
 
 			if (PLMB.humanPlayer.resources < resourcesCap)
