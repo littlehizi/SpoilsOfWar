@@ -178,8 +178,13 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 						DigSelectionManagerBehavior.GetGroundTilesToDig (tileHitRC);
 					} else if (digSelectionTmp != null && tileHitRC.ID == digSelectionTmp.ID) {
 						//If double tap, give the order to the currently character to dig (or move to closest tile and dig)
-						((UnitBehavior)SMB.unitSelected [0]).StartDiggingProcess (DigSelectionManagerBehavior.OutputTilesToDig (SMB.unitSelected [0].currentTile));
+						if (DigSelectionManagerBehavior.getGroundTilesHolderLength == 0) {
+							((UnitBehavior)SMB.unitSelected [0]).StartDiggingProcess (new GroundBehavior[1] { digSelectionTmp });
+							DigSelectionManagerBehavior.ResetTileColors ();
+						} else
+							((UnitBehavior)SMB.unitSelected [0]).StartDiggingProcess (DigSelectionManagerBehavior.OutputTilesToDig (SMB.unitSelected [0].currentTile));
 
+						Debug.Log ("hOOIIII");
 						//Reset flag
 						digSelectionTmp = null;
 					} 
@@ -188,7 +193,7 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			if (!((UnitBehavior)SMB.unitSelected [0]).PlantBomb ())
+			if (!((UnitBehavior)SMB.unitSelected [0]).PlantBomb () || ((UnitBehavior)SMB.unitSelected [0]).BB.canDetonnateABombsite)
 				((UnitBehavior)SMB.unitSelected [0]).DetonnateBomb ();
 		}
 

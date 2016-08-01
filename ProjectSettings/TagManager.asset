@@ -51,6 +51,9 @@ TagManager:
   - name: BackgroundOverlay
     uniqueID: 2955082629
     locked: 0
+  - name: CharacterUnderlay
+    uniqueID: 989775949
+    locked: 0
   - name: Characters
     uniqueID: 3654003425
     locked: 0

@@ -17,7 +17,17 @@ public class ResourceManagerBehavior : MonoBehaviour, IManager
 		StartCoroutine (UpdateResources ());
 	}
 
-	public void SetResources (int amount)
+	public void SetBaseResources ()
+	{
+		PLMB.humanPlayer.resources = GameMasterScript.instance.startResources;
+		PLMB.enemyPlayer.resources = GameMasterScript.instance.startResources;
+	}
+
+	/// <summary>
+	/// Adds resources to the current pools, both of them.
+	/// </summary>
+	/// <param name="amount">Amount.</param>
+	public void AddResources (int amount)
 	{
 		if (PLMB.humanPlayer.resources < resourcesCap)
 			PLMB.humanPlayer.resources += amount;

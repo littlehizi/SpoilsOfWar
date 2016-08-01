@@ -52,7 +52,17 @@ public class GroundBehavior : MonoBehaviour
 	public float digRes;
 	public Sprite sprite;
 	public int moveCost;
-	public bool isFortified;
+
+	private bool _isFortified;
+
+	public bool isFortified {
+		get{ return _isFortified; }
+		set {
+			_isFortified = value;
+			if (_isFortified)
+				FortifyTile ();
+		}
+	}
 
 	private bool _isAnObstacle;
 
@@ -149,5 +159,15 @@ public class GroundBehavior : MonoBehaviour
 			tileSR.color -= dugColorOffset;
 		else
 			tileSR.color += dugColorOffset;
+	}
+
+	void FortifyTile ()
+	{
+		Transform fortifyTile = new GameObject ("Tile Fortify Sprite").transform;
+		fortifyTile.SetParent (this.transform);
+		fortifyTile.position = this.transform.position;
+		SpriteRenderer fortifySR = fortifyTile.gameObject.AddComponent<SpriteRenderer> ();
+		fortifySR.sprite = GameMasterScript.instance.GMB.fortifiedSprite;
+		fortifySR.sortingLayerName = "BackgroundOverlay";
 	}
 }

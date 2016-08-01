@@ -30,6 +30,8 @@ public class DigBehavior : MonoBehaviour
 
 		while (currentIndex < tilesToDig.Length) {
 
+			bool justDugCurrentTile = false;
+
 			//First,  break the tile
 			while (tilesToDig [currentIndex].hp > 0) {
 				//Check if there's any enemy unit on next tile
@@ -39,18 +41,18 @@ public class DigBehavior : MonoBehaviour
 					StopDigging ();
 				}
 
-				yield return new WaitForSeconds (tilesToDig [currentIndex].digRes * (unitBehavior.isExhausted ? UnitBehavior.exhaustionMalus : 1) / unitBehavior.unitData.diggingPower);
+				yield return new WaitForSeconds (tilesToDig [currentIndex].digRes * (unitBehavior.isExhausted ? GameMasterScript.instance.exhaustEfficiencyModifier : 1) / unitBehavior.unitData.diggingPower);
 
 
 				tilesToDig [currentIndex].hp -= unitBehavior.unitData.diggingPower * 4;
 				Debug.Log ("Diggin tile... Hp left: " + tilesToDig [currentIndex].hp);
-
+				justDugCurrentTile = true;
 			}
 
 			//If the upcoming tile has been dug, walk to it instead
-			if (tilesToDig [currentIndex].isDug) {
+			if (!justDugCurrentTile && tilesToDig [currentIndex].isDug) {
 				//Wait according to the speed stat. 
-				yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * (unitBehavior.isExhausted ? UnitBehavior.exhaustionMalus : 1) / (float)unitBehavior.unitData.speed);
+				yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * (unitBehavior.isExhausted ? GameMasterScript.instance.exhaustEfficiencyModifier : 1) / (float)unitBehavior.unitData.speed);
 			}
 
 			////Set tile as dug
@@ -67,6 +69,14 @@ public class DigBehavior : MonoBehaviour
 
 			//Remove some stamina
 			unitBehavior.stamina -= GameMasterScript.instance.staminaCostDig;
+
+			//Lit the current tile with zero vision
+			tilesToDig [currentIndex].gameObject.AddComponent<TileVisionBehavior> ().tileVision = 0; //Make this = -1 if you don't want gradient 
+
+			//Fortify tile
+			if (unitBehavior.UseResource (GameMasterScript.instance.resourceUsedPerFortification)) {
+				tilesToDig [currentIndex].isFortified = true;
+			}
 
 			//Update index
 			currentIndex++;

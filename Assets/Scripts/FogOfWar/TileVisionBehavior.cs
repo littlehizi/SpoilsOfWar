@@ -30,9 +30,14 @@ public class TileVisionBehavior : MonoBehaviour, IVision
 		GameMasterScript.instance.FOWMB.visionBeacons.Add (this);
 	}
 
+
+	void OnDisable ()
+	{
+		DeleteIVisionEntry ();
+	}
 	//Tiles are static, so no need to delete entry
 	public void DeleteIVisionEntry ()
 	{
-		
+		GameMasterScript.instance.FOWMB.visionBeacons.Remove (this);
 	}
 }

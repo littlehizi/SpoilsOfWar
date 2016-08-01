@@ -9,6 +9,7 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 	private static GroundBehavior temporaryTile;
 	private static bool isDigging;
 
+	public static int getGroundTilesHolderLength{ get { return groundTilesHolder.Count; } }
 
 	//START METHOD
 	public void OnGameStart ()
@@ -40,10 +41,9 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 			if (temporaryTile == null)
 				temporaryTile = groundTilesHolder [groundTilesHolder.Count - 1];
 
+			//Debug.Log ("Got two pos, get diggin !");
 
-
-			Debug.Log ("Got two pos, get diggin !");
-			//If the first pos and the 2nd are the same, just leave
+			//If the first pos and the 2nd are the same, just get a mini-path going..? Not here though
 			if (temporaryTile.ID == newTile.ID)
 				return;
 
@@ -84,9 +84,9 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 	public static GroundBehavior[] OutputTilesToDig (GroundBehavior playerPos)
 	{
 		//If the player simply double clicked on a tile, tell him off
-		if (groundTilesHolder.Count <= 1)
+		if (groundTilesHolder.Count == 0)
 			return null;
-		
+
 		//If the first tile is not 1-tile away from the [0]'s item of the path, check for the last item
 		if (!PathfindingManagerBehavior.ListContainsGroundTile (PathfindingManagerBehavior.GetTileNeighbor (playerPos), groundTilesHolder [0])) {
 			if (PathfindingManagerBehavior.ListContainsGroundTile (PathfindingManagerBehavior.GetTileNeighbor (playerPos), groundTilesHolder [groundTilesHolder.Count - 1])) {
@@ -96,7 +96,7 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 				//If none of the tiles are connected to the player tile, return an error or now
 				Debug.LogWarning ("Tile too far away !");
 			}
-		}
+		} 
 
 		//reset the color
 		ResetTileColors ();
@@ -115,6 +115,11 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 			groundTilesHolder [i].tileSR.color = groundTilesHolder [i].colorBackup;
 			if (groundTilesHolder [i].isDug)
 				groundTilesHolder [i].ApplyDugColor ();
+		}
+
+		if (temporaryTile != null) {
+			temporaryTile.tileSR.color = temporaryTile.colorBackup;
+			temporaryTile = null;
 		}
 
 		//reset the flag 

@@ -73,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitSR: {fileID: 0}
   unitData: {fileID: 0}
-  currentResourcesHeld: 0
+  currentBombsHeld: 0
   canBeSelected: 0
   isExhausted: 0
   _oxygen: 0
@@ -157,3 +157,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDelayBetweenBombs: 0
   maxAmountOfBombs: 0
+  groundTileLayer:
+    serializedVersion: 2
+    m_Bits: 256

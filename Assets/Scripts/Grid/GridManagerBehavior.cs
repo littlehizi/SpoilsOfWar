@@ -31,6 +31,7 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 	[Range (0, 100)]
 	public int percentOfObstacles;
 	public Sprite obstacleSprite;
+	public Sprite fortifiedSprite;
 
 	//START METHOD
 	public void OnGameStart ()

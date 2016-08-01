@@ -43,10 +43,12 @@ public class GameMasterScript : MonoBehaviour
 	public int staminaCostMove;
 	public int staminaCostDig;
 	public int staminaCostFight;
+	public float exhaustEfficiencyModifier;
 	public float combatSpeed;
 	public int oxygenLossPerTile;
 	public int bombExplosionRadius;
 	public float damagePerBomb;
+	public int resourceUsedPerFortification;
 
 	// Camera Variables
 	public static WorldCamera.BoxLimit cameraLimits = new WorldCamera.BoxLimit ();

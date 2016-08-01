@@ -8,7 +8,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	UnitMovementBehavior UMB;
 	DigBehavior DB;
 	CombatBehavior CB;
-	BombBehavior BB;
+	[HideInInspector] public BombBehavior BB;
 
 	[HideInInspector]public SpriteRenderer unitSR;
 
@@ -55,7 +55,6 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	public int currentBombsHeld;
 	public bool canBeSelected;
 	public bool isExhausted;
-	public const float exhaustionMalus = 2.5f;
 
 	public bool isOnEnemyTrench { 
 		get { 
@@ -121,12 +120,13 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		//Set temporary data
 		health = unitData.health;
 		stamina = unitData.stamina;
+		oxygen = 100;
 
 		//Set current tile
 		currentTile = newTile;
 
 		//Victory
-		OnTileEnterEvent += GameMasterScript.instance.VMB.VictoryCheck;
+		//OnTileEnterEvent += GameMasterScript.instance.VMB.VictoryCheck;
 
 		//Selection
 		canBeSelected = true;
@@ -229,9 +229,12 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	public void StartDiggingProcess (GroundBehavior[] tilesToDig)
 	{
 		//Check if it's not an empty list
-		if (tilesToDig == null || tilesToDig.Length < 1)
+		if (tilesToDig == null || tilesToDig.Length == 0)
 			return;
 		
+		Debug.Log ("Wee?");
+
+
 		StartCoroutine ("DiggingProcess", tilesToDig);
 	}
 
@@ -320,7 +323,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		DeleteIVisionEntry ();
 
 		//Victory
-		OnTileEnterEvent -= GameMasterScript.instance.VMB.VictoryCheck;
+		//OnTileEnterEvent -= GameMasterScript.instance.VMB.VictoryCheck;
 
 		//Remove itself from the player unitstorage
 		switch (alignment) {
@@ -338,7 +341,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 
 	#endregion
 
-	#region oxygen
+	#region Oxygen
 
 	bool canPathfindAir ()
 	{
@@ -356,7 +359,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 
 	#endregion
 
-	#region bomb
+	#region Bomb
 
 	/// <summary>
 	/// Plants a bomb.
@@ -366,7 +369,6 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		if (currentBombsHeld > 0) {
 			if (BB.BombCurrentTile ()) {
 				currentBombsHeld--;
-				Debug.Log ("a bomb has been planted");
 				return true;
 			}
 		}
@@ -380,6 +382,40 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	public void DetonnateBomb ()
 	{
 		BB.DetonnateBomb ();
+	}
+
+	#endregion
+
+	#region Resources
+
+	/// <summary>
+	/// Uses the resources according it the unit's alignment.
+	/// The default value is one resource per usage.
+	/// This method will return false if no resource is currently available
+	/// </summary>
+	/// <returns><c>true</c>, if resource was used, <c>false</c> otherwise.</returns>
+	/// <param name="amount">Amount.</param>
+	public bool UseResource (int amount = 1)
+	{
+		//If the player has resources, use them, and refresh the UI
+		switch (alignment) {
+		case PlayerData.TypeOfPlayer.human:
+			if (GameMasterScript.instance.PLMB.humanPlayer.resources >= amount) {
+				GameMasterScript.instance.PLMB.humanPlayer.resources -= amount;
+				GameMasterScript.instance.UIMB.UpdateResourcesUI ();
+				return true;
+			}
+			break;
+		case PlayerData.TypeOfPlayer.enemy:
+			if (GameMasterScript.instance.PLMB.enemyPlayer.resources >= amount) {
+				GameMasterScript.instance.PLMB.enemyPlayer.resources -= amount;
+				GameMasterScript.instance.UIMB.UpdateResourcesUI ();
+				return true;
+			}
+			break;
+		}
+
+		return false;
 	}
 
 	#endregion
@@ -400,6 +436,27 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 				if (currentTile.ID == GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [i].ID)
 					return true;
 			}
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Checks if the current until is below the enemy HQ.
+	/// This method is used to plant the endgame bomb.
+	/// </summary>
+	/// <returns><c>true</c>, if below enemy H was ised, <c>false</c> otherwise.</returns>
+	public bool isBelowEnemyHQ ()
+	{
+		switch (alignment) {
+		case PlayerData.TypeOfPlayer.human:
+			if (currentTile.tilePos.x >= GameMasterScript.instance.gridWidth - GridManagerBehavior.STATIC_WIDTH)
+				return true;
+			break;
+		case PlayerData.TypeOfPlayer.enemy:
+			if (currentTile.tilePos.x <= GridManagerBehavior.STATIC_WIDTH)
+				return true;
+			break;
 		}
 
 		return false;
