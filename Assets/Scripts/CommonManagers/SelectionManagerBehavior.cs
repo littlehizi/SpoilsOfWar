@@ -96,6 +96,18 @@ public class SelectionManagerBehavior : MonoBehaviour, IManager
 
 	}
 
+	public void DeselectUnit (int newUnit)
+	{
+		ISelection unit = unitSelected [newUnit];
+
+		//Change the order layer 
+		((UnitBehavior)unit).unitSR.sortingOrder = 0;
+
+		unitSelected.RemoveAt (newUnit);
+		unit.OnDeselect ();
+
+	}
+
 	void Update ()
 	{
 		if (selectionScrollDelay >= 0.0f)
@@ -158,20 +170,72 @@ public class SelectionManagerBehavior : MonoBehaviour, IManager
 	/// </summary>
 	void OnUnitEntersTile ()
 	{
-		//If there's only one unit on the tile, dont' bother, it's unitSelected[0]
-		if (unitSelected [0].currentTile.unitsOnTile.Count > 1 || unitSelected.Count > 1) {
-			if (unitSelected.Count > 1) {
-				for (int i = 1; i < unitSelected [0].currentTile.unitsOnTile.Count; i++) {
-					//Look at units to remove
-					if (!unitSelected [0].currentTile.unitsOnTile.Contains ((UnitBehavior)unitSelected [i])) {
-						DeselectUnit (unitSelected [i]);
-					}
+		//Debug
+		if (unitSelected.Count == 0)
+			return;
+
+
+		UnitBehavior newUnit = (UnitBehavior)unitSelected [0];
+
+		//If no unit other than current are on tile, don't bother
+		if (newUnit.currentTile.unitsOnTile.Count == 1 && unitSelected.Count == 1)
+			return;
+
+		//Firstly, check if any unit on new tile.
+		//if (newUnit.currentTile.unitsOnTile.Count > 1) {
+		//If so, compare them, delete them and add them
+
+		Debug.Log (unitSelected.Count);
+
+		if (unitSelected.Count > 1) {
+			//Clear except for first entry
+			while (unitSelected.Count > 1) {
+				DeselectUnit (unitSelected.Count - 1);
+			}
+		}
+			
+		//Add all new ones! IF ANY
+		for (int i = 0; i < newUnit.currentTile.unitsOnTile.Count; i++) {
+			if (unitSelected [0] == newUnit.currentTile.unitsOnTile [i])
+				continue;
+			
+			UnitBehavior currentUnit = newUnit.currentTile.unitsOnTile [i];
+
+			if (!currentUnit.canBeSelected)
+				continue;
+
+			if (((UnitBehavior)currentUnit).alignment == PlayerData.TypeOfPlayer.human) {
+				unitSelected.Add ((ISelection)currentUnit);
+				currentUnit.OnSelect ();
+
+				//Change the order layer 
+				for (int k = 0; k < unitSelected.Count; k++) {
+					if (unitSelected [k] == newUnit)
+						currentUnit.unitSR.sortingOrder = 10 - k;
 				}
 			}
-			//Add new units on tile
-			for (int i = 0; i < unitSelected [0].currentTile.unitsOnTile.Count; i++) {
-				if (!unitSelected.Contains ((UnitBehavior)unitSelected [0].currentTile.unitsOnTile [i]))
-					SelectNewUnitsOnTile (unitSelected [0].currentTile.unitsOnTile [i]);
+		}
+			
+	}
+
+
+	public void SelectedUnitMoved (UnitBehavior newUnit)
+	{
+		//Make sure the unit given really is the unit selected
+		if (unitSelected [0].GetHashCode () == ((ISelection)newUnit).GetHashCode ()) {
+			//Check for any change of units on the current tile. Probably deselect most of them, but add the new ones too!
+
+			//Firstly, check if any unit on new tile.
+			if (newUnit.currentTile.unitsOnTile.Count > 1) {
+				//If so, compare them, delete them and add them
+
+				//Clear except for first entry
+				while (unitSelected.Count > 1) {
+					DeselectUnit (unitSelected.Count - 1);
+				}
+
+				//Add all new ones! IF ANY
+				SelectNewUnitsOnTile (newUnit);
 			}
 		}
 	}

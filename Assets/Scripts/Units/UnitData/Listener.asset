@@ -13,7 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfUnit: 1
   sprite: {fileID: 21300000, guid: 8eb9feeb58bc09a4ca09d2c60e2cd822, type: 3}
+  filePicture: {fileID: 0}
   tmpColor: {r: 0.61422414, g: 0.5187608, b: 0.6985294, a: 1}
+  medal: {fileID: 21300010, guid: 82db2d70598913e4d9f4ebf34ae31850, type: 3}
   health: 100
   stamina: 100
   strength: 30

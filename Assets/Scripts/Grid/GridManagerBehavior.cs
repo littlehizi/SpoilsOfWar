@@ -86,7 +86,7 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 
 					//Get the tile
 					tmpTile = ((GameObject)Instantiate (envTilePrefab [(int)currentTile], tmpPos, Quaternion.identity)).AddComponent<GroundBehavior> ();
-					tmpTile.groundData = groundData [(int)currentTile];
+					tmpTile.groundData = envData [(int)currentTile];
 					currentGrid.tiles [k, i] = tmpTile.GetComponent<GroundBehavior> ();
 
 					if (currentTile == GroundBehavior.EnvGroundType.buildingBG && k < STATIC_WIDTH) {

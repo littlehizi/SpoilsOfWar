@@ -1,0 +1,219 @@
+fileFormatVersion: 2
+guid: e97d9eef50229174989b42c5ef6b7f4f
+timeCreated: 1470452236
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Character Folders-Closed_0
+    21300002: Character Folders-Closed_1
+    21300004: Character Folders-Closed_2
+    21300006: Character Folders-Closed_3
+    21300008: Character Folders-Closed_4
+    21300010: Character Folders-Closed_5
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Character Folders-Closed_0
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 951
+        width: 958
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 11}
+      outline:
+      - - {x: 275.8166, y: 4.970825}
+        - {x: 267.8166, y: 4.970825}
+        - {x: 267.8166, y: 32.970825}
+        - {x: 266.8166, y: 35.970825}
+        - {x: 261.8166, y: 39.970825}
+        - {x: 82.81659, y: 39.970825}
+        - {x: 77.81659, y: 36.970825}
+        - {x: 76.81659, y: 33.970825}
+        - {x: 73.81659, y: 17.970825}
+        - {x: -271.1834, y: 17.970825}
+        - {x: -278.1834, y: 16.970825}
+        - {x: -280.1834, y: 15.970825}
+        - {x: -280.1834, y: -44.029175}
+        - {x: 280.8166, y: -44.029175}
+        - {x: 280.8166, y: 0.9708252}
+        - {x: 278.8166, y: 2.9708252}
+    - name: Character Folders-Closed_1
+      rect:
+        serializedVersion: 2
+        x: 1227
+        y: 951
+        width: 956
+        height: 139
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 270.47028, y: 10.470825}
+        - {x: 268.47028, y: 39.470825}
+        - {x: 265.47028, y: 41.470825}
+        - {x: 80.470276, y: 41.470825}
+        - {x: 79.470276, y: 40.470825}
+        - {x: 77.470276, y: 37.470825}
+        - {x: 74.470276, y: 21.470825}
+        - {x: -270.52972, y: 21.470825}
+        - {x: -277.52972, y: 20.470825}
+        - {x: -279.52972, y: 19.470825}
+        - {x: -279.52972, y: -40.529175}
+        - {x: 281.47028, y: -40.529175}
+        - {x: 281.47028, y: 5.470825}
+        - {x: 280.47028, y: 7.470825}
+    - name: Character Folders-Closed_2
+      rect:
+        serializedVersion: 2
+        x: 2279
+        y: 951
+        width: 956
+        height: 139
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 268.54053, y: 8.470825}
+        - {x: 268.54053, y: 37.470825}
+        - {x: 264.54053, y: 41.470825}
+        - {x: 80.54053, y: 41.470825}
+        - {x: 79.54053, y: 40.470825}
+        - {x: 76.54053, y: 35.470825}
+        - {x: 76.54053, y: 20.470825}
+        - {x: 73.54053, y: 21.470825}
+        - {x: -269.45947, y: 21.470825}
+        - {x: -276.45947, y: 20.470825}
+        - {x: -279.45947, y: 19.470825}
+        - {x: -279.45947, y: -40.529175}
+        - {x: 280.54053, y: -40.529175}
+        - {x: 280.54053, y: 5.470825}
+        - {x: 275.54053, y: 8.470825}
+    - name: Character Folders-Closed_3
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 570
+        width: 957
+        height: 138
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 276.06116, y: 7.531433}
+        - {x: 268.06116, y: 7.531433}
+        - {x: 268.06116, y: 37.531433}
+        - {x: 264.06116, y: 41.531433}
+        - {x: 81.06116, y: 41.531433}
+        - {x: 78.06116, y: 38.531433}
+        - {x: 77.06116, y: 35.531433}
+        - {x: 77.06116, y: 20.531433}
+        - {x: -274.93884, y: 20.531433}
+        - {x: -278.93884, y: 19.531433}
+        - {x: -279.93884, y: 18.531433}
+        - {x: -279.93884, y: -40.468567}
+        - {x: 281.06116, y: -40.468567}
+        - {x: 281.06116, y: 3.531433}
+        - {x: 279.06116, y: 6.531433}
+    - name: Character Folders-Closed_4
+      rect:
+        serializedVersion: 2
+        x: 1249
+        y: 570
+        width: 955
+        height: 165
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 268.84344, y: -0.4685669}
+        - {x: 268.84344, y: 26.531433}
+        - {x: 267.84344, y: 29.531433}
+        - {x: 262.84344, y: 34.531433}
+        - {x: 82.843445, y: 34.531433}
+        - {x: 77.843445, y: 29.531433}
+        - {x: 76.843445, y: 26.531433}
+        - {x: 76.843445, y: 12.531433}
+        - {x: -274.15656, y: 12.531433}
+        - {x: -278.15656, y: 11.531433}
+        - {x: -279.15656, y: 10.531433}
+        - {x: -279.15656, y: -48.468567}
+        - {x: 280.84344, y: -48.468567}
+        - {x: 280.84344, y: -2.468567}
+        - {x: 276.84344, y: 0.5314331}
+    - name: Character Folders-Closed_5
+      rect:
+        serializedVersion: 2
+        x: 2243
+        y: 570
+        width: 955
+        height: 138
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 275.47546, y: 7.531433}
+        - {x: 268.47546, y: 7.531433}
+        - {x: 268.47546, y: 35.531433}
+        - {x: 267.47546, y: 38.531433}
+        - {x: 263.47546, y: 41.531433}
+        - {x: 81.475464, y: 41.531433}
+        - {x: 77.475464, y: 38.531433}
+        - {x: 76.475464, y: 35.531433}
+        - {x: 76.475464, y: 20.531433}
+        - {x: -275.52454, y: 20.531433}
+        - {x: -279.52454, y: 18.531433}
+        - {x: -279.52454, y: -40.468567}
+        - {x: 280.47546, y: -40.468567}
+        - {x: 280.47546, y: 4.531433}
+        - {x: 278.47546, y: 6.531433}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

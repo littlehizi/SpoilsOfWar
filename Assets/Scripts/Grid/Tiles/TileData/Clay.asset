@@ -15,3 +15,5 @@ MonoBehaviour:
   digRes: 50
   sprite: {fileID: 0}
   moveCost: 0
+  collapseHP: 0
+  canCollapse: 1

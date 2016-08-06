@@ -41,7 +41,7 @@ public class DigBehavior : MonoBehaviour
 					StopDigging ();
 				}
 
-				yield return new WaitForSeconds (tilesToDig [currentIndex].digRes * (unitBehavior.isExhausted ? GameMasterScript.instance.exhaustEfficiencyModifier : 1) / unitBehavior.unitData.diggingPower);
+				yield return new WaitForSeconds (tilesToDig [currentIndex].digRes * ((1 - unitBehavior.stamina / unitBehavior.unitData.stamina) * GameMasterScript.instance.exhaustEfficiencyModifier) / unitBehavior.unitData.diggingPower);
 
 
 				tilesToDig [currentIndex].hp -= unitBehavior.unitData.diggingPower * 4;
@@ -54,9 +54,6 @@ public class DigBehavior : MonoBehaviour
 				//Wait according to the speed stat. 
 				yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * (unitBehavior.isExhausted ? GameMasterScript.instance.exhaustEfficiencyModifier : 1) / (float)unitBehavior.unitData.speed);
 			}
-
-			////Set tile as dug
-			//tilesToDig [currentIndex].isDug = true;
 
 			//Move the unit to the next tile once it's broken
 			Vector3 tmpPos = tilesToDig [currentIndex].tilePos;
@@ -71,10 +68,10 @@ public class DigBehavior : MonoBehaviour
 			unitBehavior.stamina -= GameMasterScript.instance.staminaCostDig;
 
 			//Lit the current tile with zero vision
-			tilesToDig [currentIndex].gameObject.AddComponent<TileVisionBehavior> ().tileVision = 0; //Make this = -1 if you don't want gradient 
+			tilesToDig [currentIndex].gameObject.AddComponent<TileVisionBehavior> ().tileVision = -1; //Make this = -1 if you don't want gradient 
 
 			//Fortify tile
-			if (unitBehavior.UseResource (GameMasterScript.instance.resourceUsedPerFortification)) {
+			if (tilesToDig [currentIndex].isFortified == false && unitBehavior.UseResource (GameMasterScript.instance.resourceUsedPerFortification)) {
 				tilesToDig [currentIndex].isFortified = true;
 			}
 

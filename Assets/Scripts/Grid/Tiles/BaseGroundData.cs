@@ -12,4 +12,7 @@ public class BaseGroundData : ScriptableObject
 	public Sprite sprite;
 	//MOVEMENT COST OF MOVING OVER TILES. IT WILL AFFECT THE PATHFINDING.
 	public int moveCost;
+	//WHEN THIS HITS ZERO, THE TILE WILL COLLAPSE
+	public int collapseHP;
+	public bool canCollapse;
 }

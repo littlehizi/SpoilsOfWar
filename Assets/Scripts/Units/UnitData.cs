@@ -13,7 +13,9 @@ public class UnitData : ScriptableObject
 
 	public UnitType typeOfUnit;
 	public Sprite sprite;
+	public Sprite filePicture;
 	public Color tmpColor;
+	public Sprite medal;
 	public int health;
 	public int stamina;
 	public int strength;

@@ -52,6 +52,8 @@ public class GroundBehavior : MonoBehaviour
 	public float digRes;
 	public Sprite sprite;
 	public int moveCost;
+	int collapseHP;
+	bool isCollapsing;
 
 	private bool _isFortified;
 
@@ -59,8 +61,12 @@ public class GroundBehavior : MonoBehaviour
 		get{ return _isFortified; }
 		set {
 			_isFortified = value;
-			if (_isFortified)
-				FortifyTile ();
+
+			FortifyTile (_isFortified);
+
+			//Fortification or collapse !
+			SubscribeToCollapseTick (!_isFortified);
+
 		}
 	}
 
@@ -127,6 +133,14 @@ public class GroundBehavior : MonoBehaviour
 				ApplyDugColor ();
 			else if (!_isDug && prevValue)
 				ApplyDugColor ();
+
+			//Collapse ! or not
+			SubscribeToCollapseTick (isDug);
+
+			if (!_isDug) {
+				for (int i = 0; i < unitsOnTile.Count; i++)
+					unitsOnTile [i].OnDeathEnter ();
+			}
 		}
 	}
 
@@ -141,13 +155,16 @@ public class GroundBehavior : MonoBehaviour
 	{
 		//Initialize lists
 		unitsOnTile = new List<UnitBehavior> ();
-		isFortified = false;
+		_isFortified = false;
 
 		//Get stats
 		hp = groundData.hp;
 		digRes = groundData.digRes;
 		sprite = groundData.sprite;
 		moveCost = groundData.moveCost;
+		collapseHP = groundData.collapseHP;
+		isCollapsing = false;
+		isDug = false;
 
 		//Temporary stuff
 		colorBackup = tileSR.color = tileSR.color;
@@ -156,18 +173,127 @@ public class GroundBehavior : MonoBehaviour
 	public void ApplyDugColor ()
 	{
 		if (isDug)
-			tileSR.color -= dugColorOffset;
-		else
 			tileSR.color += dugColorOffset;
+		else
+			tileSR.color -= dugColorOffset;
 	}
 
-	void FortifyTile ()
+	/// <summary>
+	/// Fortifies the tile visually.
+	/// This method is in charge of displaying the state of visibility of the fortification of the tile.
+	/// Wua. That sounded smart!
+	/// </summary>
+	/// <param name="state">If set to <c>true</c> state.</param>
+	void FortifyTile (bool state)
 	{
-		Transform fortifyTile = new GameObject ("Tile Fortify Sprite").transform;
-		fortifyTile.SetParent (this.transform);
-		fortifyTile.position = this.transform.position;
-		SpriteRenderer fortifySR = fortifyTile.gameObject.AddComponent<SpriteRenderer> ();
-		fortifySR.sprite = GameMasterScript.instance.GMB.fortifiedSprite;
-		fortifySR.sortingLayerName = "BackgroundOverlay";
+		if (state) {
+			Transform fortifyTile = new GameObject ("Tile Fortify Sprite").transform;
+			fortifyTile.SetParent (this.transform);
+			fortifyTile.position = this.transform.position;
+			SpriteRenderer fortifySR = fortifyTile.gameObject.AddComponent<SpriteRenderer> ();
+			fortifySR.sprite = GameMasterScript.instance.GMB.fortifiedSprite;
+			fortifySR.sortingLayerName = "BackgroundOverlay";
+		} else {
+			Transform fortifiedTile = this.transform.FindChild ("Tile Fortify Sprite");
+
+			if (fortifiedTile != null)
+				Destroy (fortifiedTile.gameObject);
+		}
 	}
+
+	void SubscribeToCollapseTick (bool state)
+	{
+		if (!groundData.canCollapse)
+			return;
+		
+		if (state)
+			GameMasterScript.instance.TMB.OnNewTickE += WaitToCollapse;
+		else
+			GameMasterScript.instance.TMB.OnNewTickE -= WaitToCollapse;
+
+	}
+
+	void WaitToCollapse ()
+	{
+		if (isCollapsing)
+			return;
+		
+		collapseHP--;
+
+		Debug.Log ("Tile slowly collapsing.. " + collapseHP.ToString () + " hp left");
+
+		if (collapseHP <= 0) {
+			Collapse ();
+			SubscribeToCollapseTick (false);
+		}
+	}
+
+	void Collapse ()
+	{
+		//Flag so i won't loop !
+		if (isCollapsing)
+			return;
+
+		isCollapsing = true;
+
+		Debug.Log ("TILE COLLAPSING ! name: " + groundData.name + " at " + tilePos);
+		//Find the nearest tile above that's not dug !
+		GroundBehavior tileAbove = this;
+		while (true) {
+			tileAbove = GameMasterScript.instance.GMB.currentGrid.tiles [(int)tileAbove.tilePos.x, (int)tileAbove.tilePos.y - 1];
+			if (!tileAbove.isDug)
+				break;
+
+			//Make sure you don't go out the map for some reason..
+			if (tileAbove.tilePos.y <= 3)
+				return;
+		}
+
+
+		//duplicate that tile over all the undug tiles below
+		GroundBehavior tileBelow = GameMasterScript.instance.GMB.currentGrid.tiles [(int)tileAbove.tilePos.x, (int)tileAbove.tilePos.y + 1];
+
+		do {
+
+			if (!tileBelow.isDug)
+				break;
+
+			//Give it current groundData and reset tile ! But first, check if the tile above is undestructible. If so, then keep the currentData
+			if (tileAbove.groundData.hp < 1000)
+				tileBelow.groundData = tileAbove.groundData;
+
+
+			//Unfortify it if needed
+			if (tileBelow.isFortified)
+				tileBelow.FortifyTile (false);
+
+			//If any player, kill them
+			if (tileBelow.unitsOnTile.Count > 0) {
+				for (int i = 0; i < tileBelow.unitsOnTile.Count; i++)
+					tileBelow.unitsOnTile [i].OnDeathEnter ();
+			}
+
+			//Effect
+			tileBelow.CollapseEffect ();
+
+			//Setup
+			tileBelow.SetupGround ();
+		
+
+			//Make sure you don't go out the map for some reason..
+			if (tileBelow.tilePos.y >= GameMasterScript.instance.gridHeight - 3)
+				return;
+
+			//PROGRESS !
+			tileBelow = GameMasterScript.instance.GMB.currentGrid.tiles [(int)tileBelow.tilePos.x, (int)tileBelow.tilePos.y + 1];
+
+
+		} while (tileBelow.isDug);
+	}
+
+	public void CollapseEffect ()
+	{
+		//Do some funky stuff !
+	}
+
 }

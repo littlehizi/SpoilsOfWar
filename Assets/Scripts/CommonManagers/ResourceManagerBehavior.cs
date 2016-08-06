@@ -56,7 +56,7 @@ public class ResourceManagerBehavior : MonoBehaviour, IManager
 			if (PLMB.enemyPlayer.resources < resourcesCap)
 				PLMB.enemyPlayer.resources += resourceGainPerBatch;
 
-			GameMasterScript.instance.UIMB.UpdateResourcesUI ();
+			GameMasterScript.instance.UIMB.G_UpdateResourcesUI ();
 		}
 	}
 }

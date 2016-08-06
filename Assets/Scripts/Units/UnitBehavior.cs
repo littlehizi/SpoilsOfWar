@@ -12,9 +12,6 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 
 	[HideInInspector]public SpriteRenderer unitSR;
 
-	//Internal vars
-	GroundBehavior _currentTile;
-
 	//ON TILE ENTER EVENT
 	public delegate void OnTileEnter ();
 
@@ -55,6 +52,23 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	public int currentBombsHeld;
 	public bool canBeSelected;
 	public bool isExhausted;
+	GroundBehavior _currentTile;
+
+	UserInterfaceManagerBehavior.CharacterFile _currentCharacterFile;
+
+	UserInterfaceManagerBehavior.CharacterFile currentCharacterFile {
+		get {
+			if (_currentCharacterFile == null) {
+				//GetCharacterFile
+				int unitIndex = GameMasterScript.instance.PLMB.humanPlayer.storedUnits.FindIndex (i => i.GetHashCode () == this.GetHashCode ());
+				_currentCharacterFile = GameMasterScript.instance.UIMB.G_characterFiles [unitIndex];
+
+				//Set it up
+				GameMasterScript.instance.UIMB.G_SetupCharacterFile (_currentCharacterFile, unitData);
+			}
+			return _currentCharacterFile;
+		}
+	}
 
 	public bool isOnEnemyTrench { 
 		get { 
@@ -71,6 +85,10 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		get { return _health; }
 		set {
 			_health = value;
+
+			//Update slider
+			GameMasterScript.instance.UIMB.G_UpdateSlider (currentCharacterFile.healthSlider, (float)_health / (float)unitData.health);
+
 			//If the unit's health falls below zero, it dies to death, but like, deadly deathful death kind of death
 			if (_health <= 0)
 				OnDeathEnter ();
@@ -83,6 +101,10 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		get { return _stamina; }
 		set {
 			_stamina = value;
+
+			//Update slider
+			GameMasterScript.instance.UIMB.G_UpdateSlider (currentCharacterFile.staminaSlider, (float)_stamina / (float)unitData.stamina);
+
 			//If the unit's stamina falls below zero, the unit goes backies to the spawn
 			if (_stamina <= 0)
 				isExhausted = true;
@@ -118,15 +140,13 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		unitSR.color = unitData.tmpColor;
 
 		//Set temporary data
-		health = unitData.health;
-		stamina = unitData.stamina;
-		oxygen = 100;
+		_health = unitData.health;
+		_stamina = unitData.stamina;
+		_oxygen = 100;
 
 		//Set current tile
-		currentTile = newTile;
-
-		//Victory
-		//OnTileEnterEvent += GameMasterScript.instance.VMB.VictoryCheck;
+		_currentTile = newTile;
+		_currentTile.unitsOnTile.Add (this);
 
 		//Selection
 		canBeSelected = true;
@@ -136,6 +156,11 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	public void OnSelect ()
 	{
 		Debug.Log ("Unit Selected: " + this.gameObject.name);
+
+		//Display the correct file if player)
+		if (alignment == PlayerData.TypeOfPlayer.human) {
+			GameMasterScript.instance.UIMB.G_DisplayCharacterFile (currentCharacterFile, true);
+		}
 	}
 
 	#region FSM
@@ -232,8 +257,6 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		if (tilesToDig == null || tilesToDig.Length == 0)
 			return;
 		
-		Debug.Log ("Wee?");
-
 
 		StartCoroutine ("DiggingProcess", tilesToDig);
 	}
@@ -315,9 +338,15 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		if (CB.isFighting)
 			CB.StopCombat ();
 
+		//Reset dig path
+		DigSelectionManagerBehavior.ResetDigPath ();
+
 		//Deselect unit (in case it was)
 		if (GameMasterScript.instance.SMB.unitSelected.Contains (this))
 			GameMasterScript.instance.SMB.DeselectUnit (this);
+
+		//Remove unit from unit on tile storage
+		currentTile.unitsOnTile.Remove (this);
 
 		//VISION
 		DeleteIVisionEntry ();
@@ -402,14 +431,14 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		case PlayerData.TypeOfPlayer.human:
 			if (GameMasterScript.instance.PLMB.humanPlayer.resources >= amount) {
 				GameMasterScript.instance.PLMB.humanPlayer.resources -= amount;
-				GameMasterScript.instance.UIMB.UpdateResourcesUI ();
+				GameMasterScript.instance.UIMB.G_UpdateResourcesUI ();
 				return true;
 			}
 			break;
 		case PlayerData.TypeOfPlayer.enemy:
 			if (GameMasterScript.instance.PLMB.enemyPlayer.resources >= amount) {
 				GameMasterScript.instance.PLMB.enemyPlayer.resources -= amount;
-				GameMasterScript.instance.UIMB.UpdateResourcesUI ();
+				GameMasterScript.instance.UIMB.G_UpdateResourcesUI ();
 				return true;
 			}
 			break;
@@ -472,5 +501,10 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	public void OnDeselect ()
 	{
 		Debug.Log ("Unit Deselected: " + this.gameObject.name);
+
+		//Hide the correct file if player)
+		if (alignment == PlayerData.TypeOfPlayer.human) {
+			GameMasterScript.instance.UIMB.G_DisplayCharacterFile (currentCharacterFile, false);
+		}
 	}
 }

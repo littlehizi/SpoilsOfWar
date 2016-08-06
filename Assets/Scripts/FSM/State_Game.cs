@@ -4,6 +4,34 @@ using System.Collections.Generic;
 
 public class State_Game : BaseState
 {
+	#region FSM
+
+	InputManagerBehavior.InputState backupState;
+
+	private bool _isPaused;
+
+	public bool isPaused {
+		get{ return _isPaused; }
+		set { 
+			_isPaused = value;
+
+			//STOP TIME ! time powers are awesome ! Also, set inputs !
+			if (isPaused) {
+				Time.timeScale = 0.0f;
+				backupState = GameMasterScript.instance.IMB.currentState;
+				GameMasterScript.instance.IMB.currentState = InputManagerBehavior.InputState.disabled;
+			} else {
+				Time.timeScale = 1;
+				GameMasterScript.instance.IMB.currentState = backupState;
+			}
+
+			//Display pause menu
+			GameMasterScript.instance.UIMB.DisplayHUD (UserInterfaceManagerBehavior.TypeOfHUD.pauseMenu, _isPaused);
+
+		}
+	}
+
+	#endregion
 
 	public State_Game ()
 	{
@@ -26,7 +54,14 @@ public class State_Game : BaseState
 		//Set both player's resources and allow them to gather resources 
 		GameMasterScript.instance.RMB.SetBaseResources ();
 		GameMasterScript.instance.RMB.canGetResources = true;
-		GameMasterScript.instance.UIMB.UpdateResourcesUI ();
+		GameMasterScript.instance.UIMB.G_UpdateResourcesUI ();
+	}
+
+	public void Update ()
+	{
+		//Just check for escape to pause the game. Only that. Kinda disappointing, isn't it?
+		if (Input.GetKeyDown (KeyCode.Escape))
+			isPaused = !isPaused;
 	}
 
 	public void ButtonPressed (UserInterfaceManagerBehavior.G_ButtonType newButton)
@@ -38,6 +73,11 @@ public class State_Game : BaseState
 		case UserInterfaceManagerBehavior.G_ButtonType.goToMainMenu:
 			//GO TO MAIN MENU
 			GameMasterScript.ChangeState<State_MainMenu> ();
+			break;
+		case UserInterfaceManagerBehavior.G_ButtonType.unpause:
+			isPaused = false;
+			break;
+		case UserInterfaceManagerBehavior.G_ButtonType.controls:
 			break;
 		}
 	}

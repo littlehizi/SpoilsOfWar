@@ -1,0 +1,318 @@
+fileFormatVersion: 2
+guid: a247d0da148a68e4aaa78ead4588f377
+timeCreated: 1470455283
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: OpenFolders_Stats_0
+    21300002: OpenFolders_Stats_1
+    21300004: OpenFolders_Stats_2
+    21300006: OpenFolders_Stats_3
+    21300008: OpenFolders_Stats_4
+    21300010: OpenFolders_Stats_5
+    21300012: OpenFolders_Stats_6
+    21300014: OpenFolders_Stats_7
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: Standalone
+    maxTextureSize: 8192
+    textureFormat: -3
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
+  spriteSheet:
+    sprites:
+    - name: OpenFolders_Stats_0
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 505
+        width: 942
+        height: 1175
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 2, z: 0, w: 44}
+      outline:
+      - - {x: 139.13, y: -82.787506}
+        - {x: 137.13, y: -67.787506}
+        - {x: 133.13, y: -63.787506}
+        - {x: 95.130005, y: -63.787506}
+        - {x: 95.130005, y: 113.212494}
+        - {x: 92.130005, y: 116.212494}
+        - {x: 86.130005, y: 120.212494}
+        - {x: 67.130005, y: 130.2125}
+        - {x: 58.130005, y: 136.2125}
+        - {x: 38.130005, y: 147.2125}
+        - {x: 29.130005, y: 155.2125}
+        - {x: 24.130005, y: 157.2125}
+        - {x: 9.130005, y: 154.2125}
+        - {x: 1.1300049, y: 157.2125}
+        - {x: -7.869995, y: 157.2125}
+        - {x: -15.869995, y: 158.2125}
+        - {x: -19.869995, y: 162.2125}
+        - {x: -97.869995, y: 162.2125}
+        - {x: -101.869995, y: 159.2125}
+        - {x: -103.869995, y: 154.2125}
+        - {x: -103.869995, y: -77.787506}
+        - {x: -134.87, y: -77.787506}
+        - {x: -137.87, y: -80.787506}
+        - {x: -137.87, y: -171.7875}
+        - {x: 120.130005, y: -171.7875}
+        - {x: 135.13, y: -131.7875}
+        - {x: 139.13, y: -120.787506}
+    - name: OpenFolders_Stats_1
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 303
+        width: 453
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: OpenFolders_Stats_2
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 234
+        width: 456
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: OpenFolders_Stats_3
+      rect:
+        serializedVersion: 2
+        x: 1254
+        y: 507
+        width: 941
+        height: 1130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 139.29498, y: -82.2025}
+        - {x: 137.29498, y: -82.2025}
+        - {x: 137.29498, y: -62.2025}
+        - {x: 133.29498, y: -58.2025}
+        - {x: 95.29498, y: -58.2025}
+        - {x: 95.29498, y: 118.7975}
+        - {x: 93.29498, y: 122.7975}
+        - {x: 80.29498, y: 129.7975}
+        - {x: 67.29498, y: 135.7975}
+        - {x: 58.294983, y: 141.7975}
+        - {x: 38.294983, y: 152.7975}
+        - {x: 29.294983, y: 160.7975}
+        - {x: 18.294983, y: 160.7975}
+        - {x: 9.294983, y: 157.7975}
+        - {x: 2.294983, y: 163.7975}
+        - {x: -5.705017, y: 165.7975}
+        - {x: -99.70502, y: 165.7975}
+        - {x: -101.70502, y: 164.7975}
+        - {x: -103.70502, y: 159.7975}
+        - {x: -103.70502, y: -72.2025}
+        - {x: -134.70502, y: -72.2025}
+        - {x: -137.70502, y: -75.2025}
+        - {x: -137.70502, y: -165.2025}
+        - {x: 120.29498, y: -165.2025}
+        - {x: 122.29498, y: -160.2025}
+        - {x: 132.29498, y: -134.2025}
+        - {x: 139.29498, y: -115.2025}
+    - name: OpenFolders_Stats_4
+      rect:
+        serializedVersion: 2
+        x: 2351
+        y: 508
+        width: 942
+        height: 1236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 107}
+      outline:
+      - - {x: 139.16748, y: -97.91}
+        - {x: 137.16748, y: -97.91}
+        - {x: 137.16748, y: -77.91}
+        - {x: 133.16748, y: -73.91}
+        - {x: 95.16748, y: -73.91}
+        - {x: 95.16748, y: 103.09}
+        - {x: 93.16748, y: 107.09}
+        - {x: 80.16748, y: 114.09}
+        - {x: 58.16748, y: 126.09}
+        - {x: 38.16748, y: 137.09}
+        - {x: 29.16748, y: 145.09}
+        - {x: 18.16748, y: 145.09}
+        - {x: 9.16748, y: 142.09}
+        - {x: 2.1674805, y: 148.09}
+        - {x: -11.83252, y: 147.09}
+        - {x: -19.83252, y: 152.09}
+        - {x: -97.83252, y: 152.09}
+        - {x: -101.83252, y: 149.09}
+        - {x: -103.83252, y: 144.09}
+        - {x: -103.83252, y: -87.91}
+        - {x: -134.83252, y: -87.91}
+        - {x: -137.83252, y: -90.91}
+        - {x: -137.83252, y: -180.91}
+        - {x: 120.16748, y: -180.91}
+        - {x: 122.16748, y: -175.91}
+        - {x: 127.16748, y: -163.91}
+        - {x: 139.16748, y: -130.91}
+    - name: OpenFolders_Stats_5
+      rect:
+        serializedVersion: 2
+        x: 3473
+        y: 508
+        width: 942
+        height: 1128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 137.35248, y: -81.91}
+        - {x: 137.35248, y: -61.910004}
+        - {x: 134.35248, y: -57.910004}
+        - {x: 95.35248, y: -57.910004}
+        - {x: 95.35248, y: 120.09}
+        - {x: 93.35248, y: 122.09}
+        - {x: 86.35248, y: 126.09}
+        - {x: 68.35248, y: 136.09}
+        - {x: 41.352478, y: 152.09}
+        - {x: 31.352478, y: 162.09}
+        - {x: 19.352478, y: 162.09}
+        - {x: 9.352478, y: 158.09}
+        - {x: 1.352478, y: 163.09}
+        - {x: -7.647522, y: 163.09}
+        - {x: -14.647522, y: 160.09}
+        - {x: -16.647522, y: 166.09}
+        - {x: -99.64752, y: 166.09}
+        - {x: -101.64752, y: 164.09}
+        - {x: -103.64752, y: 159.09}
+        - {x: -103.64752, y: -71.91}
+        - {x: -134.64752, y: -71.91}
+        - {x: -137.64752, y: -74.91}
+        - {x: -137.64752, y: -164.91}
+        - {x: 120.35248, y: -164.91}
+        - {x: 122.35248, y: -160.91}
+        - {x: 139.35248, y: -115.91}
+        - {x: 139.35248, y: -81.91}
+    - name: OpenFolders_Stats_6
+      rect:
+        serializedVersion: 2
+        x: 4658
+        y: 508
+        width: 940
+        height: 1128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 138.46497, y: -81.91}
+        - {x: 136.46497, y: -81.91}
+        - {x: 136.46497, y: -60.910004}
+        - {x: 133.46497, y: -57.910004}
+        - {x: 94.464966, y: -57.910004}
+        - {x: 94.464966, y: 120.09}
+        - {x: 93.464966, y: 122.09}
+        - {x: 86.464966, y: 126.09}
+        - {x: 66.464966, y: 136.09}
+        - {x: 33.464966, y: 158.09}
+        - {x: 30.464966, y: 162.09}
+        - {x: 17.464966, y: 162.09}
+        - {x: 8.464966, y: 158.09}
+        - {x: 0.46496582, y: 164.09}
+        - {x: -15.535034, y: 163.09}
+        - {x: -17.535034, y: 166.09}
+        - {x: -101.535034, y: 166.09}
+        - {x: -105.535034, y: 158.09}
+        - {x: -104.535034, y: -71.91}
+        - {x: -134.53503, y: -71.91}
+        - {x: -137.53503, y: -73.91}
+        - {x: -137.53503, y: -164.91}
+        - {x: 121.464966, y: -164.91}
+        - {x: 137.46497, y: -122.91}
+        - {x: 138.46497, y: -117.91}
+    - name: OpenFolders_Stats_7
+      rect:
+        serializedVersion: 2
+        x: 5841
+        y: 508
+        width: 928
+        height: 1127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 135.49243, y: -57.910004}
+        - {x: 97.49243, y: -57.910004}
+        - {x: 97.49243, y: 119.09}
+        - {x: 95.49243, y: 123.09}
+        - {x: 82.49243, y: 130.09}
+        - {x: 69.49243, y: 136.09}
+        - {x: 60.49243, y: 142.09}
+        - {x: 40.49243, y: 153.09}
+        - {x: 31.492432, y: 161.09}
+        - {x: 20.492432, y: 161.09}
+        - {x: 11.492432, y: 158.09}
+        - {x: 3.4924316, y: 163.09}
+        - {x: -5.5075684, y: 163.09}
+        - {x: -12.507568, y: 160.09}
+        - {x: -13.507568, y: 164.09}
+        - {x: -15.507568, y: 166.09}
+        - {x: -97.50757, y: 166.09}
+        - {x: -99.50757, y: 165.09}
+        - {x: -101.50757, y: 160.09}
+        - {x: -101.50757, y: -71.91}
+        - {x: -132.50757, y: -71.91}
+        - {x: -135.50757, y: -74.91}
+        - {x: -135.50757, y: -164.91}
+        - {x: 122.49243, y: -164.91}
+        - {x: 125.49243, y: -157.91}
+        - {x: 136.49243, y: -128.91}
+        - {x: 136.49243, y: -58.910004}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

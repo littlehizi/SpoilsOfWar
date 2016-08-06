@@ -1,0 +1,395 @@
+fileFormatVersion: 2
+guid: 82db2d70598913e4d9f4ebf34ae31850
+timeCreated: 1470486093
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: GameUI Assets 1_0
+    21300002: GameUI Assets 1_1
+    21300004: GameUI Assets 1_2
+    21300006: GameUI Assets 1_3
+    21300008: GameUI Assets 1_4
+    21300010: GameUI Assets 1_5
+    21300012: GameUI Assets 1_6
+    21300014: GameUI Assets 1_7
+    21300016: GameUI Assets 1_8
+    21300018: GameUI Assets 1_9
+    21300020: GameUI Assets 1_10
+    21300022: GameUI Assets 1_11
+    21300024: GameUI Assets 1_12
+    21300026: GameUI Assets 1_13
+    21300028: GameUI Assets 1_14
+    21300030: GameUI Assets 1_15
+    21300032: GameUI Assets 1_16
+    21300034: GameUI Assets 1_17
+    21300036: GameUI Assets 1_18
+    21300038: GameUI Assets 1_19
+    21300040: GameUI Assets 1_20
+    21300042: GameUI Assets 1_21
+    21300044: GameUI Assets 1_22
+    21300046: GameUI Assets 1_23
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GameUI Assets 1_0
+      rect:
+        serializedVersion: 2
+        x: 4091
+        y: 1923
+        width: 3515
+        height: 1438
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GameUI Assets 1_1
+      rect:
+        serializedVersion: 2
+        x: 1498
+        y: 1608
+        width: 72
+        height: 273
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GameUI Assets 1_2
+      rect:
+        serializedVersion: 2
+        x: 1370
+        y: 1592
+        width: 98
+        height: 402
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GameUI Assets 1_3
+      rect:
+        serializedVersion: 2
+        x: 1422
+        y: 2050
+        width: 99
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GameUI Assets 1_4
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 3376
+        width: 645
+        height: 1325
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GameUI Assets 1_5
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 3374
+        width: 645
+        height: 1325
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GameUI Assets 1_6
+      rect:
+        serializedVersion: 2
+        x: 1624
+        y: 3359
+        width: 645
+        height: 1325
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GameUI Assets 1_7
+      rect:
+        serializedVersion: 2
+        x: 1559
+        y: 4478
+        width: 19
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_8
+      rect:
+        serializedVersion: 2
+        x: 2709
+        y: 3381
+        width: 36
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_9
+      rect:
+        serializedVersion: 2
+        x: 2757
+        y: 3383
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_10
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 2593
+        width: 1381
+        height: 521
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_11
+      rect:
+        serializedVersion: 2
+        x: 3156
+        y: 3089
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_12
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 1228
+        width: 1074
+        height: 1321
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_13
+      rect:
+        serializedVersion: 2
+        x: 4308
+        y: 1095
+        width: 391
+        height: 759
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_14
+      rect:
+        serializedVersion: 2
+        x: 4759
+        y: 1095
+        width: 391
+        height: 759
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_15
+      rect:
+        serializedVersion: 2
+        x: 5188
+        y: 1103
+        width: 391
+        height: 759
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_16
+      rect:
+        serializedVersion: 2
+        x: 5614
+        y: 1110
+        width: 391
+        height: 760
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_17
+      rect:
+        serializedVersion: 2
+        x: 6055
+        y: 1080
+        width: 394
+        height: 763
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_18
+      rect:
+        serializedVersion: 2
+        x: 4327
+        y: 279
+        width: 391
+        height: 761
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_19
+      rect:
+        serializedVersion: 2
+        x: 4778
+        y: 234
+        width: 391
+        height: 762
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_20
+      rect:
+        serializedVersion: 2
+        x: 5246
+        y: 218
+        width: 394
+        height: 759
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_21
+      rect:
+        serializedVersion: 2
+        x: 5682
+        y: 218
+        width: 391
+        height: 759
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_22
+      rect:
+        serializedVersion: 2
+        x: 6122
+        y: 233
+        width: 392
+        height: 760
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GameUI Assets 1_23
+      rect:
+        serializedVersion: 2
+        x: 6574
+        y: 226
+        width: 393
+        height: 759
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

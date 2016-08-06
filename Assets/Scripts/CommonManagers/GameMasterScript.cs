@@ -22,6 +22,8 @@ public class GameMasterScript : MonoBehaviour
 	public UserInterfaceManagerBehavior UIMB;
 	public VictoryManagerBehavior VMB;
 	public ResourceManagerBehavior RMB;
+	public TickManagerBehavior TMB;
+	public TimeManagerBehavior TIMB;
 
 	public IManager[] managers;
 
@@ -36,9 +38,12 @@ public class GameMasterScript : MonoBehaviour
 	public GameObject[,] trenchGrid;
 
 	//Game Variables
-	public int startResources;
+	public UnitData[] playerCharacters = new UnitData[6];
+	public int daysInARound;
 
 	//Unit Variable
+	public int startResources;
+	public float delayBetweenTicks;
 	public float baseUnitSpeed;
 	public int staminaCostMove;
 	public int staminaCostDig;
@@ -119,11 +124,12 @@ public class GameMasterScript : MonoBehaviour
 		GameMasterScript.ChangeState<State_MainMenu> ();
 	}
 
+	//Method will be run when State_Game begins.
 	public void StartGame ()
 	{
 		//ORDER MATTERS !! DON'T TOUCH IF YOU DON'T KNOW
 		if (managers == null)
-			managers = new IManager[10]{ PLMB, GMB, FOWMB, IMB, SMB, PMB, DSMB, USMB, VMB, RMB };
+			managers = new IManager[12]{ PLMB, GMB, FOWMB, IMB, SMB, PMB, DSMB, USMB, VMB, RMB, TMB, TIMB };
 
 		//Initialize Managers
 		for (int i = 0; i < managers.Length; i++)

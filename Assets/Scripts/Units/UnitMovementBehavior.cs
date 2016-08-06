@@ -51,7 +51,7 @@ public class UnitMovementBehavior : MonoBehaviour
 			}
 
 			//Wait according to the speed stat. 
-			yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * (unitBehavior.isExhausted ? GameMasterScript.instance.exhaustEfficiencyModifier : 1) / (float)unitBehavior.unitData.speed);
+			yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * ((1 - unitBehavior.stamina / unitBehavior.unitData.stamina) * GameMasterScript.instance.exhaustEfficiencyModifier) / (float)unitBehavior.unitData.speed);
 
 			//Move the unit to the next tile
 			Vector3 tmpPos = path [currentIndex].tilePos;
@@ -61,6 +61,12 @@ public class UnitMovementBehavior : MonoBehaviour
 
 			//Set current tile to new tile
 			unitBehavior.currentTile = path [currentIndex];
+
+			//Fortify tile
+			if (path [currentIndex].isFortified == false && unitBehavior.UseResource (GameMasterScript.instance.resourceUsedPerFortification)) {
+				path [currentIndex].isFortified = true;
+			}
+
 
 			//Remove some stamina
 			unitBehavior.stamina -= GameMasterScript.instance.staminaCostMove;

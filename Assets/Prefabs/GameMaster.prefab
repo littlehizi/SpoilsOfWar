@@ -21,6 +21,8 @@ GameObject:
   - 114: {fileID: 11410494}
   - 114: {fileID: 11438038}
   - 114: {fileID: 114000011685851846}
+  - 114: {fileID: 114000013486385688}
+  - 114: {fileID: 114000010374687448}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: GMB
@@ -283,10 +285,21 @@ MonoBehaviour:
   UIMB: {fileID: 11438038}
   VMB: {fileID: 11410494}
   RMB: {fileID: 114000011685851846}
+  TMB: {fileID: 114000013486385688}
+  TIMB: {fileID: 114000010374687448}
   pathfindingType: 2
   gridWidth: 50
   gridHeight: 30
+  playerCharacters:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  daysInARound: 10
   startResources: 50
+  delayBetweenTicks: 1.5
   baseUnitSpeed: 3
   staminaCostMove: 1
   staminaCostDig: 5
@@ -310,9 +323,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitPrefab: {fileID: 117792, guid: abafa89adb4c5e8448fb054384cdc110, type: 2}
   unitTypes:
+  - {fileID: 11400000, guid: 24c5675d404b63c419ac1309ca66f041, type: 2}
   - {fileID: 11400000, guid: 6c876147680f10b409aa2c2733d51337, type: 2}
   - {fileID: 11400000, guid: 49033d1c3a130b349899572ab9f4fe44, type: 2}
-  - {fileID: 11400000, guid: 24c5675d404b63c419ac1309ca66f041, type: 2}
 --- !u!114 &11430764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -363,7 +376,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 506d0c6a23362bc4fb48c47c809c7ad7, type: 2}
   - {fileID: 11400000, guid: 71147385541721f45aabcc985e3b79c0, type: 2}
   - {fileID: 11400000, guid: ba9f5414d7d578245baaee9683a3f0e2, type: 2}
-  percentOfObstacles: 39
+  percentOfObstacles: 35
   obstacleSprite: {fileID: 21300000, guid: a2dd925f8d9a6ae4fad27c5dfaa34d8e, type: 3}
   fortifiedSprite: {fileID: 21300000, guid: e69fdb4c8aaf689488a2642681d53d4b, type: 3}
 --- !u!114 &11438038
@@ -381,8 +394,93 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  playerResources: {fileID: 0}
-  enemyResources: {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  MM_mainMenuButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  CS_selectionFiles:
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    className: {fileID: 0}
+    medal: {fileID: 0}
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    className: {fileID: 0}
+    medal: {fileID: 0}
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    className: {fileID: 0}
+    medal: {fileID: 0}
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    className: {fileID: 0}
+    medal: {fileID: 0}
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    className: {fileID: 0}
+    medal: {fileID: 0}
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    className: {fileID: 0}
+    medal: {fileID: 0}
+  G_playerResources: {fileID: 0}
+  G_enemyResources: {fileID: 0}
+  G_characterFiles:
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    healthSlider: {fileID: 0}
+    staminaSlider: {fileID: 0}
+    picture: {fileID: 0}
+    medal: {fileID: 0}
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    healthSlider: {fileID: 0}
+    staminaSlider: {fileID: 0}
+    picture: {fileID: 0}
+    medal: {fileID: 0}
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    healthSlider: {fileID: 0}
+    staminaSlider: {fileID: 0}
+    picture: {fileID: 0}
+    medal: {fileID: 0}
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    healthSlider: {fileID: 0}
+    staminaSlider: {fileID: 0}
+    picture: {fileID: 0}
+    medal: {fileID: 0}
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    healthSlider: {fileID: 0}
+    staminaSlider: {fileID: 0}
+    picture: {fileID: 0}
+    medal: {fileID: 0}
+  - openFile: {fileID: 0}
+    closedFile: {fileID: 0}
+    healthSlider: {fileID: 0}
+    staminaSlider: {fileID: 0}
+    picture: {fileID: 0}
+    medal: {fileID: 0}
+  clockHandleBig: {fileID: 0}
+  clockHandleSmall: {fileID: 0}
+  daysLeft:
+  - {fileID: 0}
+  - {fileID: 0}
+  dayNumbers:
+  - {fileID: 21300026, guid: 82db2d70598913e4d9f4ebf34ae31850, type: 3}
+  - {fileID: 21300028, guid: 82db2d70598913e4d9f4ebf34ae31850, type: 3}
+  - {fileID: 21300030, guid: 82db2d70598913e4d9f4ebf34ae31850, type: 3}
+  - {fileID: 21300032, guid: 82db2d70598913e4d9f4ebf34ae31850, type: 3}
+  - {fileID: 21300034, guid: 82db2d70598913e4d9f4ebf34ae31850, type: 3}
+  - {fileID: 21300036, guid: 82db2d70598913e4d9f4ebf34ae31850, type: 3}
+  - {fileID: 21300038, guid: 82db2d70598913e4d9f4ebf34ae31850, type: 3}
+  - {fileID: 21300040, guid: 82db2d70598913e4d9f4ebf34ae31850, type: 3}
+  - {fileID: 21300042, guid: 82db2d70598913e4d9f4ebf34ae31850, type: 3}
+  - {fileID: 21300044, guid: 82db2d70598913e4d9f4ebf34ae31850, type: 3}
 --- !u!114 &11445322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -458,6 +556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   humanPlayer: {fileID: 11400000, guid: 78bd7faa5f5defa4cb71e90b5e78f48a, type: 2}
   enemyPlayer: {fileID: 11400000, guid: ed76a6d0eb4e21443855205a2a6cb0ea, type: 2}
+  enemyTeamComposition: 1
 --- !u!114 &11477180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -491,6 +590,20 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 150090}
   m_IsPrefabParent: 1
+--- !u!114 &114000010374687448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f813baffd3a2efd4fb11c47c40f3e6f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTimeRunning: 0
+  debugTimeScale: 1
+  currentTime: 0
 --- !u!114 &114000011685851846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -506,3 +619,15 @@ MonoBehaviour:
   resourceGainPerBatch: 1
   resourceDelay: 1.4
   resourcesCap: 250
+--- !u!114 &114000013486385688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76c108e1eca30947976375b5b1c0034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canTick: 0

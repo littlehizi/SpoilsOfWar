@@ -183,8 +183,6 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 							DigSelectionManagerBehavior.ResetTileColors ();
 						} else
 							((UnitBehavior)SMB.unitSelected [0]).StartDiggingProcess (DigSelectionManagerBehavior.OutputTilesToDig (SMB.unitSelected [0].currentTile));
-
-						Debug.Log ("hOOIIII");
 						//Reset flag
 						digSelectionTmp = null;
 					} 
