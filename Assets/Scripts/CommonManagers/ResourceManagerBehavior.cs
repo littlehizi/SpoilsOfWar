@@ -8,6 +8,9 @@ public class ResourceManagerBehavior : MonoBehaviour, IManager
 
 	//Internal variables
 	public bool canGetResources;
+
+	public static bool s_canGetResources{ get { return GameMasterScript.instance.RMB.canGetResources; } }
+
 	public int resourceGainPerBatch;
 	public float resourceDelay;
 	public int resourcesCap;
@@ -45,7 +48,7 @@ public class ResourceManagerBehavior : MonoBehaviour, IManager
 	IEnumerator UpdateResources ()
 	{
 		while (true) {
-			if (!canGetResources)
+			if (!s_canGetResources)
 				yield return null;
 			
 			yield return new WaitForSeconds (resourceDelay);

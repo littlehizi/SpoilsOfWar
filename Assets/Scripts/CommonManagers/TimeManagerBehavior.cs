@@ -12,6 +12,7 @@ public class TimeManagerBehavior : MonoBehaviour, IManager
 	public void OnGameStart ()
 	{
 		isTimeRunning = true;	
+		currentTime = 0;
 	}
 
 	/// <summary>

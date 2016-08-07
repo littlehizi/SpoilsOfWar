@@ -41,7 +41,8 @@ public class State_Game : BaseState
 	public override void OnStateEnter ()
 	{
 		//Will be run every time entering this state
-	
+		isPaused = false;
+
 		//Display Game HUD
 		GameMasterScript.instance.UIMB.DisplayHUD (UserInterfaceManagerBehavior.TypeOfHUD.game, true);
 
@@ -123,10 +124,18 @@ public class State_Game : BaseState
 		Destroy (GameObject.Find ("Grid"));
 		Destroy (GameObject.Find ("FogOfWar Holder"));
 
+		//Stop the tick, time and resource from working
+		GameMasterScript.instance.RMB.StopAllCoroutines ();
+		GameMasterScript.instance.TMB.canTick = false;
+		GameMasterScript.instance.TIMB.isTimeRunning = false;
+
 		//Hide game HUD
 		GameMasterScript.instance.UIMB.DisplayHUD (UserInterfaceManagerBehavior.TypeOfHUD.game, false);
 		GameMasterScript.instance.UIMB.DisplayHUD (UserInterfaceManagerBehavior.TypeOfHUD.endGame, false);
 
+		//Reset pause
+		Time.timeScale = 1;
+		GameMasterScript.instance.UIMB.DisplayHUD (UserInterfaceManagerBehavior.TypeOfHUD.pauseMenu, false);
 
 	}
 }
