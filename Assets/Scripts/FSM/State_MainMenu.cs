@@ -179,6 +179,17 @@ public class State_MainMenu : BaseState
 		}
 	}
 
+	public void Update ()
+	{
+		//Debug
+		if (Input.GetKeyDown (KeyCode.K)) {
+			for (int i = 0; i < GameMasterScript.instance.playerCharacters.Length; i++) {
+				GameMasterScript.instance.playerCharacters [i] = GameMasterScript.instance.USMB.unitTypes [(int)UnitData.UnitType.Digger];
+			}
+
+			CS_ButtonPressed (UserInterfaceManagerBehavior.CS_ButtonType.confirm);
+		}
+	}
 
 	public override void OnStateExit ()
 	{

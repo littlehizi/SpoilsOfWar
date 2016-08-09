@@ -6,9 +6,9 @@ public class UnitData : ScriptableObject
 {
 	public enum UnitType
 	{
-		Fighter,
+		Digger,
 		Listener,
-		Digger
+		Fighter
 	}
 
 	public UnitType typeOfUnit;

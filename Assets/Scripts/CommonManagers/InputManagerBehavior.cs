@@ -35,6 +35,7 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 			case InputState.idle:
 				break;
 			case InputState.unitSelected:
+				//DigSelectionManagerBehavior.ResetDigPath ();
 				break;
 			}
 
@@ -190,6 +191,7 @@ public class InputManagerBehavior : MonoBehaviour, IManager
 			}
 		}
 
+		//Pressing space will place a bomb
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			if (!((UnitBehavior)SMB.unitSelected [0]).PlantBomb () || ((UnitBehavior)SMB.unitSelected [0]).BB.canDetonnateABombsite)
 				((UnitBehavior)SMB.unitSelected [0]).DetonnateBomb ();

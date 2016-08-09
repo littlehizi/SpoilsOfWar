@@ -24,6 +24,7 @@ public class GameMasterScript : MonoBehaviour
 	public ResourceManagerBehavior RMB;
 	public TickManagerBehavior TMB;
 	public TimeManagerBehavior TIMB;
+	public CursorManagerBehavior CMB;
 
 	public IManager[] managers;
 
@@ -53,7 +54,9 @@ public class GameMasterScript : MonoBehaviour
 	public int oxygenLossPerTile;
 	public int bombExplosionRadius;
 	public float damagePerBomb;
+	public int farBombDamage;
 	public int resourceUsedPerFortification;
+	public Vector3 tileHpBeforeNextFrame;
 
 	// Camera Variables
 	public static WorldCamera.BoxLimit cameraLimits = new WorldCamera.BoxLimit ();

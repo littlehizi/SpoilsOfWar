@@ -240,10 +240,18 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 		List<AStarNode> nodePath = new List<AStarNode> ();
 		AStarNode currentPathNode = destinationNode;
 
+		bool isNull = false;
 		while (currentPathNode != originNode) {
 			nodePath.Add (currentPathNode);
+			if (currentPathNode.parent == null) {
+				isNull = true;
+				break;
+			}
 			currentPathNode = currentPathNode.parent;
 		}
+
+		if (isNull)
+			return null;
 
 		//Reverse !
 		nodePath.Reverse ();

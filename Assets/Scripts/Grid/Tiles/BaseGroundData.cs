@@ -10,6 +10,7 @@ public class BaseGroundData : ScriptableObject
 	public float digRes;
 	//DEFAULT SPRITE OF EACH TILE
 	public Sprite sprite;
+	public Sprite[] destructionSprites;
 	//MOVEMENT COST OF MOVING OVER TILES. IT WILL AFFECT THE PATHFINDING.
 	public int moveCost;
 	//WHEN THIS HITS ZERO, THE TILE WILL COLLAPSE

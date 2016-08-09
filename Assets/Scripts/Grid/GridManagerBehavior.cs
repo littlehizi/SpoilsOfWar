@@ -218,4 +218,9 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 	{
 		return new Vector2 (newTile.ID % ID_X_DIGGIT, (newTile.ID - (newTile.ID % ID_X_DIGGIT)) / ID_X_DIGGIT);
 	}
+
+	public GroundBehavior TileposToTile (Vector2 input)
+	{
+		return currentGrid.tiles [(int)input.x, (int)input.y];	
+	}
 }

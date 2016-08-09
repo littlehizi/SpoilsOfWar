@@ -23,9 +23,9 @@ public class WorldCamera : MonoBehaviour
 	public static BoxLimit mouseScrollLimits = new BoxLimit ();
 	public static WorldCamera instance;
 
-	private float cameraMoveSpeed = 60.0f;
-	private float shiftBonus = 45.0f;
-	private float mouseBoundary = 25.0f;
+	public float cameraMoveSpeed = 60.0f;
+	public float shiftBonus = 45.0f;
+	public float mouseBoundary;
 
 	public static SetupAndSpawningScript setupScript;
 
@@ -49,14 +49,15 @@ public class WorldCamera : MonoBehaviour
 		mouseScrollLimits.leftLimit = mouseBoundary;
 		mouseScrollLimits.rightLimit = mouseBoundary;
 		mouseScrollLimits.topLimit = mouseBoundary;
-		mouseScrollLimits.bottomLimit = mouseBoundary;
+		mouseScrollLimits.bottomLimit = mouseBoundary / 3;
 
 	}
 
 	void Update ()
 	{
 		if (GameMasterScript.instance.IMB.currentState != InputManagerBehavior.InputState.disabled) {
-			if (CheckIfUserCameraInput ()) {
+			bool isKeyboardInput = false;
+			if (CheckIfUserCameraInput (out isKeyboardInput)) {
 				Vector3 cameraDesiredMove = GetDesiredTranslation ();
 
 				if (!isDesiredPositionOverBoundaries (cameraDesiredMove)) {
@@ -67,7 +68,7 @@ public class WorldCamera : MonoBehaviour
 	}
 
 	//Check if the user is inputting commands for the camera to move
-	public bool CheckIfUserCameraInput ()
+	public bool CheckIfUserCameraInput (out bool isKeyboard)
 	{
 		bool keyboardMove;
 		bool mouseMove;
@@ -76,8 +77,10 @@ public class WorldCamera : MonoBehaviour
 		//check keyboard
 		if (WorldCamera.AreCameraKeyboardButtonsPressed ()) {
 			keyboardMove = true;
+			isKeyboard = true;
 		} else {
 			keyboardMove = false;
+			isKeyboard = false;
 		}
 
 		//check mouse position
@@ -111,19 +114,19 @@ public class WorldCamera : MonoBehaviour
 
 		//Move via keyboard
 		if (Input.GetKey (KeyCode.W)) {
-			desiredY = moveSpeed;
+			desiredY = moveSpeed * Time.deltaTime;
 		}
 
 		if (Input.GetKey (KeyCode.S)) {
-			desiredY = -moveSpeed;
+			desiredY = -moveSpeed * Time.deltaTime;
 		}
 
 		if (Input.GetKey (KeyCode.A)) {
-			desiredX = -moveSpeed;
+			desiredX = -moveSpeed * Time.deltaTime;
 		}
 
 		if (Input.GetKey (KeyCode.D)) {
-			desiredX = moveSpeed;
+			desiredX = moveSpeed * Time.deltaTime;
 		}
 
 		//move via mouse

@@ -27,10 +27,11 @@ public class UnitMovementBehavior : MonoBehaviour
 		}
 
 		//Stop all walk coroutines if any
-		StopCoroutine ("WalkUntilDestination");
+		//StopCoroutine ("WalkUntilDestination");
+		StopAllCoroutines ();
 
 		//Start the walk coroutine
-		StartCoroutine ("WalkUntilDestination", path);
+		StartCoroutine (WalkUntilDestination (path));
 	}
 
 
@@ -83,6 +84,6 @@ public class UnitMovementBehavior : MonoBehaviour
 	/// </summary>
 	public void StopWalking ()
 	{
-		StopCoroutine ("WalkUntilDestination");
+		StopAllCoroutines ();
 	}
 }

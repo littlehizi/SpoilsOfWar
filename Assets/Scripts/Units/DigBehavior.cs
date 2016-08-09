@@ -47,12 +47,23 @@ public class DigBehavior : MonoBehaviour
 				tilesToDig [currentIndex].hp -= unitBehavior.unitData.diggingPower * 4;
 				Debug.Log ("Diggin tile... Hp left: " + tilesToDig [currentIndex].hp);
 				justDugCurrentTile = true;
+
+				//Check for change of tile sprite
+				if (tilesToDig [currentIndex].hp < GameMasterScript.instance.tileHpBeforeNextFrame.z)
+					tilesToDig [currentIndex].tileSR.sprite = tilesToDig [currentIndex].groundData.destructionSprites [2];
+				else if (tilesToDig [currentIndex].hp < GameMasterScript.instance.tileHpBeforeNextFrame.y)
+					tilesToDig [currentIndex].tileSR.sprite = tilesToDig [currentIndex].groundData.destructionSprites [1];
+				else if (tilesToDig [currentIndex].hp < GameMasterScript.instance.tileHpBeforeNextFrame.x)
+					tilesToDig [currentIndex].tileSR.sprite = tilesToDig [currentIndex].groundData.destructionSprites [0];
 			}
 
 			//If the upcoming tile has been dug, walk to it instead
 			if (!justDugCurrentTile && tilesToDig [currentIndex].isDug) {
 				//Wait according to the speed stat. 
 				yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * (unitBehavior.isExhausted ? GameMasterScript.instance.exhaustEfficiencyModifier : 1) / (float)unitBehavior.unitData.speed);
+			} else {
+				//If the player really dug the previous tile, reset its sprite
+				tilesToDig [currentIndex].tileSR.sprite = null;
 			}
 
 			//Move the unit to the next tile once it's broken

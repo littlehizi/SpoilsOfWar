@@ -19,6 +19,11 @@ public class CombatBehavior : MonoBehaviour
 		isFighting = true;
 		canRunAway = isEngaging;
 
+		for (int i = 0; i < opponent.unitsOnTile.Count; i++) {
+			if (!opponent.unitsOnTile [i].GetComponent<CombatBehavior> ().isFighting)
+				opponent.unitsOnTile [i].IsEngagedInCombat (unitBehavior.currentTile);
+		}
+
 		StartCoroutine ("Fighting", opponent);
 	}
 
@@ -30,16 +35,23 @@ public class CombatBehavior : MonoBehaviour
 
 		while (isFighting) {
 			yield return new WaitForSeconds (GameMasterScript.instance.combatSpeed);
-			//If the unit is exhausted, it cannot attack anymore
-			if (unitBehavior.stamina > 0) {
-				//Pick a random enemy from the ones available
-				UnitBehavior selectedEnemy = opponentTile.unitsOnTile [Random.Range (0, opponentTile.unitsOnTile.Count)];
 
-				//Enemy takes damage according to its strength and its percentage of stamina left
-				selectedEnemy.health -= (int)(((float)unitBehavior.unitData.strength) * (((float)unitBehavior.unitData.stamina) / ((float)unitBehavior.stamina)));
-
-				unitBehavior.stamina -= GameMasterScript.instance.staminaCostFight;
+			//Check if there's still some enemies left to attack
+			if (opponentTile.unitsOnTile.Count == 0) {
+				//Congratz on not dying ! 
+				isFighting = false;
+				break;
 			}
+
+			//Pick a random enemy from the ones available
+			UnitBehavior selectedEnemy = opponentTile.unitsOnTile [Random.Range (0, opponentTile.unitsOnTile.Count)];
+
+			Debug.Log (((int)(((float)unitBehavior.unitData.strength) * (0.1f + ((float)unitBehavior.unitData.stamina) / ((float)unitBehavior.stamina)))) + "Damage dealt to " + selectedEnemy.name);
+
+			//Enemy takes damage according to its strength and its percentage of stamina left
+			selectedEnemy.health -= (int)(((float)unitBehavior.unitData.strength) * (0.1f + ((float)unitBehavior.unitData.stamina) / ((float)unitBehavior.stamina)));
+
+			unitBehavior.stamina -= GameMasterScript.instance.staminaCostFight;
 		}
 	}
 

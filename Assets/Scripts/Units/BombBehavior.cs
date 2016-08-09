@@ -112,6 +112,17 @@ public class BombBehavior : MonoBehaviour
 		for (int i = 0; i < orderedExplosionTileList.Count; i++) {
 			orderedExplosionTileList [i].hp -= (int)(GameMasterScript.instance.damagePerBomb / (orderedExplosionTileList [i].digRes / 10 * i));
 			Debug.Log ((int)(GameMasterScript.instance.damagePerBomb / (orderedExplosionTileList [i].digRes / 10 * i)));
+
+			//Kill all units in the explosion range, unless they're too far, then try to kill them
+			if (orderedExplosionTileList [i].unitsOnTile.Count > 0) {
+				for (int k = 0; k < orderedExplosionTileList [i].unitsOnTile.Count; k++) {
+					//If the unit is too closed from the bomb, kill it. If not, remove soem HP.
+					if (Vector3.Distance (currentBomb.bombTile.trueTilePos, orderedExplosionTileList [i].trueTilePos) < GameMasterScript.instance.bombExplosionRadius / 2)
+						orderedExplosionTileList [i].unitsOnTile [k].OnDeathEnter ();
+					else
+						orderedExplosionTileList [i].unitsOnTile [k].health -= GameMasterScript.instance.farBombDamage;
+				}
+			}
 		}
 
 		//Reset bombs

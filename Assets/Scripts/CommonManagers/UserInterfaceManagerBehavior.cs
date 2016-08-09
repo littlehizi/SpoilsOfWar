@@ -127,7 +127,7 @@ public class UserInterfaceManagerBehavior : MonoBehaviour, IManager
 	public class CharacterFile
 	{
 		public GameObject openFile, closedFile;
-		public Slider healthSlider, staminaSlider;
+		public Slider healthSlider, staminaSlider, oxygenSlider;
 		public Image picture;
 		public Image medal;
 	}
@@ -168,6 +168,14 @@ public class UserInterfaceManagerBehavior : MonoBehaviour, IManager
 	{
 		newFile.openFile.SetActive (canDisplay);
 		newFile.closedFile.SetActive (!canDisplay);
+	}
+
+	bool[] G_isDisplaying = new bool[6]{ false, false, false, false, false, false };
+
+	public void G_DisplayCharacterFile (int file)
+	{
+		G_DisplayCharacterFile (G_characterFiles [file], !G_isDisplaying [file]);
+		G_isDisplaying [file] = !G_isDisplaying [file];
 	}
 
 	public void G_UpdateSlider (Slider newSlider, float newValue)

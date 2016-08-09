@@ -39,11 +39,18 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 				OnStaminaRestored ();
 			}
 
-			//Check for oxygen change
-			if (stamina < unitData.stamina && !canPathfindAir ()) {
-				Debug.Log ("wee?");
-				oxygen -= GameMasterScript.instance.oxygenLossPerTile;
-			}
+//			//Check for oxygen change
+//			if (stamina < unitData.stamina && !canPathfindAir ()) {
+//				Debug.Log ("Unit is gonna die from oxygen lost !");
+//				isLosingOxygen = true;
+//				SubscribeToOxygenLossTick (isLosingOxygen);
+//
+//			} else if (isLosingOxygen && canPathfindAir ()) {
+//				isLosingOxygen = false;
+//				SubscribeToOxygenLossTick (isLosingOxygen);
+//			}
+//
+//
 		}
 	}
 
@@ -87,7 +94,8 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 			_health = value;
 
 			//Update slider
-			GameMasterScript.instance.UIMB.G_UpdateSlider (currentCharacterFile.healthSlider, (float)_health / (float)unitData.health);
+			if (alignment == PlayerData.TypeOfPlayer.human)
+				GameMasterScript.instance.UIMB.G_UpdateSlider (currentCharacterFile.healthSlider, (float)_health / (float)unitData.health);
 
 			//If the unit's health falls below zero, it dies to death, but like, deadly deathful death kind of death
 			if (_health <= 0)
@@ -103,7 +111,8 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 			_stamina = value;
 
 			//Update slider
-			GameMasterScript.instance.UIMB.G_UpdateSlider (currentCharacterFile.staminaSlider, (float)_stamina / (float)unitData.stamina);
+			if (alignment == PlayerData.TypeOfPlayer.human)
+				GameMasterScript.instance.UIMB.G_UpdateSlider (currentCharacterFile.staminaSlider, (float)_stamina / (float)unitData.stamina);
 
 			//If the unit's stamina falls below zero, the unit goes backies to the spawn
 			if (_stamina <= 0)
@@ -118,6 +127,11 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		set {
 			_oxygen = value;
 			//if the unit has no more oxygen, the unit dies.
+
+			//Update slider
+			if (alignment == PlayerData.TypeOfPlayer.human)
+				GameMasterScript.instance.UIMB.G_UpdateSlider (currentCharacterFile.oxygenSlider, (float)_oxygen / 100f);
+			
 			if (_oxygen <= 0)
 				OnDeathEnter ();
 		}
@@ -141,8 +155,9 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 
 		//Set temporary data
 		_health = unitData.health;
-		_stamina = unitData.stamina;
+		_stamina = unitData.stamina - 1;
 		_oxygen = 100;
+		SubscribeToOxygenLossTick (true);
 
 		//Set current tile
 		_currentTile = newTile;
@@ -151,6 +166,9 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		//Selection
 		canBeSelected = true;
 		isExhausted = false;
+
+		if (alignment == PlayerData.TypeOfPlayer.enemy)
+			this.GetComponent<AIBrainBehavior> ().SetupAI ();
 	}
 
 	public void OnSelect ()
@@ -338,8 +356,14 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		if (CB.isFighting)
 			CB.StopCombat ();
 
+		UMB.StopAllCoroutines ();
+		DB.StopAllCoroutines ();
+
 		//Reset dig path
 		DigSelectionManagerBehavior.ResetDigPath ();
+
+		//Desubscribe to oxygen loss event just in case
+		SubscribeToOxygenLossTick (false);
 
 		//Deselect unit (in case it was)
 		if (GameMasterScript.instance.SMB.unitSelected.Contains (this))
@@ -381,9 +405,29 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		} else {
 			spawnTile = GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [0];
 		}
+
 		GroundBehavior[] path = PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, currentTile, spawnTile, true);
 
 		return path != null;
+	}
+
+	void SubscribeToOxygenLossTick (bool state)
+	{
+		if (state)
+			GameMasterScript.instance.TMB.OnNewTickE += OnOxygenLoss;
+		else
+			GameMasterScript.instance.TMB.OnNewTickE -= OnOxygenLoss;
+	}
+
+	//Lose oxygen every tick !
+	void OnOxygenLoss ()
+	{
+		//Check for oxygen change
+		if (!canPathfindAir ()) {
+			Debug.Log ("Unit is gonna die from oxygen lost !");
+			oxygen -= GameMasterScript.instance.oxygenLossPerTile;
+
+		} 
 	}
 
 	#endregion

@@ -37,10 +37,7 @@ public class UnitSpawnerManagerBehavior : MonoBehaviour, IManager
 		//Give data to unit. UNIT IS FREEEEEEE
 		newUnit.unitData = correctData;
 
-		//Run unit setup
-		newUnit.SetupUnit (newTile);
 
-		newUnit.alignment = newAlignment;
 
 		//ADD ALIGNMENT COMPONENTS
 		switch (newAlignment) {
@@ -53,6 +50,11 @@ public class UnitSpawnerManagerBehavior : MonoBehaviour, IManager
 			newUnit.gameObject.AddComponent<AIBrainBehavior> ();
 			break;
 		}
+
+		newUnit.alignment = newAlignment;
+
+		//Run unit setup
+		newUnit.SetupUnit (newTile);
 
 		return newUnit;
 	}

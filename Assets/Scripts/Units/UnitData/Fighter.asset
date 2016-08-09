@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa848c737d92b24cb4d24897b3c7b0c, type: 3}
   m_Name: Fighter
   m_EditorClassIdentifier: 
-  typeOfUnit: 0
+  typeOfUnit: 2
   sprite: {fileID: 21300000, guid: d28f8d08ad4185546ad40be1e03a0012, type: 3}
   filePicture: {fileID: 0}
   tmpColor: {r: 0.6985294, g: 0, b: 0, a: 1}

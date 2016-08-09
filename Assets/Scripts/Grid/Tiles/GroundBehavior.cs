@@ -34,6 +34,16 @@ public class GroundBehavior : MonoBehaviour
 	public Vector2 tilePos;
 	public int ID;
 
+	GroundBehavior[] _tileNeighbors;
+
+	GroundBehavior[] tileNeighbors {
+		get{ return _tileNeighbors; }
+		set { 
+			_tileNeighbors = PathfindingManagerBehavior.GetTileNeighbor (this).ToArray ();
+		}
+	}
+
+
 	//Handy stuff (FOW)
 	public Vector2 trueTilePos { get { return new Vector2 (tilePos.x, -tilePos.y); } }
 
@@ -54,6 +64,7 @@ public class GroundBehavior : MonoBehaviour
 	public int moveCost;
 	int collapseHP;
 	bool isCollapsing;
+	SpriteRenderer subTileSR;
 
 	private bool _isFortified;
 
@@ -166,8 +177,24 @@ public class GroundBehavior : MonoBehaviour
 		isCollapsing = false;
 		isDug = false;
 
+		StartCoroutine (SetTileNeighbor ());
+
+		//Set subtile
+		subTileSR = new GameObject ("subTileSR").AddComponent<SpriteRenderer> ();
+		subTileSR.transform.SetParent (this.transform);
+		subTileSR.transform.localPosition = Vector3.zero;
+		subTileSR.sprite = groundData.sprite;
+		subTileSR.color = Color.white;
+
 		//Temporary stuff
-		colorBackup = tileSR.color = tileSR.color;
+		colorBackup = tileSR.color;
+		tileSR.sprite = groundData.sprite;
+	}
+
+	IEnumerator SetTileNeighbor ()
+	{
+		yield return new WaitForSeconds (0.3f);
+		tileNeighbors = new GroundBehavior[4];
 	}
 
 	public void ApplyDugColor ()
@@ -217,8 +244,13 @@ public class GroundBehavior : MonoBehaviour
 	{
 		if (isCollapsing)
 			return;
-		
+						
 		collapseHP--;
+
+		for (int i = 0; i < tileNeighbors.Length; i++) {
+			if (tileNeighbors [i].isDug && !tileNeighbors [i].isFortified)
+				collapseHP--;
+		}
 
 		Debug.Log ("Tile slowly collapsing.. " + collapseHP.ToString () + " hp left");
 
@@ -236,7 +268,6 @@ public class GroundBehavior : MonoBehaviour
 
 		isCollapsing = true;
 
-		Debug.Log ("TILE COLLAPSING ! name: " + groundData.name + " at " + tilePos);
 		//Find the nearest tile above that's not dug !
 		GroundBehavior tileAbove = this;
 		while (true) {

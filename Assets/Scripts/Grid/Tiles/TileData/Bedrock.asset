@@ -13,5 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 9999
   digRes: 9999
-  sprite: {fileID: 0}
+  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  destructionSprites: []
   moveCost: 9999
+  collapseHP: 9999
+  canCollapse: 0
