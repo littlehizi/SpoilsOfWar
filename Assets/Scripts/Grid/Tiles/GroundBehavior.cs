@@ -244,7 +244,13 @@ public class GroundBehavior : MonoBehaviour
 	{
 		if (isCollapsing)
 			return;
-						
+					
+		//Because it ended up being necessary..
+		if (isFortified) {
+			SubscribeToCollapseTick (false);
+			return;
+		}
+
 		collapseHP--;
 
 		for (int i = 0; i < tileNeighbors.Length; i++) {

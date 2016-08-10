@@ -5,12 +5,12 @@ using System.Collections.Generic;
 public class UnitBehavior : MonoBehaviour, ISelection, IVision
 {
 	//References
-	UnitMovementBehavior UMB;
-	DigBehavior DB;
-	CombatBehavior CB;
+	[HideInInspector] public UnitMovementBehavior UMB;
+	[HideInInspector] public DigBehavior DB;
+	[HideInInspector] public CombatBehavior CB;
 	[HideInInspector] public BombBehavior BB;
 
-	[HideInInspector]public SpriteRenderer unitSR;
+	[HideInInspector] public SpriteRenderer unitSR;
 
 	//ON TILE ENTER EVENT
 	public delegate void OnTileEnter ();
@@ -36,7 +36,10 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 
 			//Check if was exhausted and running home
 			if (isOnSpawnTiles (alignment)) {
+				//Restore stamina
 				OnStaminaRestored ();
+				//Restore bombs
+				currentBombsHeld = unitData.amountOfBombs;
 			}
 
 //			//Check for oxygen change
@@ -157,6 +160,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		_health = unitData.health;
 		_stamina = unitData.stamina - 1;
 		_oxygen = 100;
+		currentBombsHeld = unitData.amountOfBombs;
 		SubscribeToOxygenLossTick (true);
 
 		//Set current tile
@@ -388,6 +392,10 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 			break;
 		}
 
+		//Tell the AI if it's an enemy unit
+		if (alignment == PlayerData.TypeOfPlayer.enemy)
+			this.GetComponent<AIBrainBehavior> ().AIDeathEnter ();
+
 		//Destroy unit
 		Destroy (this.gameObject);
 	}
@@ -497,7 +505,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	/// Returns true if the unit is currently standing on its spawn tiles.
 	/// </summary>
 	/// <returns><c>true</c>, if on spawn tiles was ised, <c>false</c> otherwise.</returns>
-	bool isOnSpawnTiles (PlayerData.TypeOfPlayer playerType)
+	public bool isOnSpawnTiles (PlayerData.TypeOfPlayer playerType)
 	{
 		if (playerType == PlayerData.TypeOfPlayer.human) {
 			for (int i = 0; i < GameMasterScript.instance.PLMB.humanPlayer.spawnTiles.Length; i++) {
@@ -527,7 +535,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 				return true;
 			break;
 		case PlayerData.TypeOfPlayer.enemy:
-			if (currentTile.tilePos.x <= GridManagerBehavior.STATIC_WIDTH)
+			if (currentTile.tilePos.x <= GridManagerBehavior.STATIC_WIDTH - 1)
 				return true;
 			break;
 		}
@@ -550,5 +558,18 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		if (alignment == PlayerData.TypeOfPlayer.human) {
 			GameMasterScript.instance.UIMB.G_DisplayCharacterFile (currentCharacterFile, false);
 		}
+	}
+
+	public void StopEverythingies ()
+	{
+		//Stop all actions
+		UMB.StopWalking ();
+		DB.StopDigging ();
+		if (CB.isFighting)
+			CB.StopCombat ();
+
+		UMB.StopAllCoroutines ();
+		DB.StopAllCoroutines ();
+
 	}
 }

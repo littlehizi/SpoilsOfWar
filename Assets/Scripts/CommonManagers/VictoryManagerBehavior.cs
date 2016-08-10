@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class VictoryManagerBehavior : MonoBehaviour, IManager
 {
+	[System.Serializable]
 	public class BombSite
 	{
 		public GroundBehavior tile;
@@ -12,9 +13,12 @@ public class VictoryManagerBehavior : MonoBehaviour, IManager
 
 		public int currentAmountOfBombs{ get { return amountOfBombs; } }
 
-		public bool canDetonnate{ get { return amountOfBombs > tile.tilePos.y / 2; } }
+		public int totalAmountOfBombsNeeded{ get { return Mathf.RoundToInt (tile.tilePos.y / 2); } }
 
-		public int amountOfBombsNeeded{ get { return Mathf.RoundToInt (tile.tilePos.y / 2) - amountOfBombs; } }
+		public bool canDetonnate{ get { return amountOfBombs >= Mathf.RoundToInt (tile.tilePos.y / 2); } }
+
+		public int amountOfBombsNeeded{ get { return totalAmountOfBombsNeeded - amountOfBombs; } }
+
 
 		public BombSite (GroundBehavior newTile, UnitBehavior newOwner)
 		{
@@ -47,6 +51,7 @@ public class VictoryManagerBehavior : MonoBehaviour, IManager
 		/// </summary>
 		public void DetonnateBomb ()
 		{
+			Debug.LogWarning ("Game over!");
 			((State_Game)GameMasterScript.currentState).GameOver (owners [0].alignment);
 		}
 	}

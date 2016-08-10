@@ -17,11 +17,12 @@ public class DigBehavior : MonoBehaviour
 	{
 		//Stop any coroutines
 		StopAllCoroutines ();
+		unitBehavior.UMB.StopAllCoroutines ();
 
 		Debug.Log ("Digging begun!");
 
 		//Start it !
-		StartCoroutine ("DigUntilDestination", tilesToDig);
+		StartCoroutine (DigUntilDestination (tilesToDig));
 	}
 
 	IEnumerator DigUntilDestination (GroundBehavior[] tilesToDig)
@@ -45,7 +46,7 @@ public class DigBehavior : MonoBehaviour
 
 
 				tilesToDig [currentIndex].hp -= unitBehavior.unitData.diggingPower * 4;
-				Debug.Log ("Diggin tile... Hp left: " + tilesToDig [currentIndex].hp);
+				//Debug.Log ("Diggin tile... Hp left: " + tilesToDig [currentIndex].hp);
 				justDugCurrentTile = true;
 
 				//Check for change of tile sprite

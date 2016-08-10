@@ -143,12 +143,14 @@ public class BombBehavior : MonoBehaviour
 		if (GameMasterScript.instance.VMB.bombSites.Count == 0)
 			return false;
 
-
+		Debug.Log ("checkin for detonnation...");
 		for (int i = 0; i < GameMasterScript.instance.VMB.bombSites.Count; i++) {
 			//Check if the current unit is the owner (or partial owner) of the bombsite
 			if (GameMasterScript.instance.VMB.bombSites [i].owners.Contains (unitBehavior)) {
+				Debug.Log ("Current bomb found, looking if there's enough explosives..");
 				//If so, then check if there's enough bombs planted.
 				if (GameMasterScript.instance.VMB.bombSites [i].canDetonnate) {
+					Debug.Log ("BOOOOOOOOOOOOOOOOOOOOM");
 					//If so, win the game ! KABOOM !
 					GameMasterScript.instance.VMB.bombSites [i].DetonnateBomb ();
 					return true;

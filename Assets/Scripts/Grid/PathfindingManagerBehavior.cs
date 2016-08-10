@@ -353,7 +353,6 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 
 	public static GroundBehavior[] FindWithAStarNoObstacles (GroundBehavior origin, GroundBehavior destination)
 	{
-		Debug.Log ("wee");
 		//Check if the origin and destination are the same tile. If so, just return the destination as a path.
 		if (origin.ID == destination.ID) {
 			GroundBehavior[] path = new GroundBehavior[1];

@@ -90,6 +90,14 @@ public class State_Game : BaseState
 		//Stop the game
 		GameMasterScript.instance.IMB.currentState = InputManagerBehavior.InputState.disabled;
 
+		//Stop all units from doing whatever
+		for (int i = 0; i < GameMasterScript.instance.PLMB.humanPlayer.storedUnits.Count; i++)
+			GameMasterScript.instance.PLMB.humanPlayer.storedUnits [i].StopEverythingies ();
+
+		for (int i = 0; i < GameMasterScript.instance.PLMB.enemyPlayer.storedUnits.Count; i++)
+			GameMasterScript.instance.PLMB.enemyPlayer.storedUnits [i].StopEverythingies ();
+
+
 		//Display endgame screen
 		GameMasterScript.instance.UIMB.DisplayHUD (UserInterfaceManagerBehavior.TypeOfHUD.endGame, true);
 	}

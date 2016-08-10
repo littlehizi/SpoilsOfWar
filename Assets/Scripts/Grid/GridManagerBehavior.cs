@@ -155,7 +155,7 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 
 		//Add secondary obstacle passes
 		for (int h = 0; h < amountOfObstaclePasses; h++) {
-			for (int i = STATIC_HEIGHT; i < GameMasterScript.instance.gridHeight; i++) {
+			for (int i = STATIC_HEIGHT + 1; i < GameMasterScript.instance.gridHeight; i++) {
 				for (int k = 0; k < GameMasterScript.instance.gridWidth; k++) {
 					if (!currentGrid.tiles [k, i].isAnObstacle && secondaryObstacleChance > Random.Range (0, 100))
 						currentGrid.tiles [k, i].isAnObstacle = true;
