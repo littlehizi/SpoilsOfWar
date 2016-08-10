@@ -263,6 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01ec70699b9951649b2184ea378efe09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bombSites: []
 --- !u!114 &11422320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -309,9 +310,9 @@ MonoBehaviour:
   exhaustEfficiencyModifier: 2.5
   combatSpeed: 1.2
   oxygenLossPerTile: 8
-  bombExplosionRadius: 2
+  bombExplosionRadius: 4
   damagePerBomb: 600
-  farBombDamage: 0
+  farBombDamage: 35
   resourceUsedPerFortification: 3
   tileHpBeforeNextFrame: {x: 75, y: 50, z: 25}
 --- !u!114 &11429442

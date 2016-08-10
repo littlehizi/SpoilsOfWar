@@ -111,7 +111,7 @@ public class BombBehavior : MonoBehaviour
 		//Go boom!
 		for (int i = 0; i < orderedExplosionTileList.Count; i++) {
 			orderedExplosionTileList [i].hp -= (int)(GameMasterScript.instance.damagePerBomb / (orderedExplosionTileList [i].digRes / 10 * i));
-			Debug.Log ((int)(GameMasterScript.instance.damagePerBomb / (orderedExplosionTileList [i].digRes / 10 * i)));
+			//Debug.Log ((int)(GameMasterScript.instance.damagePerBomb / (orderedExplosionTileList [i].digRes / 10 * i)));
 
 			//Kill all units in the explosion range, unless they're too far, then try to kill them
 			if (orderedExplosionTileList [i].unitsOnTile.Count > 0) {

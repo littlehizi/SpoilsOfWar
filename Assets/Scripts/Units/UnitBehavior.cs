@@ -349,6 +349,9 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	{
 		Debug.Log ("An enemy has engaged combat with " + this);
 		canBeSelected = false;
+		//Stop the unit from doing whatever
+		StopEverythingies ();
+
 		CB.StartCombat (enemyTile, false);
 	}
 
