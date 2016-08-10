@@ -22,7 +22,7 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 	/// Add tiles to dig 
 	/// </summary>
 	/// <returns>The ground tiles to dig.</returns>
-	public static void GetGroundTilesToDig (GroundBehavior newTile)
+	public static void GetGroundTilesToDig (GroundBehavior newTile, bool isObstacle = false)
 	{
 		//Empty the list of the last digging process
 		if (!isDigging)
@@ -48,8 +48,14 @@ public class DigSelectionManagerBehavior : MonoBehaviour, IManager
 				return;
 
 			//If the first position has already been given, the newTile is the 2nd, and you can collect all tiles using pathfinding
-			GroundBehavior[] tmpPath = PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, temporaryTile, newTile, false);
+			GroundBehavior[] tmpPath = null;
 
+			if (!isObstacle)
+				tmpPath = PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, temporaryTile, newTile, false);
+			else
+				//If it's the AI, take the obstacle out. LAZINESS FTW
+				tmpPath = PathfindingManagerBehavior.FindWithAStarNoObstacles (temporaryTile, newTile);
+			
 			if (tmpPath == null) {
 				return;
 			}

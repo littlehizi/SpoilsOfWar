@@ -346,4 +346,120 @@ public class PathfindingManagerBehavior : MonoBehaviour, IManager
 	}
 
 	#endregion
+
+	#region OBSTACLE FINDING USING A*
+
+	//Yes, I was too lazy to fix the one above, so am takin an easy step
+
+	public static GroundBehavior[] FindWithAStarNoObstacles (GroundBehavior origin, GroundBehavior destination)
+	{
+		Debug.Log ("wee");
+		//Check if the origin and destination are the same tile. If so, just return the destination as a path.
+		if (origin.ID == destination.ID) {
+			GroundBehavior[] path = new GroundBehavior[1];
+			path [0] = destination;
+			return path;
+		}
+
+		//Open list are the positions to check
+		Heap<AStarNode> open = new Heap<AStarNode> (mapSize);
+		//Closed list are the positions that aren't available or that are checked already
+		List<AStarNode> closed = new List<AStarNode> (mapSize);
+
+		//Prepare a destination node and a origin node
+		AStarNode originNode = new AStarNode (origin);
+		AStarNode destinationNode = new AStarNode (destination);
+
+		//Start searching from the character's position
+		open.Add (originNode);
+		bool pathFound = false;
+
+		while (open.Count > 0 && !pathFound) {
+			//Check if the path cannot be found. Return null in this case.
+			if (open.Count >= mapSize - 1 || closed.Count >= mapSize - 1)
+				return null;
+
+			//Get a new node
+			AStarNode currentNode = open.RemoveFirst ();
+
+			closed.Add (currentNode);
+
+			//If destination has been reached
+			if (currentNode.tile.ID == destinationNode.tile.ID) {
+				destinationNode = currentNode;
+				pathFound = true;
+			}
+
+			//Get all the neighbors and add those in the list
+			List<GroundBehavior> currentNeighbors = GetTileNeighbor (currentNode.tile);
+			List<AStarNode> neighborNodes = new List<AStarNode> ();
+
+			int dugCount = 0; 
+
+			for (int i = 0; i < currentNeighbors.Count; i++) {
+				//CHECK IF DUG
+				if (currentNeighbors [i].isAnObstacle) {
+					dugCount++;
+					continue;
+				}
+
+
+				//Change the tile into a node
+				neighborNodes.Add (new AStarNode (currentNeighbors [i]));
+
+				//If that neighbor has already been checked, don't bother
+				if (ListContainsGroundTile (closed, neighborNodes [i - dugCount]))
+					continue;
+
+
+				int newMovCost = currentNode.gCost + GetDistance (currentNode, neighborNodes [i - dugCount]);
+
+				if (newMovCost < neighborNodes [i - dugCount].gCost || !open.Contains (neighborNodes [i - dugCount])) {
+					//Calculate new costs
+					neighborNodes [i - dugCount].gCost = newMovCost;
+					neighborNodes [i - dugCount].hCost = GetDistance (neighborNodes [i - dugCount], destinationNode);
+
+					//SetNeighbor
+					neighborNodes [i - dugCount].parent = currentNode;
+
+					if (!open.Contains (neighborNodes [i - dugCount]))
+						open.Add (neighborNodes [i - dugCount]);
+					else
+						open.UpdateObject (neighborNodes [i - dugCount]);
+				}
+			}
+		}
+
+		//Create a path
+		List<AStarNode> nodePath = new List<AStarNode> ();
+		AStarNode currentPathNode = destinationNode;
+
+		bool isNull = false;
+		while (currentPathNode != originNode) {
+			nodePath.Add (currentPathNode);
+			if (currentPathNode.parent == null) {
+				isNull = true;
+				break;
+			}
+			currentPathNode = currentPathNode.parent;
+		}
+
+		if (isNull)
+			return null;
+
+		//Reverse !
+		nodePath.Reverse ();
+
+		//Create GroundBehavior list output
+		GroundBehavior[] output = new GroundBehavior[nodePath.Count];
+
+		for (int i = 0; i < nodePath.Count; i++)
+			output [i] = nodePath [i].tile;
+
+		return output;
+
+	}
+
+
+	#endregion
 }

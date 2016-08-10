@@ -13,11 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   digRes: 10
-  sprite: {fileID: 21300000, guid: d7322907e534ad2468f0debdef99c563, type: 3}
+  sprite: {fileID: 21300000, guid: 78066793ff423b6408e0f28f0954e03b, type: 3}
   destructionSprites:
-  - {fileID: 21300000, guid: 5e1e81084b06b4e4787dff51c04a502c, type: 3}
-  - {fileID: 21300000, guid: 66e4cebc047533b499815e9aa005f022, type: 3}
-  - {fileID: 21300000, guid: fbd034efb34e0bd48a62928d3fdc12bd, type: 3}
+  - {fileID: 21300000, guid: 9b50cc54b5b3d204a96022ff997c0854, type: 3}
+  - {fileID: 21300000, guid: 586f607f92f4655408a98c0ffae53e4e, type: 3}
+  - {fileID: 21300000, guid: 530ab1ca8e68b97448cd827b892282cd, type: 3}
   moveCost: 0
   collapseHP: 20
   canCollapse: 1

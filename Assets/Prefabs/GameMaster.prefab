@@ -23,6 +23,7 @@ GameObject:
   - 114: {fileID: 114000011685851846}
   - 114: {fileID: 114000013486385688}
   - 114: {fileID: 114000010374687448}
+  - 114: {fileID: 114000010085503962}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: GMB
@@ -287,6 +288,7 @@ MonoBehaviour:
   RMB: {fileID: 114000011685851846}
   TMB: {fileID: 114000013486385688}
   TIMB: {fileID: 114000010374687448}
+  CMB: {fileID: 114000010085503962}
   pathfindingType: 2
   gridWidth: 50
   gridHeight: 30
@@ -309,7 +311,9 @@ MonoBehaviour:
   oxygenLossPerTile: 8
   bombExplosionRadius: 2
   damagePerBomb: 600
+  farBombDamage: 0
   resourceUsedPerFortification: 3
+  tileHpBeforeNextFrame: {x: 75, y: 50, z: 25}
 --- !u!114 &11429442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -376,9 +380,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 506d0c6a23362bc4fb48c47c809c7ad7, type: 2}
   - {fileID: 11400000, guid: 71147385541721f45aabcc985e3b79c0, type: 2}
   - {fileID: 11400000, guid: ba9f5414d7d578245baaee9683a3f0e2, type: 2}
-  percentOfObstacles: 35
+  percentOfObstacles: 30
   obstacleSprite: {fileID: 21300000, guid: a2dd925f8d9a6ae4fad27c5dfaa34d8e, type: 3}
   fortifiedSprite: {fileID: 21300000, guid: e69fdb4c8aaf689488a2642681d53d4b, type: 3}
+  amountOfObstaclePasses: 1
+  secondaryObstacleChance: 2.45
 --- !u!114 &11438038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -433,36 +439,42 @@ MonoBehaviour:
     closedFile: {fileID: 0}
     healthSlider: {fileID: 0}
     staminaSlider: {fileID: 0}
+    oxygenSlider: {fileID: 0}
     picture: {fileID: 0}
     medal: {fileID: 0}
   - openFile: {fileID: 0}
     closedFile: {fileID: 0}
     healthSlider: {fileID: 0}
     staminaSlider: {fileID: 0}
+    oxygenSlider: {fileID: 0}
     picture: {fileID: 0}
     medal: {fileID: 0}
   - openFile: {fileID: 0}
     closedFile: {fileID: 0}
     healthSlider: {fileID: 0}
     staminaSlider: {fileID: 0}
+    oxygenSlider: {fileID: 0}
     picture: {fileID: 0}
     medal: {fileID: 0}
   - openFile: {fileID: 0}
     closedFile: {fileID: 0}
     healthSlider: {fileID: 0}
     staminaSlider: {fileID: 0}
+    oxygenSlider: {fileID: 0}
     picture: {fileID: 0}
     medal: {fileID: 0}
   - openFile: {fileID: 0}
     closedFile: {fileID: 0}
     healthSlider: {fileID: 0}
     staminaSlider: {fileID: 0}
+    oxygenSlider: {fileID: 0}
     picture: {fileID: 0}
     medal: {fileID: 0}
   - openFile: {fileID: 0}
     closedFile: {fileID: 0}
     healthSlider: {fileID: 0}
     staminaSlider: {fileID: 0}
+    oxygenSlider: {fileID: 0}
     picture: {fileID: 0}
     medal: {fileID: 0}
   clockHandleBig: {fileID: 0}
@@ -556,7 +568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   humanPlayer: {fileID: 11400000, guid: 78bd7faa5f5defa4cb71e90b5e78f48a, type: 2}
   enemyPlayer: {fileID: 11400000, guid: ed76a6d0eb4e21443855205a2a6cb0ea, type: 2}
-  enemyTeamComposition: 1
+  enemyTeamComposition: 0
 --- !u!114 &11477180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -590,6 +602,22 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 150090}
   m_IsPrefabParent: 1
+--- !u!114 &114000010085503962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1547f33fc93489b4898a1e4970394d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canChangeCursor: 0
+  cursors: []
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &114000010374687448
 MonoBehaviour:
   m_ObjectHideFlags: 1

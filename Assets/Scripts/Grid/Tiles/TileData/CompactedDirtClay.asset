@@ -13,8 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   digRes: 35
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  destructionSprites: []
+  sprite: {fileID: 21300000, guid: 006200f797090b742a1994c05f976b66, type: 3}
+  destructionSprites:
+  - {fileID: 21300000, guid: 7553c98403bb8e944a338e4e50e22de7, type: 3}
+  - {fileID: 21300000, guid: f69d455d599100e4e999fbb3a41586d9, type: 3}
+  - {fileID: 21300000, guid: 744754ef1672e8d4e865351cf90d8086, type: 3}
   moveCost: 0
   collapseHP: 20
   canCollapse: 1

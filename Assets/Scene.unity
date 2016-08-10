@@ -6979,26 +6979,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 662142862}
---- !u!1 &670100642 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 150090, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-  m_PrefabInternal: {fileID: 1621070238}
---- !u!114 &670100643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 670100642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1547f33fc93489b4898a1e4970394d58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canChangeCursor: 0
-  cursors: []
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &675125076
 GameObject:
   m_ObjectHideFlags: 0
@@ -16256,6 +16236,10 @@ Prefab:
       value: 
       objectReference: {fileID: 1666065367}
     - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
+      propertyPath: G_characterFiles.Array.data[0].oxygenSlider
+      value: 
+      objectReference: {fileID: 807072168}
+    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
       propertyPath: G_characterFiles.Array.data[0].picture
       value: 
       objectReference: {fileID: 662142864}
@@ -16279,6 +16263,10 @@ Prefab:
       propertyPath: G_characterFiles.Array.data[1].staminaSlider
       value: 
       objectReference: {fileID: 1453629436}
+    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
+      propertyPath: G_characterFiles.Array.data[1].oxygenSlider
+      value: 
+      objectReference: {fileID: 1461319356}
     - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
       propertyPath: G_characterFiles.Array.data[1].picture
       value: 
@@ -16304,6 +16292,10 @@ Prefab:
       value: 
       objectReference: {fileID: 1106238221}
     - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
+      propertyPath: G_characterFiles.Array.data[2].oxygenSlider
+      value: 
+      objectReference: {fileID: 1968646984}
+    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
       propertyPath: G_characterFiles.Array.data[2].picture
       value: 
       objectReference: {fileID: 692767825}
@@ -16327,6 +16319,10 @@ Prefab:
       propertyPath: G_characterFiles.Array.data[3].staminaSlider
       value: 
       objectReference: {fileID: 934757578}
+    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
+      propertyPath: G_characterFiles.Array.data[3].oxygenSlider
+      value: 
+      objectReference: {fileID: 1641527423}
     - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
       propertyPath: G_characterFiles.Array.data[3].picture
       value: 
@@ -16352,6 +16348,10 @@ Prefab:
       value: 
       objectReference: {fileID: 2122994895}
     - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
+      propertyPath: G_characterFiles.Array.data[4].oxygenSlider
+      value: 
+      objectReference: {fileID: 1181437689}
+    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
       propertyPath: G_characterFiles.Array.data[4].picture
       value: 
       objectReference: {fileID: 1751508970}
@@ -16376,6 +16376,10 @@ Prefab:
       value: 
       objectReference: {fileID: 2051913828}
     - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
+      propertyPath: G_characterFiles.Array.data[5].oxygenSlider
+      value: 
+      objectReference: {fileID: 358998891}
+    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
       propertyPath: G_characterFiles.Array.data[5].picture
       value: 
       objectReference: {fileID: 1995789081}
@@ -16399,70 +16403,6 @@ Prefab:
       propertyPath: daysLeft.Array.data[1]
       value: 
       objectReference: {fileID: 1038347692}
-    - target: {fileID: 11430764, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: amountOfObstaclePasses
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11430764, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: secondaryObstacleChance
-      value: 2.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 11430764, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: percentOfObstacles
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 11422320, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: gridWidth
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 11422320, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: startResources
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11473556, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: enemyTeamComposition
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11422320, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: tileHpBeforeNextFrame.x
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 11422320, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: tileHpBeforeNextFrame.y
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 11422320, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: tileHpBeforeNextFrame.z
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 11422320, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: CMB
-      value: 
-      objectReference: {fileID: 670100643}
-    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: G_characterFiles.Array.data[0].oxygenSlider
-      value: 
-      objectReference: {fileID: 807072168}
-    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: G_characterFiles.Array.data[1].oxygenSlider
-      value: 
-      objectReference: {fileID: 1461319356}
-    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: G_characterFiles.Array.data[2].oxygenSlider
-      value: 
-      objectReference: {fileID: 1968646984}
-    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: G_characterFiles.Array.data[3].oxygenSlider
-      value: 
-      objectReference: {fileID: 1641527423}
-    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: G_characterFiles.Array.data[4].oxygenSlider
-      value: 
-      objectReference: {fileID: 1181437689}
-    - target: {fileID: 11438038, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
-      propertyPath: G_characterFiles.Array.data[5].oxygenSlider
-      value: 
-      objectReference: {fileID: 358998891}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
   m_IsPrefabParent: 0
