@@ -201,12 +201,13 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 	public void InitalizeSpawnTiles ()
 	{
 		//human
-		for (int i = 0; i < GameMasterScript.instance.PLMB.humanPlayer.spawnTiles.Length; i++)
-			GameMasterScript.instance.PLMB.humanPlayer.spawnTiles [i].isDug = true;
+		for (int i = 0; i < GameMasterScript.instance.PLMB.humanPlayer.spawnTiles.Length; i++) {
+			GameMasterScript.instance.PLMB.humanPlayer.spawnTiles [i].hp = 0;
+		}
 
 		//enemy
 		for (int i = 0; i < GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles.Length; i++)
-			GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [i].isDug = true;
+			GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [i].hp = 0;
 	}
 
 	/// <summary>
@@ -219,8 +220,23 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 		return new Vector2 (newTile.ID % ID_X_DIGGIT, (newTile.ID - (newTile.ID % ID_X_DIGGIT)) / ID_X_DIGGIT);
 	}
 
+	/// <summary>
+	/// Using tilepos
+	/// </summary>
+	/// <returns>The to tile.</returns>
+	/// <param name="input">Input.</param>
 	public GroundBehavior TileposToTile (Vector2 input)
 	{
 		return currentGrid.tiles [(int)input.x, (int)input.y];	
+	}
+
+	/// <summary>
+	/// Using trueTilePos
+	/// </summary>
+	/// <returns>The to tile.</returns>
+	/// <param name="input">Input.</param>
+	public GroundBehavior TileposToTile (Vector3 input)
+	{
+		return currentGrid.tiles [(int)input.x, -(int)input.y];	
 	}
 }

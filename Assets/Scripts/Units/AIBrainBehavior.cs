@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Runtime.InteropServices;
 
 [RequireComponent (typeof(UnitBehavior))]
@@ -67,18 +67,40 @@ public class AIBrainBehavior : MonoBehaviour
 	//References
 	UnitBehavior currentUnit;
 	UnitData.UnitType currentType;
-	public static GroundBehavior selectedBombsite;
 	GroundBehavior[] pathChosen;
-
-	//Internal variables
-	public int stubbornness;
-	public int pointsToPick = 5;
-	public int preferedDiggerDepth = 4;
-	public bool isWaitingForResources;
-	GroundBehavior[] currentPath;
 	public float inactivityDelay = 5;
 	float inactivityTimer;
 
+	//Internal variables
+	public int pointsToPick = 5;
+	public static List<GroundBehavior> dugTiles;
+
+	//Digger specific
+	public static GroundBehavior selectedBombsite;
+	public int preferedDiggerDepth = 4;
+	public bool isWaitingForResources;
+	GroundBehavior[] currentPath;
+
+	//listener specific
+	public int listenerID;
+
+	//Fighter specific
+	private GroundBehavior _currentTileTarget;
+
+	public GroundBehavior currentTileTarget {
+		get{ return _currentTileTarget; }
+		set {
+			//Set the value and start walking to it.
+			GroundBehavior previousTarget = _currentTileTarget;
+
+			_currentTileTarget = value;
+
+			if (_currentTileTarget != null && (previousTarget == null || _currentTileTarget.ID != previousTarget.ID))
+				//currentUnit.WalkToTile (_currentTileTarget);
+				currentUnit.StartDiggingProcess (DigFromHereUntilTile (currentTileTarget));
+			
+		}
+	}
 
 	public void SetupAI ()
 	{
@@ -86,6 +108,7 @@ public class AIBrainBehavior : MonoBehaviour
 
 		//Initalize
 		currentUnit = this.GetComponent<UnitBehavior> ();
+		AIBrainBehavior.dugTiles = new List<GroundBehavior> ();
 
 		//init
 		currentType = currentUnit.unitData.typeOfUnit;
@@ -153,14 +176,79 @@ public class AIBrainBehavior : MonoBehaviour
 			//Subscribe to bombing event
 			currentUnit.OnTileEnterEvent += CheckIfOnBombsite;
 
+			//Subscribe to add new dug tile event
+			currentUnit.OnTileEnterEvent += AddNewDugTile;
+
 			break;
 		case UnitData.UnitType.Fighter:
+			//Fighters do nothingies during the first seconds. They wait for the diggers to dig a bit until they become inactive.
+			currentTileTarget = currentUnit.currentTile;
+
+			//Once inactive, they'll start moving
+			inactivityTimer = inactivityDelay;
+			currentUnit.OnTileEnterEvent += CheckForInactivity;
+
+			//Check for closeby units
+			currentUnit.OnTileEnterEvent += LookForUnitsInSight;
 			break;
 		case UnitData.UnitType.Listener:
+			//Get which listener is the current one.
+			List<UnitBehavior> storedUnits = GameMasterScript.instance.PLMB.enemyPlayer.storedUnits;
+			int otherListeners = 0;
+			for (int i = 0; i < storedUnits.Count; i++) {
+				if (storedUnits [i].unitData.typeOfUnit == UnitData.UnitType.Listener)
+					otherListeners++;
+				
+				if (storedUnits [i] == currentUnit) {
+					listenerID = otherListeners;
+					break;
+				}
+			}
+
+			GroundBehavior targetTile = null;
+			//Position the listeners according to their ID.
+			switch (listenerID) {
+			case 0:
+				//Get a point near home, slightly below.
+				targetTile = GameMasterScript.instance.GMB.TileposToTile (new Vector2 (GameMasterScript.instance.gridWidth - GridManagerBehavior.STATIC_WIDTH - 3, GridManagerBehavior.STATIC_HEIGHT + 2));
+				break;
+			case 1:
+				//Get a point towards the middle
+				targetTile = GameMasterScript.instance.GMB.TileposToTile (new Vector2 (GameMasterScript.instance.gridWidth / 3 * 2, GridManagerBehavior.STATIC_HEIGHT + 2));
+				break;
+			case 2:
+				//Get a point below but close to home
+				targetTile = GameMasterScript.instance.GMB.TileposToTile (new Vector2 (GameMasterScript.instance.gridWidth - GridManagerBehavior.STATIC_WIDTH - 3, GridManagerBehavior.STATIC_HEIGHT + GameMasterScript.instance.gridHeight / 2));
+				break;
+			case 3:
+				//I don't know... Why would you wanna have more than 3 listeners..? that's kinda retarded
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			}
+
+
+			firstTile = currentUnit.currentTile;
+
+			do {
+				Vector2 tilePosBelow = firstTile.tilePos;
+				tilePosBelow.y += 1;
+				firstTile = GameMasterScript.instance.GMB.TileposToTile (tilePosBelow);
+			} while(firstTile == null || firstTile.isDug);
+
+
+			Debug.Log (firstTile + " " + targetTile);
+
+			currentUnit.StartDiggingProcess (PathfindingManagerBehavior.FindWithAStarNoObstacles (firstTile, targetTile));
+
+
+			//Check for closeby units
+			currentUnit.OnTileEnterEvent += LookForUnitsInSight;
+
 			break;
 		}
-
-	
 	}
 
 	void Update ()
@@ -173,7 +261,7 @@ public class AIBrainBehavior : MonoBehaviour
 				currentPath = pathChosen;
 				currentUnit.StartDiggingProcess (currentPath);
 				inactivityTimer = inactivityDelay;
-				Debug.Log ("Inactive unit spotted !");
+				//Debug.Log ("Inactive unit spotted !");
 
 			} else if (inactivityTimer > 0 && !isWaitingForResources) {
 				inactivityTimer -= Time.deltaTime;
@@ -202,6 +290,43 @@ public class AIBrainBehavior : MonoBehaviour
 
 			break;
 		case UnitData.UnitType.Fighter:
+			//Check for flag change
+			if (currentUnit.CB.isFighting)
+				currentState = AIState.fighting;
+			else if (currentState == AIState.fighting && !currentUnit.CB.isFighting)
+				currentState = AIState.idle;
+
+			//If the fighter is inactive, pick a new tile to dig. If the unit is fighting, wait for it to be done at least..
+			if (inactivityTimer < 0 && currentState != AIState.fighting) {
+				//Debug.Log ("Inactive unit spotted !");
+				if (currentTileTarget.ID == currentUnit.currentTile.ID) {
+					if (AIBrainBehavior.dugTiles.Count == 0)
+						return;
+					currentTileTarget = SetFighterPath ();
+					//currentUnit.StartDiggingProcess (PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, GameMasterScript.instance.GMB.TileposToTile (new Vector2 (currentUnit.currentTile.tilePos.x, currentUnit.currentTile.tilePos.y + 1)), currentTileTarget, true));
+					//Reset timer
+				} 
+				inactivityTimer = inactivityDelay;
+			} else if (inactivityTimer < 0 && currentState == AIState.fighting) {
+				//Check for units on surrounding tiles
+				GroundBehavior[] neighbors = PathfindingManagerBehavior.GetTileNeighbor (currentUnit.currentTile).ToArray ();
+
+				bool check = false;
+				for (int i = 0; i < neighbors.Length; i++) {
+					if (neighbors [i].unitsOnTile.Count > 0 && neighbors [i].unitsOnTile [0].alignment == PlayerData.TypeOfPlayer.human)
+						check = true;
+				}
+
+				if (!check)
+					currentState = AIState.idle;
+				
+			} else if (inactivityTimer > 0) {
+				inactivityTimer -= Time.deltaTime;
+			}
+
+			//IF the unit doesn't have enough stamina and is not fighting, have it go home
+			if (currentUnit.stamina < 10 && currentState != AIState.fighting)
+				currentState = AIState.goingHome;
 			break;
 		case UnitData.UnitType.Listener:
 			break;
@@ -212,7 +337,7 @@ public class AIBrainBehavior : MonoBehaviour
 
 	void GoHome ()
 	{
-		Debug.Log ("AI going home~");
+		//Debug.Log ("AI going home~");
 		//Dig the way home
 		GroundBehavior[] pathToHome = PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, currentUnit.currentTile, GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [Random.Range (0, 6)]);
 		//currentUnit.WalkToTile (GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [Random.Range (0, 6)]);
@@ -241,6 +366,9 @@ public class AIBrainBehavior : MonoBehaviour
 				currentUnit.StartDiggingProcess (currentPath);
 				break;
 			case UnitData.UnitType.Fighter:
+				//Once home, just pick a normal path
+				currentTileTarget = SetFighterPath ();
+				//currentUnit.StartDiggingProcess (DigFromHereUntilTile(currentTileTarget));
 				break;
 			case UnitData.UnitType.Listener:
 				break;
@@ -334,6 +462,96 @@ public class AIBrainBehavior : MonoBehaviour
 		}
 	}
 
+	GroundBehavior SetFighterPath ()
+	{
+		if (AIBrainBehavior.dugTiles.Count > 0)
+			return AIBrainBehavior.dugTiles [Random.Range (0, AIBrainBehavior.dugTiles.Count)];
+		else
+			return currentUnit.currentTile;
+	}
+
+	/// <summary>
+	/// Adds the current tile to the path of dug tiles
+	/// This gets called everytime a digger gets on a new tile
+	/// </summary>
+	void AddNewDugTile ()
+	{
+		if (AIBrainBehavior.dugTiles.Count == 0 || !AIBrainBehavior.dugTiles.Contains (currentUnit.currentTile))
+			AIBrainBehavior.dugTiles.Add (currentUnit.currentTile);
+	}
+
+	GroundBehavior[] DigFromHereUntilTile (GroundBehavior tile)
+	{
+		GroundBehavior[] tmp = PathfindingManagerBehavior.FindPathToTarget (GameMasterScript.instance.pathfindingType, currentUnit.currentTile, tile);
+
+		if (tmp == null || tmp.Length == 1) {
+			return tmp;
+		}
+		GroundBehavior[] output = new GroundBehavior[tmp.Length - 1];
+
+		for (int i = 1; i < tmp.Length; i++)
+			output [i - 1] = tmp [i];
+
+		return output;
+	}
+
+	#endregion
+
+	#region Combat Utilities
+
+	void LookForUnitsInSight ()
+	{
+		RaycastHit2D[] tileTargets = Physics2D.CircleCastAll (currentUnit.currentTile.trueTilePos, (float)currentUnit.unitData.vision, Vector2.zero);
+
+		List<GroundBehavior> targetedUnits = new List<GroundBehavior> ();
+
+		//Get all the tiles
+		for (int i = 0; i < tileTargets.Length; i++) {
+			GroundBehavior tmpTile = GameMasterScript.instance.GMB.TileposToTile (tileTargets [i].transform.position);
+
+			if (tmpTile.unitsOnTile.Count > 0) {
+				if (tmpTile.unitsOnTile [0].alignment == PlayerData.TypeOfPlayer.human) {
+					//If the units on that tile are enemies, then you've got a new target !
+					targetedUnits.Add (tmpTile);
+				}
+			}
+		}
+
+		switch (currentType) {
+		case UnitData.UnitType.Fighter:
+			//Pick a random target
+			if (targetedUnits.Count > 0)
+				currentTileTarget = targetedUnits [Random.Range (0, targetedUnits.Count)];
+			break;
+		case UnitData.UnitType.Listener:
+			//Find a fighter, and tell him to handle it if the enemy is far. If the enemy is close, self-detonnate self.
+			for (int i = 0; i < targetedUnits.Count; i++) {
+				if (Vector2.Distance (currentUnit.currentTile.tilePos, targetedUnits [i].tilePos) < 1.4f) {
+					//Self detonnate !
+					if (currentUnit.PlantBomb ()) {
+						currentUnit.DetonnateBomb ();
+						return;
+					}
+				}
+			}
+
+			List<UnitBehavior> fighterList = new List<UnitBehavior> ();
+
+			for (int i = 0; i < GameMasterScript.instance.PLMB.enemyPlayer.storedUnits.Count; i++) {
+				if (GameMasterScript.instance.PLMB.enemyPlayer.storedUnits [i].unitData.typeOfUnit == UnitData.UnitType.Fighter)
+					fighterList.Add (GameMasterScript.instance.PLMB.enemyPlayer.storedUnits [i]);
+			}
+
+			if (fighterList.Count > 0 && targetedUnits.Count > 0) {
+				UnitBehavior chosenFighter = fighterList [Random.Range (0, fighterList.Count)];
+
+				chosenFighter.GetComponent<AIBrainBehavior> ().currentTileTarget = targetedUnits [Random.Range (0, targetedUnits.Count)];
+			}
+			break;
+		}
+
+	}
+
 	#endregion
 
 	#region Death
@@ -343,6 +561,8 @@ public class AIBrainBehavior : MonoBehaviour
 		//Desubscribe to stuff
 		currentUnit.OnTileEnterEvent -= CheckForInactivity;
 		currentUnit.OnTileEnterEvent -= CheckIfOnBombsite;
+		currentUnit.OnTileEnterEvent -= AddNewDugTile;
+		currentUnit.OnTileEnterEvent -= LookForUnitsInSight;
 
 		//Summon a new unit of same type !
 		GameMasterScript.instance.PLMB.enemyPlayer.storedUnits.Add (UnitSpawnerManagerBehavior.SpawnUnit (currentType, GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [Random.Range (0, 6)], PlayerData.TypeOfPlayer.enemy));
@@ -353,23 +573,9 @@ public class AIBrainBehavior : MonoBehaviour
 	//		//Desubscribe to stuff
 	//		currentUnit.OnTileEnterEvent -= CheckForInactivity;
 	//		currentUnit.OnTileEnterEvent -= CheckIfOnBombsite;
+	//		currentUnit.OnTileEnterEvent -= AddNewDugTile;
 	//	}
 
 	#endregion
 
-	//	void OnDrawGizmos ()
-	//	{
-	//		if (pathChosen == null)
-	//			return;
-	//
-	//		Gizmos.color = Color.cyan;
-	//		for (int i = 0; i < pathChosen.Length; i++)
-	//			Gizmos.DrawWireCube (pathChosen [i].trueTilePos, Vector3.one);
-	//
-	//		Gizmos.color = Color.magenta;
-	//
-	//		Gizmos.DrawWireCube (selectedBombsite.trueTilePos, Vector3.one);
-	//
-	//		Gizmos.DrawWireCube (pathChosen [0].trueTilePos, Vector3.one);
-	//	}
 }

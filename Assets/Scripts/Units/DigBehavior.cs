@@ -80,7 +80,8 @@ public class DigBehavior : MonoBehaviour
 			unitBehavior.stamina -= GameMasterScript.instance.staminaCostDig;
 
 			//Lit the current tile with zero vision
-			tilesToDig [currentIndex].gameObject.AddComponent<TileVisionBehavior> ().tileVision = -1; //Make this = -1 if you don't want gradient 
+			if (unitBehavior.alignment == PlayerData.TypeOfPlayer.human)
+				tilesToDig [currentIndex].gameObject.AddComponent<TileVisionBehavior> ().tileVision = -1; //Make this = -1 if you don't want gradient 
 
 			//Fortify tile
 			if (tilesToDig [currentIndex].isFortified == false && unitBehavior.UseResource (GameMasterScript.instance.resourceUsedPerFortification)) {

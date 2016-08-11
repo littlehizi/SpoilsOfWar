@@ -199,6 +199,9 @@ public class GroundBehavior : MonoBehaviour
 
 	public void ApplyDugColor ()
 	{
+		if (tileSR == null)
+			return;
+		
 		if (isDug)
 			tileSR.color += dugColorOffset;
 		else
