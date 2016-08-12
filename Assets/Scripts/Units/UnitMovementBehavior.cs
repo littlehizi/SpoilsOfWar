@@ -30,8 +30,10 @@ public class UnitMovementBehavior : MonoBehaviour
 		//StopCoroutine ("WalkUntilDestination");
 		StopAllCoroutines ();
 
+
 		//Start the walk coroutine
 		StartCoroutine (WalkUntilDestination (path));
+
 	}
 
 
@@ -52,7 +54,15 @@ public class UnitMovementBehavior : MonoBehaviour
 			}
 
 			//Wait according to the speed stat. 
-			yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * ((1 - unitBehavior.stamina / unitBehavior.unitData.stamina) * GameMasterScript.instance.exhaustEfficiencyModifier) / (float)unitBehavior.unitData.speed);
+
+			//yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * ((1 - unitBehavior.stamina / unitBehavior.unitData.stamina) * GameMasterScript.instance.exhaustEfficiencyModifier) / (float)unitBehavior.unitData.speed);
+
+			float timer = GameMasterScript.instance.baseUnitSpeed * ((1 - unitBehavior.stamina / unitBehavior.unitData.stamina) * GameMasterScript.instance.exhaustEfficiencyModifier) / (float)unitBehavior.unitData.speed;
+
+			while (timer > 0) {
+				timer -= Time.deltaTime;
+				yield return null;
+			}
 
 			//Move the unit to the next tile
 			Vector3 tmpPos = path [currentIndex].tilePos;

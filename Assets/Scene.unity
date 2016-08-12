@@ -16403,6 +16403,10 @@ Prefab:
       propertyPath: daysLeft.Array.data[1]
       value: 
       objectReference: {fileID: 1038347692}
+    - target: {fileID: 11473556, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
+      propertyPath: enemyTeamComposition
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2804bb5a99f31e942b1dbd583f44ad8a, type: 2}
   m_IsPrefabParent: 0

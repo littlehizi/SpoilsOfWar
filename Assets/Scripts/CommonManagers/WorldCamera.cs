@@ -49,7 +49,7 @@ public class WorldCamera : MonoBehaviour
 		mouseScrollLimits.leftLimit = mouseBoundary;
 		mouseScrollLimits.rightLimit = mouseBoundary;
 		mouseScrollLimits.topLimit = mouseBoundary;
-		mouseScrollLimits.bottomLimit = mouseBoundary / 3;
+		mouseScrollLimits.bottomLimit = mouseBoundary / 10f;
 
 	}
 

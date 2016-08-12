@@ -64,6 +64,33 @@ public class SelectionManagerBehavior : MonoBehaviour, IManager
 		return false;
 	}
 
+	public bool SelectNewPrimaryUnit (UnitBehavior newUnit)
+	{
+		if (!newUnit.canBeSelected)
+			return false;
+
+		if (((UnitBehavior)newUnit).alignment == PlayerData.TypeOfPlayer.human) {
+			unitSelected.Insert (0, (ISelection)newUnit);
+			newUnit.OnSelect ();
+
+			//Set it as first unit
+			ApplyFirstSelectedUnitChange (newUnit, true);
+
+			//If there's any other unit, show them their priviledges
+			if (unitSelected.Count > 1)
+				ApplyFirstSelectedUnitChange ((UnitBehavior)unitSelected [1], false);
+
+			//Change the order layer 
+			for (int i = 0; i < unitSelected.Count; i++) {
+				if (unitSelected [i] == newUnit)
+					newUnit.unitSR.sortingOrder = 10 - i;
+			}
+			return true;
+		}
+
+		return false;
+	}
+
 	/// <summary>
 	/// Deselects all selected units, and call the OnDeselect method.
 	/// </summary>
@@ -94,10 +121,18 @@ public class SelectionManagerBehavior : MonoBehaviour, IManager
 		unitSelected.Remove (newUnit);
 		newUnit.OnDeselect ();
 
+		//If there's any other units, make the 0s primary
+		if (unitSelected.Count > 0) {
+			ApplyFirstSelectedUnitChange ((UnitBehavior)unitSelected [0], true);
+		}
 	}
 
 	public void DeselectUnit (int newUnit)
 	{
+		//if it's the first unit, get the event deregistered
+		if (newUnit == 0)
+			ApplyFirstSelectedUnitChange ((UnitBehavior)unitSelected [0], false);
+		
 		ISelection unit = unitSelected [newUnit];
 
 		//Change the order layer 
@@ -106,6 +141,10 @@ public class SelectionManagerBehavior : MonoBehaviour, IManager
 		unitSelected.RemoveAt (newUnit);
 		unit.OnDeselect ();
 
+		//If there's any other units, make the 0s primary
+		if (unitSelected.Count > 0) {
+			ApplyFirstSelectedUnitChange ((UnitBehavior)unitSelected [0], true);
+		}
 	}
 
 	void Update ()

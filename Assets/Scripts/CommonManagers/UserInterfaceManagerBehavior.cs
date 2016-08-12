@@ -175,7 +175,12 @@ public class UserInterfaceManagerBehavior : MonoBehaviour, IManager
 	public void G_DisplayCharacterFile (int file)
 	{
 		G_DisplayCharacterFile (G_characterFiles [file], !G_isDisplaying [file]);
+		bool check = G_isDisplaying [file];
 		G_isDisplaying [file] = !G_isDisplaying [file];
+
+		if (check != G_isDisplaying [file])
+			((State_Game)GameMasterScript.currentState).SelectNewUnitByClickingOnFile (file, G_isDisplaying [file]);
+
 	}
 
 	public void G_UpdateSlider (Slider newSlider, float newValue)

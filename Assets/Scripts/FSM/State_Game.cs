@@ -33,6 +33,8 @@ public class State_Game : BaseState
 
 	#endregion
 
+	public bool isGameOver;
+
 	public State_Game ()
 	{
 		//Will be run when state is created (During assembly compiling)
@@ -42,6 +44,7 @@ public class State_Game : BaseState
 	{
 		//Will be run every time entering this state
 		isPaused = false;
+		isGameOver = false;
 
 		//Display Game HUD
 		GameMasterScript.instance.UIMB.DisplayHUD (UserInterfaceManagerBehavior.TypeOfHUD.game, true);
@@ -73,6 +76,7 @@ public class State_Game : BaseState
 			break;
 		case UserInterfaceManagerBehavior.G_ButtonType.goToMainMenu:
 			//GO TO MAIN MENU
+			isGameOver = true;
 			GameMasterScript.ChangeState<State_MainMenu> ();
 			break;
 		case UserInterfaceManagerBehavior.G_ButtonType.unpause:
@@ -83,9 +87,23 @@ public class State_Game : BaseState
 		}
 	}
 
+	public void SelectNewUnitByClickingOnFile (int index, bool canDisplay)
+	{
+		//If the player tries to close a file, deselect unit. 
+		if (canDisplay) {
+			GameMasterScript.instance.SMB.SelectNewPrimaryUnit (GameMasterScript.instance.PLMB.humanPlayer.storedUnits [index]);
+			GameMasterScript.instance.IMB.currentState = InputManagerBehavior.InputState.unitSelected;
+		} else {
+			GameMasterScript.instance.SMB.DeselectUnit (GameMasterScript.instance.PLMB.humanPlayer.storedUnits [index]);
+			GameMasterScript.instance.IMB.currentState = InputManagerBehavior.InputState.idle;
+
+		}
+	}
+
 	public void GameOver (PlayerData.TypeOfPlayer newWinner)
 	{
 		Debug.Log ("Game over ! " + newWinner + " is the winner!");
+		isGameOver = true;
 
 		//Stop the game
 		GameMasterScript.instance.IMB.currentState = InputManagerBehavior.InputState.disabled;

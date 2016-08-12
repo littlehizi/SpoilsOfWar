@@ -565,7 +565,8 @@ public class AIBrainBehavior : MonoBehaviour
 		currentUnit.OnTileEnterEvent -= LookForUnitsInSight;
 
 		//Summon a new unit of same type !
-		GameMasterScript.instance.PLMB.enemyPlayer.storedUnits.Add (UnitSpawnerManagerBehavior.SpawnUnit (currentType, GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [Random.Range (0, 6)], PlayerData.TypeOfPlayer.enemy));
+		if (!((State_Game)GameMasterScript.currentState).isGameOver)
+			GameMasterScript.instance.PLMB.enemyPlayer.storedUnits.Add (UnitSpawnerManagerBehavior.SpawnUnit (currentType, GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [Random.Range (0, 6)], PlayerData.TypeOfPlayer.enemy));
 	}
 
 	//	void OnDestroy ()

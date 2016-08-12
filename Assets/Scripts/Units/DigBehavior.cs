@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 [RequireComponent (typeof(UnitBehavior))]
 public class DigBehavior : MonoBehaviour
@@ -42,8 +43,13 @@ public class DigBehavior : MonoBehaviour
 					StopDigging ();
 				}
 
-				yield return new WaitForSeconds (tilesToDig [currentIndex].digRes * ((1 - unitBehavior.stamina / unitBehavior.unitData.stamina) * GameMasterScript.instance.exhaustEfficiencyModifier) / unitBehavior.unitData.diggingPower);
+				//yield return new WaitForSeconds (tilesToDig [currentIndex].digRes * ((1 - unitBehavior.stamina / unitBehavior.unitData.stamina) * GameMasterScript.instance.exhaustEfficiencyModifier) / unitBehavior.unitData.diggingPower);
+				float timer1 = tilesToDig [currentIndex].digRes * ((1 - unitBehavior.stamina / unitBehavior.unitData.stamina) * GameMasterScript.instance.exhaustEfficiencyModifier) / unitBehavior.unitData.diggingPower;
 
+				while (timer1 > 0) {
+					timer1 -= Time.deltaTime;
+					yield return null;
+				}
 
 				tilesToDig [currentIndex].hp -= unitBehavior.unitData.diggingPower * 4;
 				//Debug.Log ("Diggin tile... Hp left: " + tilesToDig [currentIndex].hp);
@@ -61,7 +67,15 @@ public class DigBehavior : MonoBehaviour
 			//If the upcoming tile has been dug, walk to it instead
 			if (!justDugCurrentTile && tilesToDig [currentIndex].isDug) {
 				//Wait according to the speed stat. 
-				yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * (unitBehavior.isExhausted ? GameMasterScript.instance.exhaustEfficiencyModifier : 1) / (float)unitBehavior.unitData.speed);
+				//yield return new WaitForSeconds (GameMasterScript.instance.baseUnitSpeed * (unitBehavior.isExhausted ? GameMasterScript.instance.exhaustEfficiencyModifier : 1) / (float)unitBehavior.unitData.speed);
+
+				float timer2 = GameMasterScript.instance.baseUnitSpeed * (unitBehavior.isExhausted ? GameMasterScript.instance.exhaustEfficiencyModifier : 1) / (float)unitBehavior.unitData.speed;
+					
+				while (timer2 > 0) {
+					timer2 -= Time.deltaTime;
+					yield return null;
+				}
+
 			} else {
 				//If the player really dug the previous tile, reset its sprite
 				tilesToDig [currentIndex].tileSR.sprite = null;
@@ -84,7 +98,7 @@ public class DigBehavior : MonoBehaviour
 				tilesToDig [currentIndex].gameObject.AddComponent<TileVisionBehavior> ().tileVision = -1; //Make this = -1 if you don't want gradient 
 
 			//Fortify tile
-			if (tilesToDig [currentIndex].isFortified == false && unitBehavior.UseResource (GameMasterScript.instance.resourceUsedPerFortification)) {
+			if (tilesToDig [currentIndex].isFortified == false && unitBehavior.UseResource (GameMasterScript.instance.resourceUsedPerFortification) && tilesToDig [currentIndex].groundData.canCollapse) {
 				tilesToDig [currentIndex].isFortified = true;
 			}
 

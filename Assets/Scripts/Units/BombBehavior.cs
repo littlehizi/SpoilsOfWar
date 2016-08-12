@@ -25,10 +25,13 @@ public class BombBehavior : MonoBehaviour
 	public int maxAmountOfBombs;
 	public LayerMask groundTileLayer;
 	public bool canDetonnateABombsite = false;
+	bool isExploding;
 
 	void Start ()
 	{
 		unitBehavior = this.GetComponent<UnitBehavior> ();
+
+		isExploding = false;
 	}
 
 	/// <summary>
@@ -62,18 +65,33 @@ public class BombBehavior : MonoBehaviour
 		}
 	}
 
+
 	/// <summary>
 	/// Detonnates the bomb.
 	/// Will return false if that action cannot be done.
 	/// </summary>
 	/// <returns><c>true</c>, if bomb was detonnated, <c>false</c> otherwise.</returns>
-	public bool DetonnateBomb ()
+	public void DetonnateBomb ()
 	{
+		if (isExploding)
+			return;
+
+		StartCoroutine (BombBooming ());
+
+		isExploding = true;
+	}
+
+	IEnumerator BombBooming ()
+	{
+
 		if (CheckForBombsiteDetonnation ())
-			return false;
-		
+			yield return null;
+
 		if (currentBomb == null)
-			return false;
+			yield return null;
+
+		yield return new WaitForSeconds (0);
+
 
 		//KABOOM
 		Collider2D[] overlapResult = Physics2D.OverlapCircleAll (currentBomb.bombTile.trueTilePos, (float)GameMasterScript.instance.bombExplosionRadius, groundTileLayer);
@@ -84,7 +102,7 @@ public class BombBehavior : MonoBehaviour
 		for (int i = 0; i < overlapResult.Length; i++) {
 			tmpExplosionTileList.Add (overlapResult [i].transform.GetComponent<GroundBehavior> ());
 		}
-			
+
 
 		//Remove current tile
 		if (tmpExplosionTileList.Contains (unitBehavior.currentTile))
@@ -113,6 +131,12 @@ public class BombBehavior : MonoBehaviour
 			orderedExplosionTileList [i].hp -= (int)(GameMasterScript.instance.damagePerBomb / (orderedExplosionTileList [i].digRes / 10 * i));
 			//Debug.Log ((int)(GameMasterScript.instance.damagePerBomb / (orderedExplosionTileList [i].digRes / 10 * i)));
 
+			//Destroy obstacles
+			if (orderedExplosionTileList [i].isAnObstacle) {
+				orderedExplosionTileList [i].hp = 0;
+				orderedExplosionTileList [i].isAnObstacle = false;
+			}
+
 			//Kill all units in the explosion range, unless they're too far, then try to kill them
 			if (orderedExplosionTileList [i].unitsOnTile.Count > 0) {
 				for (int k = 0; k < orderedExplosionTileList [i].unitsOnTile.Count; k++) {
@@ -125,13 +149,18 @@ public class BombBehavior : MonoBehaviour
 			}
 		}
 
+		//Kill the unit on the tilebomb
+		if (currentBomb.bombTile.unitsOnTile.Count > 0) {
+			for (int i = 0; i < currentBomb.bombTile.unitsOnTile.Count; i++)
+				currentBomb.bombTile.unitsOnTile [i].OnDeathEnter ();
+		}
+
 		//Reset bombs
 		currentBomb = null;
 
 		Debug.Log ("a bomb has been detonated");
-
-		return true;
 	}
+
 
 	/// <summary>
 	/// Checks for bombsite detonnation.
