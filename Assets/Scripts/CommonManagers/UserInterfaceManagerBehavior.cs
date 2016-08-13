@@ -186,9 +186,10 @@ public class UserInterfaceManagerBehavior : MonoBehaviour, IManager
 		bool check = G_isDisplaying [file];
 		G_isDisplaying [file] = !G_isDisplaying [file];
 
-		if (check != G_isDisplaying [file])
-			((State_Game)GameMasterScript.currentState).SelectNewUnitByClickingOnFile (file, G_isDisplaying [file]);
-
+		if (GameMasterScript.currentState.stateID != BaseState.State.tutorial) {
+			if (check != G_isDisplaying [file])
+				((State_Game)GameMasterScript.currentState).SelectNewUnitByClickingOnFile (file, G_isDisplaying [file]);
+		}
 	}
 
 	public void G_UpdateSlider (Slider newSlider, float newValue)
