@@ -9,6 +9,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 	[HideInInspector] public DigBehavior DB;
 	[HideInInspector] public CombatBehavior CB;
 	[HideInInspector] public BombBehavior BB;
+	[HideInInspector] public UnitSoundBehavior USB;
 
 	[HideInInspector] public SpriteRenderer unitSR;
 
@@ -153,6 +154,7 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		CB = this.GetComponent<CombatBehavior> ();
 		unitSR = this.GetComponent<SpriteRenderer> ();
 		BB = this.GetComponent<BombBehavior> ();
+		USB = this.GetComponent<UnitSoundBehavior> ();
 
 		unitSR.sprite = unitData.sprite;
 		unitSR.color = unitData.tmpColor;

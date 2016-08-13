@@ -62,6 +62,9 @@ public class DigBehavior : MonoBehaviour
 					tilesToDig [currentIndex].tileSR.sprite = tilesToDig [currentIndex].groundData.destructionSprites [1];
 				else if (tilesToDig [currentIndex].hp < GameMasterScript.instance.tileHpBeforeNextFrame.x)
 					tilesToDig [currentIndex].tileSR.sprite = tilesToDig [currentIndex].groundData.destructionSprites [0];
+
+				//Apply sound
+				unitBehavior.USB.PlaySFX (UnitSoundBehavior.SFX.yay);
 			}
 
 			//If the upcoming tile has been dug, walk to it instead
