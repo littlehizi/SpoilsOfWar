@@ -52,7 +52,10 @@ public class VictoryManagerBehavior : MonoBehaviour, IManager
 		public void DetonnateBomb ()
 		{
 			Debug.LogWarning ("Game over!");
-			((State_Game)GameMasterScript.currentState).GameOver (owners [0].alignment);
+			if (GameMasterScript.currentState.stateID != BaseState.State.tutorial)
+				((State_Game)GameMasterScript.currentState).GameOver (owners [0].alignment);
+			else
+				((State_Tutorial)GameMasterScript.currentState).isGameOver = true;
 		}
 	}
 
@@ -63,5 +66,15 @@ public class VictoryManagerBehavior : MonoBehaviour, IManager
 		//Find all units and add VictoryCheck to their event
 		bombSites = new List<BombSite> ();
 	}
-		
+
+	public void CheckForNoPlayerAlive ()
+	{
+		if (GameMasterScript.instance.PLMB.humanPlayer.storedUnits.Count == 0) {
+			Debug.LogWarning ("Game over!");
+			if (GameMasterScript.currentState.stateID != BaseState.State.tutorial)
+				((State_Game)GameMasterScript.currentState).GameOver (PlayerData.TypeOfPlayer.enemy);
+			else
+				((State_Tutorial)GameMasterScript.currentState).isGameOver = true;
+		}
+	}
 }

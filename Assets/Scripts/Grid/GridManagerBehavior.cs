@@ -10,6 +10,7 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 	public GameObject[] tilePrefab;
 	public GameObject[] envTilePrefab;
 	public LayerSize[] tileLayerSize;
+	public LayerSize[] tutorialLayerSize;
 	public BaseGroundData[] groundData;
 	public BaseGroundData[] envData;
 
@@ -39,7 +40,7 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 	//START METHOD
 	public void OnGameStart ()
 	{
-		//Generate the terrain
+		//Generate the terrain. Different terrains will be spawned during tutorial.
 		CreateGrid ();
 	}
 
@@ -53,15 +54,18 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 		//Get the constant background (HQs and etc)
 		HQ_Player playerHQ = new HQ_Player ();
 
-		currentGrid = new Grid (GameMasterScript.instance.gridWidth, GameMasterScript.instance.gridHeight);
+		int currentWidth = GameMasterScript.currentState.stateID == BaseState.State.tutorial ? GameMasterScript.instance.tutorialGridWidth : GameMasterScript.instance.gridWidth;
+		int currentHeight = GameMasterScript.currentState.stateID == BaseState.State.tutorial ? GameMasterScript.instance.tutorialGridHeight : GameMasterScript.instance.gridHeight;
+
+		currentGrid = new Grid (currentWidth, currentHeight);
 		Vector3 tmpPos = Vector3.zero;
 
 		// Player and enemy indexs
 		int humanIndex = 0;
 		int enemyIndex = 0;
 
-		for (int i = 0; i < GameMasterScript.instance.gridHeight; i++) {
-			for (int k = 0; k < GameMasterScript.instance.gridWidth; k++) {
+		for (int i = 0; i < currentHeight; i++) {
+			for (int k = 0; k < currentWidth; k++) {
 				tmpPos.x = k;
 				tmpPos.y = -i;
 
@@ -76,9 +80,9 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 						currentTile = playerHQ.tileData [i, k];
 
                         
-					} else if (k >= GameMasterScript.instance.gridWidth - STATIC_WIDTH) {
+					} else if (k >= currentWidth - STATIC_WIDTH) {
 						//ENEMY HQ
-						currentTile = playerHQ.tileData [i, GameMasterScript.instance.gridWidth - k - 1];
+						currentTile = playerHQ.tileData [i, currentWidth - k - 1];
 					} else {
 						//ENV
 						if (i >= 2)
@@ -94,7 +98,7 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 
 					if (currentTile == GroundBehavior.EnvGroundType.buildingBG && k < STATIC_WIDTH) {
 						GameMasterScript.instance.PLMB.humanPlayer.spawnTiles [humanIndex++] = tmpTile;
-					} else if (currentTile == GroundBehavior.EnvGroundType.buildingBG && k >= GameMasterScript.instance.gridWidth - STATIC_WIDTH) {
+					} else if (currentTile == GroundBehavior.EnvGroundType.buildingBG && k >= currentWidth - STATIC_WIDTH) {
 						GameMasterScript.instance.PLMB.enemyPlayer.spawnTiles [enemyIndex++] = tmpTile;
 					}
 						
@@ -130,10 +134,10 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 			}
 		} 
 
-		AddObstacles ();
+		AddObstacles (currentWidth, currentHeight);
 	}
 
-	public void AddObstacles ()
+	public void AddObstacles (int currentWidth, int currentHeight)
 	{
 		//Generate obstacles based on perlin noise
 		float rdmX = Random.Range (-10000, 10000) + 0.01f;
@@ -155,8 +159,8 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 
 		//Add secondary obstacle passes
 		for (int h = 0; h < amountOfObstaclePasses; h++) {
-			for (int i = STATIC_HEIGHT + 1; i < GameMasterScript.instance.gridHeight; i++) {
-				for (int k = 0; k < GameMasterScript.instance.gridWidth; k++) {
+			for (int i = STATIC_HEIGHT + 1; i < currentHeight; i++) {
+				for (int k = 0; k < currentWidth; k++) {
 					if (!currentGrid.tiles [k, i].isAnObstacle && secondaryObstacleChance > Random.Range (0, 100))
 						currentGrid.tiles [k, i].isAnObstacle = true;
 				}
@@ -172,12 +176,14 @@ public class GridManagerBehavior : MonoBehaviour, IManager
 	/// <param name="tileHeight">Tile height.</param>
 	GroundBehavior.GroundType GetNewTile (int tileHeight)
 	{
+		int currentHeight = GameMasterScript.currentState.stateID == BaseState.State.tutorial ? GameMasterScript.instance.tutorialGridHeight : GameMasterScript.instance.gridHeight;
+
 		//IF IT IS THE FINAL ROW, USE BEDROCK NO MATTER WAT
-		if (tileHeight == GameMasterScript.instance.gridHeight - 1)
+		if (tileHeight == currentHeight - 1)
 			return GroundBehavior.GroundType.bedRock;
 
 		//First, get the tile height as a percentage
-		float heightPer = ((float)tileHeight) / ((float)GameMasterScript.instance.gridHeight) * 100;
+		float heightPer = ((float)tileHeight) / ((float)currentHeight) * 100;
 
 		//Return a type of tile according to the percentages entered in inspector
 		for (int i = 0; i < tileLayerSize.Length; i++) {

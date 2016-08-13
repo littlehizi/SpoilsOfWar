@@ -81,8 +81,13 @@ public class State_Game : BaseState
 			break;
 		case UserInterfaceManagerBehavior.G_ButtonType.unpause:
 			isPaused = false;
+			GameMasterScript.instance.UIMB.DisplayHUD (UserInterfaceManagerBehavior.TypeOfHUD.controlsPause, false);
 			break;
 		case UserInterfaceManagerBehavior.G_ButtonType.controls:
+			GameMasterScript.instance.UIMB.DisplayHUD (UserInterfaceManagerBehavior.TypeOfHUD.controlsPause, true);
+			break;
+		case UserInterfaceManagerBehavior.G_ButtonType.BackToPauseMenu:
+			GameMasterScript.instance.UIMB.DisplayHUD (UserInterfaceManagerBehavior.TypeOfHUD.controlsPause, false);
 			break;
 		}
 	}
@@ -91,10 +96,10 @@ public class State_Game : BaseState
 	{
 		//If the player tries to close a file, deselect unit. 
 		if (canDisplay) {
-			GameMasterScript.instance.SMB.SelectNewPrimaryUnit (GameMasterScript.instance.PLMB.humanPlayer.storedUnits [index]);
+			GameMasterScript.instance.SMB.SelectNewPrimaryUnit (GameMasterScript.instance.UIMB.G_characterFiles [index].currentUnit);
 			GameMasterScript.instance.IMB.currentState = InputManagerBehavior.InputState.unitSelected;
 		} else {
-			GameMasterScript.instance.SMB.DeselectUnit (GameMasterScript.instance.PLMB.humanPlayer.storedUnits [index]);
+			GameMasterScript.instance.SMB.DeselectUnit (GameMasterScript.instance.UIMB.G_characterFiles [index].currentUnit);
 			GameMasterScript.instance.IMB.currentState = InputManagerBehavior.InputState.idle;
 
 		}

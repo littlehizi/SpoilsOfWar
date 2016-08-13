@@ -7,7 +7,8 @@ public abstract class BaseState : MonoBehaviour
 	{
 		mainMenu,
 		game,
-		endGame
+		endGame,
+		tutorial
 	}
 
 	protected BaseState ()

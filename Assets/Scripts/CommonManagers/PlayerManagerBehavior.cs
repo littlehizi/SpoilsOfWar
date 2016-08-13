@@ -111,4 +111,20 @@ public class PlayerManagerBehavior : MonoBehaviour, IManager
 			break;
 		}
 	}
+
+	public UnitBehavior SpawnSingleUnit (UnitData.UnitType newUnit, PlayerData.TypeOfPlayer newAlignment, GroundBehavior newTile)
+	{
+		UnitBehavior tmpUnit = UnitSpawnerManagerBehavior.SpawnUnit (newUnit, newTile, newAlignment);
+
+		switch (newAlignment) {
+		case PlayerData.TypeOfPlayer.human:
+			humanPlayer.storedUnits.Add (tmpUnit);
+			break;
+		case PlayerData.TypeOfPlayer.enemy:
+			enemyPlayer.storedUnits.Add (tmpUnit);
+			break;
+		}
+
+		return tmpUnit;
+	}
 }

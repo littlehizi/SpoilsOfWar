@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using System.Security.Principal;
 
 /// <summary>
 /// UI manager behavior.
@@ -21,6 +22,7 @@ public class UserInterfaceManagerBehavior : MonoBehaviour, IManager
 		endGame,
 		controls,
 		credits,
+		controlsPause,
 		quitConfirm
 	}
 
@@ -28,7 +30,6 @@ public class UserInterfaceManagerBehavior : MonoBehaviour, IManager
 
 	public void OnGameStart ()
 	{
-		
 	}
 
 	public void DisplayHUD (TypeOfHUD newType, bool wantToDisplay)
@@ -46,7 +47,8 @@ public class UserInterfaceManagerBehavior : MonoBehaviour, IManager
 		showControls,
 		showCredits,
 		showQuit,
-		confirmQuit
+		confirmQuit,
+		playTutorial
 	}
 
 	public enum CS_ButtonType
@@ -120,12 +122,14 @@ public class UserInterfaceManagerBehavior : MonoBehaviour, IManager
 		restart,
 		goToMainMenu,
 		unpause,
-		controls
+		controls,
+		BackToPauseMenu
 	}
 
 	[System.Serializable]
 	public class CharacterFile
 	{
+		[HideInInspector] public UnitBehavior currentUnit;
 		public GameObject openFile, closedFile;
 		public Slider healthSlider, staminaSlider, oxygenSlider;
 		public Image picture;
@@ -174,6 +178,10 @@ public class UserInterfaceManagerBehavior : MonoBehaviour, IManager
 
 	public void G_DisplayCharacterFile (int file)
 	{
+		//if the player is dead, don't bother
+		if (!GameMasterScript.instance.PLMB.humanPlayer.storedUnits.Contains (G_characterFiles [file].currentUnit))
+			return;
+
 		G_DisplayCharacterFile (G_characterFiles [file], !G_isDisplaying [file]);
 		bool check = G_isDisplaying [file];
 		G_isDisplaying [file] = !G_isDisplaying [file];

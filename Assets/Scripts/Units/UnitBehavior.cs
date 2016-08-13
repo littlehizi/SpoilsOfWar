@@ -66,12 +66,13 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 
 	UserInterfaceManagerBehavior.CharacterFile _currentCharacterFile;
 
-	UserInterfaceManagerBehavior.CharacterFile currentCharacterFile {
+	public UserInterfaceManagerBehavior.CharacterFile currentCharacterFile {
 		get {
 			if (_currentCharacterFile == null) {
 				//GetCharacterFile
 				int unitIndex = GameMasterScript.instance.PLMB.humanPlayer.storedUnits.FindIndex (i => i.GetHashCode () == this.GetHashCode ());
 				_currentCharacterFile = GameMasterScript.instance.UIMB.G_characterFiles [unitIndex];
+				_currentCharacterFile.currentUnit = this;
 
 				//Set it up
 				GameMasterScript.instance.UIMB.G_SetupCharacterFile (_currentCharacterFile, unitData);
@@ -398,6 +399,9 @@ public class UnitBehavior : MonoBehaviour, ISelection, IVision
 		//Tell the AI if it's an enemy unit
 		if (alignment == PlayerData.TypeOfPlayer.enemy)
 			this.GetComponent<AIBrainBehavior> ().AIDeathEnter ();
+
+		//Check for player lost if it's a player death
+		GameMasterScript.instance.VMB.CheckForNoPlayerAlive ();
 
 		//Destroy unit
 		Destroy (this.gameObject);

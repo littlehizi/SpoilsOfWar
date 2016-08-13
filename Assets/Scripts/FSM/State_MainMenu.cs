@@ -189,6 +189,10 @@ public class State_MainMenu : BaseState
 
 			CS_ButtonPressed (UserInterfaceManagerBehavior.CS_ButtonType.confirm);
 		}
+
+		if (Input.GetKeyDown (KeyCode.L)) {
+			GameMasterScript.ChangeState<State_Tutorial> ();
+		}
 	}
 
 	public override void OnStateExit ()
